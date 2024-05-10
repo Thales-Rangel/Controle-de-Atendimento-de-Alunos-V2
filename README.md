@@ -76,11 +76,24 @@ create table if not exists estuda(
     foreign key (id_turma) references turmas(id)
 )DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+create table if not exists solicitacoes(
+	id int auto_increment primary key,
+    matricula_a varchar(20),
+    matricula_p varchar(20),
+    duvida text not null,
+    resposta text,
+    respondido enum('T', 'F') default 'F',
+    foreign key (matricula_a) references alunos(matricula),
+    foreign key (matricula_p) references professores(matricula)
+)DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 ```
 ---
-- O projeto foi inteiramente feito com a linguagem de programação Java.
+- O projeto foi inteiramente feito com a linguagem de programação Java e com Banco de Dados MySQL.
 
 <a href="https://www.java.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="40" height="40"/> </a>
+
+<a href="https://www.mysql.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="mysql" width="40" height="40"/> </a> 
 
 ---
 * Veja mais projetos meus no meu [perfil](https://github.com/Thales-Rangel).
