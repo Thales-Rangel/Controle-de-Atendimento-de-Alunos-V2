@@ -1,6 +1,5 @@
 package Models;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -21,7 +20,7 @@ public class Professor extends User {
 			con = DAO.conectar();
 			pst = con.prepareStatement(insert);
 			pst.setString(1, matricula);
-			ResultSet rs = pst.executeQuery();
+			rs = pst.executeQuery();
 			
 			while (rs.next()) {
 				disciplinas.add(new Disciplane(rs.getInt(1), rs.getString(2)));

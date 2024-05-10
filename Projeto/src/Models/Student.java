@@ -1,12 +1,8 @@
 package Models;
 
-import java.sql.ResultSet;
-
 import javax.swing.JOptionPane;
 
 public class Student extends User {
-	
-	private ResultSet rs;
 	
 	int id_turma;
 	private Turma turma;

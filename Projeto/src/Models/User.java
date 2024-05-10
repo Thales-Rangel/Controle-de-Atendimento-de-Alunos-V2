@@ -2,11 +2,13 @@ package Models;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public abstract class User {
 	
 	protected Connection con;
 	protected PreparedStatement pst;
+	protected ResultSet rs;
 	
 	protected String nome;
 	protected String matricula;

@@ -21,8 +21,9 @@ public class ProfessorView extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	
-	private Professor prof;
+	public Professor prof;
 	private JLabel lblNome;
+	public JPanel viewPanel;
 
 	/**
 	 * Launch the application.
@@ -85,5 +86,24 @@ public class ProfessorView extends JFrame {
 		btnVerSolicitations.setFont(new Font("Arial", Font.PLAIN, 15));
 		btnVerSolicitations.setBounds(32, 99, 145, 27);
 		panel.add(btnVerSolicitations);
+		
+		JButton btnVerTurmas = new JButton("Ver minhas turmas");
+		btnVerTurmas.setFont(new Font("Arial", Font.PLAIN, 13));
+		btnVerTurmas.setBounds(32, 136, 145, 27);
+		panel.add(btnVerTurmas);
+		
+		JButton btnVerDisciplinas = new JButton("Ver minhas disciplinas");
+		btnVerDisciplinas.setFont(new Font("Arial", Font.PLAIN, 11));
+		btnVerDisciplinas.setBounds(32, 173, 145, 27);
+		panel.add(btnVerDisciplinas);
+		
+		JButton btnSair = new JButton("Sair");
+		btnSair.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnSair.setBounds(0, 562, 210, 31);
+		panel.add(btnSair);
+		
+		viewPanel = new JPanel();
+		viewPanel.setBounds(0, 0, 637, 593);
+		contentPane.add(viewPanel);
 	}
 }
