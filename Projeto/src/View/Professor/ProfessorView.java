@@ -102,7 +102,7 @@ public class ProfessorView extends JFrame {
 		btnSair.setBounds(0, 562, 210, 31);
 		panel.add(btnSair);
 		
-		viewPanel = new JPanel();
+		viewPanel = new PagInicial(this);
 		viewPanel.setBounds(0, 0, 637, 593);
 		contentPane.add(viewPanel);
 	}
