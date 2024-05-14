@@ -15,13 +15,15 @@ import javax.swing.ImageIcon;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ProfessorView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	
-	public Professor prof;
+	Professor prof;
 	private JLabel lblNome;
 	public JPanel viewPanel;
 
@@ -32,7 +34,7 @@ public class ProfessorView extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ProfessorView frame = new ProfessorView(null);
+					ProfessorView frame = new ProfessorView(new Professor("Carlos", "1002", "senha p2"));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -77,7 +79,16 @@ public class ProfessorView extends JFrame {
 		lblNome.setBounds(10, 10, 190, 42);
 		panel.add(lblNome);
 		
+		ProfessorView pv = this;
+		
 		JButton btnVerDados = new JButton("Ver meus dados");
+		btnVerDados.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				viewPanel.setVisible(false);
+				viewPanel = new ViewDatas(pv);
+				contentPane.add(viewPanel);
+			}
+		});
 		btnVerDados.setFont(new Font("Arial", Font.PLAIN, 15));
 		btnVerDados.setBounds(32, 62, 145, 27);
 		panel.add(btnVerDados);
@@ -102,7 +113,7 @@ public class ProfessorView extends JFrame {
 		btnSair.setBounds(0, 562, 210, 31);
 		panel.add(btnSair);
 		
-		viewPanel = new PagInicial(this);
+		viewPanel = new PagInicial(prof);
 		viewPanel.setBounds(0, 0, 637, 593);
 		contentPane.add(viewPanel);
 	}

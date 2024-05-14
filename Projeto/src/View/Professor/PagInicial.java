@@ -16,6 +16,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Models.DAO;
+import Models.Professor;
 
 public class PagInicial extends JPanel {
 
@@ -23,7 +24,7 @@ public class PagInicial extends JPanel {
 	private PreparedStatement pst;
 	private ResultSet rs;
 	
-	private ProfessorView pv;
+	private Professor p;
 	
 	private static final long serialVersionUID = 1L;
 	private JTable tableSolicitations;
@@ -33,8 +34,8 @@ public class PagInicial extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PagInicial(ProfessorView pv) {
-		this.pv = pv;
+	public PagInicial(Professor p) {
+		this.p = p;
 		
 		setBounds(0, 0, 637, 593);
 		setLayout(null);
@@ -45,12 +46,12 @@ public class PagInicial extends JPanel {
 		add(panelCabecalho);
 		panelCabecalho.setLayout(null);
 
-		JLabel lblNome = new JLabel(pv.prof.getNome());
+		JLabel lblNome = new JLabel(p.getNome());
 		lblNome.setBounds(10, 10, 597, 36);
 		panelCabecalho.add(lblNome);
 		lblNome.setFont(new Font("Arial", Font.PLAIN, 30));
 
-		JLabel lblMatricula = new JLabel(pv.prof.getMatricula());
+		JLabel lblMatricula = new JLabel(p.getMatricula());
 		lblMatricula.setBounds(10, 56, 597, 30);
 		panelCabecalho.add(lblMatricula);
 		lblMatricula.setFont(new Font("Arial", Font.PLAIN, 25));
@@ -139,7 +140,7 @@ public class PagInicial extends JPanel {
 	}
 
 	private void listagens() {
-		String readSolicitacoes = "select duvida from solicitacoes where respondido= 'F' and matricula_p= '"+pv.prof.getMatricula()+"'";
+		String readSolicitacoes = "select duvida from solicitacoes where respondido= 'F' and matricula_p= '"+p.getMatricula()+"'";
 		
 		DefaultTableModel modelSolicitacoes = new DefaultTableModel(new Object[][] {},
 				new String[] { "Solicita\u00E7\u00F5es" }) {
@@ -159,7 +160,7 @@ public class PagInicial extends JPanel {
 				+ "on t.id = es.id_turma "
 				+ "inner join ensina en "
 				+ "on en.id_disciplina = es.id_disciplina "
-				+ "where en.matricula_professor = '"+pv.prof.getMatricula()+"' "
+				+ "where en.matricula_professor = '"+p.getMatricula()+"' "
 				+ "order by t.nome";
 		
 		DefaultTableModel modelTurmas = new DefaultTableModel(new Object[][] {}, new String[] { "Minhas turmas" }) {
@@ -177,7 +178,7 @@ public class PagInicial extends JPanel {
 		String readDisciplinas = "select d.nome from ensina en "
 				+ "inner join disciplinas d "
 				+ "on d.id = en.id_disciplina "
-				+ "where en.matricula_professor= '"+pv.prof.getMatricula()+"' "
+				+ "where en.matricula_professor= '"+p.getMatricula()+"' "
 				+ "order by d.nome";
 		
 		DefaultTableModel modelDisciplinas = new DefaultTableModel(new Object[][] {},
