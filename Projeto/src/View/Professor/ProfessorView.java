@@ -21,7 +21,7 @@ import java.awt.event.ActionEvent;
 public class ProfessorView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
+	JPanel contentPane;
 	
 	Professor prof;
 	private JLabel lblNome;
@@ -89,7 +89,7 @@ public class ProfessorView extends JFrame {
 				contentPane.add(viewPanel);
 			}
 		});
-		btnVerDados.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnVerDados.setFont(new Font("Arial", Font.PLAIN, 14));
 		btnVerDados.setBounds(32, 62, 145, 27);
 		panel.add(btnVerDados);
 		
@@ -104,7 +104,7 @@ public class ProfessorView extends JFrame {
 		panel.add(btnVerTurmas);
 		
 		JButton btnVerDisciplinas = new JButton("Ver minhas disciplinas");
-		btnVerDisciplinas.setFont(new Font("Arial", Font.PLAIN, 11));
+		btnVerDisciplinas.setFont(new Font("Arial", Font.PLAIN, 10));
 		btnVerDisciplinas.setBounds(32, 173, 145, 27);
 		panel.add(btnVerDisciplinas);
 		
@@ -112,6 +112,18 @@ public class ProfessorView extends JFrame {
 		btnSair.setFont(new Font("Arial", Font.PLAIN, 15));
 		btnSair.setBounds(0, 562, 210, 31);
 		panel.add(btnSair);
+		
+		JButton btnPaginaInicial = new JButton("Página Inicial");
+		btnPaginaInicial.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				viewPanel.setVisible(false);
+				viewPanel = new PagInicial(prof);
+				contentPane.add(viewPanel);
+			}
+		});
+		btnPaginaInicial.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnPaginaInicial.setBounds(32, 210, 145, 27);
+		panel.add(btnPaginaInicial);
 		
 		viewPanel = new PagInicial(prof);
 		viewPanel.setBounds(0, 0, 637, 593);

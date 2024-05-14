@@ -30,6 +30,9 @@ public class PagInicial extends JPanel {
 	private JTable tableSolicitations;
 	private JTable tableTurmas;
 	private JTable tableDisciplinas;
+	private JLabel lblSolicitacoes;
+	private JLabel lblTurmas;
+	private JLabel lblDisciplinas;
 
 	/**
 	 * Create the panel.
@@ -62,15 +65,15 @@ public class PagInicial extends JPanel {
 		add(panelRecebidos);
 		panelRecebidos.setLayout(new BoxLayout(panelRecebidos, BoxLayout.X_AXIS));
 
-		JLabel lblSolicitacoes = new JLabel("Solicitações recebidas: x   ");
+		lblSolicitacoes = new JLabel("Solicitações recebidas: x   ");
 		lblSolicitacoes.setFont(new Font("Arial", Font.PLAIN, 15));
 		panelRecebidos.add(lblSolicitacoes);
 
-		JLabel lblTurmas = new JLabel("Minhas turmas: y  ");
+		lblTurmas = new JLabel("Minhas turmas: y  ");
 		lblTurmas.setFont(new Font("Arial", Font.PLAIN, 15));
 		panelRecebidos.add(lblTurmas);
 
-		JLabel lblDisciplinas = new JLabel("Minhas disciplinas: z");
+		lblDisciplinas = new JLabel("Minhas disciplinas: z");
 		lblDisciplinas.setFont(new Font("Arial", Font.PLAIN, 15));
 		panelRecebidos.add(lblDisciplinas);
 
@@ -136,7 +139,43 @@ public class PagInicial extends JPanel {
 		scrollPaneSolicitations_1_1.setViewportView(tableDisciplinas);
 
 		listagens();
+		contagem();
+	}
+	
+	private void contagem() {
+		String readSolicitations = "select count(*) from solicitacoes where matricula_p= '"+ p.getMatricula()+ "'";
 		
+		String readDisciplinas = "select count(*) from ensina where matricula_professor= '"+ p.getMatricula() +"'";
+		
+		String readTurmas = "select count(*) from estuda es "
+				+ "inner join ensina en "
+				+ "on en.id_disciplina = es.id_disciplina "
+				+ "where en.matricula_professor= '"+ p.getMatricula() +"'";
+		
+		try {
+			con = DAO.conectar();
+			
+			pst = con.prepareStatement(readSolicitations);
+			rs = pst.executeQuery();
+			if (rs.next()) {
+				lblSolicitacoes.setText("Solicitações recebidas: "+ rs.getInt(1) +";   ");
+			}
+			
+			pst = con.prepareStatement(readTurmas);
+			rs = pst.executeQuery();
+			if (rs.next()) {
+				lblTurmas.setText("Minhas turmas: "+ rs.getInt(1) +"  ");
+			}
+			
+			pst = con.prepareStatement(readDisciplinas);
+			rs = pst.executeQuery();
+			if (rs.next()) {
+				lblDisciplinas.setText("Minhas disciplinas: "+ rs.getInt(1));
+			}
+			
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Não foi possivel conectar no servidor:\n"+ e);
+		}
 	}
 
 	private void listagens() {
