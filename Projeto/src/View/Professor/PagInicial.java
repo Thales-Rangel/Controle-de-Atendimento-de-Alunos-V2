@@ -17,6 +17,8 @@ import javax.swing.table.DefaultTableModel;
 
 import Models.DAO;
 import Models.Professor;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 public class PagInicial extends JPanel {
 
@@ -41,28 +43,38 @@ public class PagInicial extends JPanel {
 		this.p = p;
 		
 		setBounds(0, 0, 637, 593);
-		setLayout(null);
 
 		JPanel panelCabecalho = new JPanel();
 		panelCabecalho.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		panelCabecalho.setBounds(10, 10, 617, 98);
-		add(panelCabecalho);
-		panelCabecalho.setLayout(null);
 
 		JLabel lblNome = new JLabel(p.getNome());
-		lblNome.setBounds(10, 10, 597, 36);
-		panelCabecalho.add(lblNome);
 		lblNome.setFont(new Font("Arial", Font.PLAIN, 30));
 
 		JLabel lblMatricula = new JLabel(p.getMatricula());
-		lblMatricula.setBounds(10, 56, 597, 30);
-		panelCabecalho.add(lblMatricula);
 		lblMatricula.setFont(new Font("Arial", Font.PLAIN, 25));
+		GroupLayout gl_panelCabecalho = new GroupLayout(panelCabecalho);
+		gl_panelCabecalho.setHorizontalGroup(
+			gl_panelCabecalho.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelCabecalho.createSequentialGroup()
+					.addGap(8)
+					.addGroup(gl_panelCabecalho.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNome, GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE)
+						.addComponent(lblMatricula, GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE))
+					.addGap(8))
+		);
+		gl_panelCabecalho.setVerticalGroup(
+			gl_panelCabecalho.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelCabecalho.createSequentialGroup()
+					.addGap(8)
+					.addComponent(lblNome, GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+					.addGap(10)
+					.addComponent(lblMatricula, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGap(10))
+		);
+		panelCabecalho.setLayout(gl_panelCabecalho);
 
 		JPanel panelRecebidos = new JPanel();
 		panelRecebidos.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelRecebidos.setBounds(10, 118, 617, 55);
-		add(panelRecebidos);
 		panelRecebidos.setLayout(new BoxLayout(panelRecebidos, BoxLayout.X_AXIS));
 
 		lblSolicitacoes = new JLabel("Solicitações recebidas: x   ");
@@ -78,8 +90,6 @@ public class PagInicial extends JPanel {
 		panelRecebidos.add(lblDisciplinas);
 
 		JScrollPane scrollPaneSolicitations = new JScrollPane();
-		scrollPaneSolicitations.setBounds(10, 183, 198, 400);
-		add(scrollPaneSolicitations);
 
 		tableSolicitations = new JTable();
 		tableSolicitations
@@ -99,8 +109,6 @@ public class PagInicial extends JPanel {
 		scrollPaneSolicitations.setViewportView(tableSolicitations);
 
 		JScrollPane scrollPaneSolicitations_1 = new JScrollPane();
-		scrollPaneSolicitations_1.setBounds(221, 183, 198, 400);
-		add(scrollPaneSolicitations_1);
 
 		tableTurmas = new JTable();
 		tableTurmas.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Minhas turmas" }) {
@@ -119,8 +127,6 @@ public class PagInicial extends JPanel {
 		scrollPaneSolicitations_1.setViewportView(tableTurmas);
 
 		JScrollPane scrollPaneSolicitations_1_1 = new JScrollPane();
-		scrollPaneSolicitations_1_1.setBounds(429, 183, 198, 400);
-		add(scrollPaneSolicitations_1_1);
 
 		tableDisciplinas = new JTable();
 		tableDisciplinas.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Minhas disciplinas" }) {
@@ -137,6 +143,37 @@ public class PagInicial extends JPanel {
 		tableDisciplinas.setFont(new Font("Arial", Font.PLAIN, 15));
 		tableDisciplinas.setRowSelectionAllowed(false);
 		scrollPaneSolicitations_1_1.setViewportView(tableDisciplinas);
+		GroupLayout groupLayout = new GroupLayout(this);
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(panelCabecalho, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(panelRecebidos, GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(scrollPaneSolicitations, GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+							.addGap(13)
+							.addComponent(scrollPaneSolicitations_1, GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+							.addGap(10)
+							.addComponent(scrollPaneSolicitations_1_1, GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)))
+					.addGap(10))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addComponent(panelCabecalho, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(panelRecebidos, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollPaneSolicitations, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+						.addComponent(scrollPaneSolicitations_1, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+						.addComponent(scrollPaneSolicitations_1_1, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE))
+					.addGap(10))
+		);
+		setLayout(groupLayout);
 
 		listagens();
 		contagem();

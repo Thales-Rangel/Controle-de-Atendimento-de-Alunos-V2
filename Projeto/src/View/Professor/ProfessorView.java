@@ -17,6 +17,8 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 public class ProfessorView extends JFrame {
 
@@ -26,6 +28,14 @@ public class ProfessorView extends JFrame {
 	Professor prof;
 	private JLabel lblNome;
 	public JPanel viewPanel;
+	private JButton btnVerDados;
+	private JButton btnVerSolicitations;
+	private JButton btnVerTurmas;
+	private JButton btnVerDisciplinas;
+	private JButton btnPaginaInicial;
+	private JLabel lblIFLogo;
+	private JButton btnSair;
+	private JPanel panel;
 
 	/**
 	 * Launch the application.
@@ -51,69 +61,59 @@ public class ProfessorView extends JFrame {
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Admin.class.getResource("/img/IF Logo - Remove.png")));
 		setTitle("Página do Professor");
-		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 860, 630);
+		setBounds(100, 100, 860, 650);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		setLocationRelativeTo(null);
 
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setBackground(new Color(26, 150, 3));
-		panel.setBounds(636, 0, 210, 593);
-		contentPane.add(panel);
-		panel.setLayout(null);
 		
-		JLabel lblIFLogo = new JLabel("");
+		lblIFLogo = new JLabel("");
 		lblIFLogo.setIcon(new ImageIcon(ProfessorView.class.getResource("/img/IF Logo Branca - Remove.png")));
-		lblIFLogo.setBounds(32, 321, 145, 142);
-		panel.add(lblIFLogo);
 		
 		lblNome = new JLabel(prof.getNome());
 		lblNome.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNome.setFont(new Font("Arial", Font.PLAIN, 20));
-		lblNome.setBounds(10, 10, 190, 42);
-		panel.add(lblNome);
 		
 		ProfessorView pv = this;
 		
-		JButton btnVerDados = new JButton("Ver meus dados");
+		btnVerDados = new JButton("Ver meus dados");
 		btnVerDados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				viewPanel.setVisible(false);
 				viewPanel = new ViewDatas(pv);
 				contentPane.add(viewPanel);
+				dimensionar();
 			}
 		});
 		btnVerDados.setFont(new Font("Arial", Font.PLAIN, 14));
-		btnVerDados.setBounds(32, 62, 145, 27);
-		panel.add(btnVerDados);
 		
-		JButton btnVerSolicitations = new JButton("Ver solicitações");
+		btnVerSolicitations = new JButton("Ver solicitações");
+		btnVerSolicitations.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				viewPanel.setVisible(false);
+				viewPanel = new ViewSolicitationsList(prof, pv);
+				contentPane.add(viewPanel);
+				dimensionar();
+			}
+		});
 		btnVerSolicitations.setFont(new Font("Arial", Font.PLAIN, 15));
-		btnVerSolicitations.setBounds(32, 99, 145, 27);
-		panel.add(btnVerSolicitations);
 		
-		JButton btnVerTurmas = new JButton("Ver minhas turmas");
+		btnVerTurmas = new JButton("Ver minhas turmas");
 		btnVerTurmas.setFont(new Font("Arial", Font.PLAIN, 13));
-		btnVerTurmas.setBounds(32, 136, 145, 27);
-		panel.add(btnVerTurmas);
 		
-		JButton btnVerDisciplinas = new JButton("Ver minhas disciplinas");
+		btnVerDisciplinas = new JButton("Ver minhas disciplinas");
 		btnVerDisciplinas.setFont(new Font("Arial", Font.PLAIN, 10));
-		btnVerDisciplinas.setBounds(32, 173, 145, 27);
-		panel.add(btnVerDisciplinas);
 		
-		JButton btnSair = new JButton("Sair");
+		btnSair = new JButton("Sair");
 		btnSair.setFont(new Font("Arial", Font.PLAIN, 15));
-		btnSair.setBounds(0, 562, 210, 31);
-		panel.add(btnSair);
 		
-		JButton btnPaginaInicial = new JButton("Página Inicial");
+		btnPaginaInicial = new JButton("Página Inicial");
 		btnPaginaInicial.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				viewPanel.setVisible(false);
@@ -122,11 +122,74 @@ public class ProfessorView extends JFrame {
 			}
 		});
 		btnPaginaInicial.setFont(new Font("Arial", Font.PLAIN, 15));
-		btnPaginaInicial.setBounds(32, 210, 145, 27);
-		panel.add(btnPaginaInicial);
 		
 		viewPanel = new PagInicial(prof);
-		viewPanel.setBounds(0, 0, 637, 593);
-		contentPane.add(viewPanel);
+		dimensionar();
+		
+	}
+	
+	public void dimensionar() {
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+					.addComponent(viewPanel, GroupLayout.DEFAULT_SIZE, 627, Short.MAX_VALUE)
+					.addGap(9)
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+				.addComponent(viewPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 603, Short.MAX_VALUE)
+		);
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(32)
+					.addComponent(btnVerDados, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(32)
+					.addComponent(btnVerSolicitations, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(32)
+					.addComponent(btnVerTurmas, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(32)
+					.addComponent(btnVerDisciplinas, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(32)
+					.addComponent(btnPaginaInicial, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(32)
+					.addComponent(lblIFLogo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGap(33))
+				.addComponent(btnSair, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+		);
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(btnVerDados, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(btnVerSolicitations)
+					.addGap(10)
+					.addComponent(btnVerTurmas, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(btnVerDisciplinas, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(btnPaginaInicial)
+					.addGap(84)
+					.addComponent(lblIFLogo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGap(103)
+					.addComponent(btnSair))
+		);
+		panel.setLayout(gl_panel);
+		contentPane.setLayout(gl_contentPane);
 	}
 }

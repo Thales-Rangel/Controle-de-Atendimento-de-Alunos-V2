@@ -17,6 +17,8 @@ import Models.DAO;
 import Models.Professor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 public class ViewDatas extends JPanel {
 	
@@ -37,26 +39,18 @@ public class ViewDatas extends JPanel {
 		this.p = pv.prof;
 
 		setBounds(0, 0, 637, 593);
-		setLayout(null);
 		
 		JLabel lblTitulo = new JLabel("Dados pessoais");
 		lblTitulo.setFont(new Font("Arial Black", Font.PLAIN, 25));
-		lblTitulo.setBounds(10, 10, 302, 39);
-		add(lblTitulo);
 		
 		JLabel lblNome = new JLabel("Nome: "+ p.getNome());
 		lblNome.setFont(new Font("Arial", Font.PLAIN, 20));
-		lblNome.setBounds(10, 59, 617, 28);
-		add(lblNome);
 		
 		JLabel lblMatricula = new JLabel("Matricula: "+ p.getMatricula());
 		lblMatricula.setFont(new Font("Arial", Font.PLAIN, 20));
-		lblMatricula.setBounds(10, 97, 617, 28);
-		add(lblMatricula);
 		
 		JLabel lblSenha = new JLabel("Senha: ");
 		lblSenha.setFont(new Font("Arial", Font.PLAIN, 20));
-		lblSenha.setBounds(10, 135, 617, 28);
 		
 		String senha = "Senha: ";
 		for(int i = 0; i < p.getSenha().length(); i++) {
@@ -64,19 +58,13 @@ public class ViewDatas extends JPanel {
 		}
 		lblSenha.setText(senha);
 		
-		add(lblSenha);
-		
 		JScrollPane scrollPaneDisciplinas = new JScrollPane();
-		scrollPaneDisciplinas.setBounds(10, 264, 302, 319);
-		add(scrollPaneDisciplinas);
 		
 		listDisciplinas = new JList<String>();
 		listDisciplinas.setFont(new Font("Arial", Font.PLAIN, 13));
 		scrollPaneDisciplinas.setViewportView(listDisciplinas);
 		
 		JScrollPane scrollPaneTurmas = new JScrollPane();
-		scrollPaneTurmas.setBounds(322, 264, 302, 319);
-		add(scrollPaneTurmas);
 		
 		listTurmas = new JList<String>();
 		listTurmas.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -88,21 +76,65 @@ public class ViewDatas extends JPanel {
 				pv.viewPanel.setVisible(false);
 				pv.viewPanel = new AlterDatas(pv);
 				pv.contentPane.add(pv.viewPanel);
+				pv.dimensionar();
 			}
 		});
 		btnEdit.setFont(new Font("Arial", Font.PLAIN, 15));
-		btnEdit.setBounds(10, 173, 189, 39);
-		add(btnEdit);
 		
 		JLabel lblDisciplinas = new JLabel("Minhas disciplinas:");
 		lblDisciplinas.setFont(new Font("Arial", Font.PLAIN, 20));
-		lblDisciplinas.setBounds(10, 222, 302, 32);
-		add(lblDisciplinas);
 		
 		JLabel lblTurmas = new JLabel("Minhas turmas:");
 		lblTurmas.setFont(new Font("Arial", Font.PLAIN, 20));
-		lblTurmas.setBounds(322, 222, 302, 32);
-		add(lblTurmas);
+		GroupLayout groupLayout = new GroupLayout(this);
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblTitulo, GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+							.addGap(315))
+						.addComponent(lblNome, GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+						.addComponent(lblMatricula, GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+						.addComponent(lblSenha, GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+						.addComponent(btnEdit, GroupLayout.PREFERRED_SIZE, 189, GroupLayout.PREFERRED_SIZE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(lblDisciplinas, GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
+							.addGap(6)
+							.addComponent(lblTurmas, GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
+							.addGap(3))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(scrollPaneDisciplinas, GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+							.addGap(10)
+							.addComponent(scrollPaneTurmas, GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
+							.addGap(3)))
+					.addGap(10))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblTitulo, GroupLayout.PREFERRED_SIZE, 37, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(lblMatricula, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(lblSenha, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(btnEdit, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(lblDisciplinas, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblTurmas, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
+					.addGap(6)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollPaneDisciplinas, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
+						.addComponent(scrollPaneTurmas, GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE))
+					.addGap(10))
+		);
+		setLayout(groupLayout);
 
 		listagem();
 		

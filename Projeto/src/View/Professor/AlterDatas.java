@@ -16,6 +16,9 @@ import Utils.Validador;
 import javax.swing.ImageIcon;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.SwingConstants;
 
 public class AlterDatas extends JPanel {
 
@@ -36,23 +39,15 @@ public class AlterDatas extends JPanel {
 		this.p = pv.prof;
 
 		setBounds(0, 0, 637, 593);
-		setLayout(null);
 
 		JLabel lblTitulo = new JLabel("Alterar dados pessoais");
 		lblTitulo.setFont(new Font("Arial Black", Font.PLAIN, 25));
-		lblTitulo.setBounds(10, 10, 465, 39);
-		add(lblTitulo);
 
 		JLabel lblNome = new JLabel("Nome: ");
 		lblNome.setFont(new Font("Arial", Font.PLAIN, 20));
-		lblNome.setBounds(10, 59, 81, 28);
-		add(lblNome);
 
 		JLabel lblSenha = new JLabel("Senha antiga: ");
 		lblSenha.setFont(new Font("Arial", Font.PLAIN, 20));
-		lblSenha.setBounds(10, 97, 141, 28);
-
-		add(lblSenha);
 
 		JButton btnEdit = new JButton("Alterar dados");
 		btnEdit.addActionListener(new ActionListener() {
@@ -61,8 +56,6 @@ public class AlterDatas extends JPanel {
 			}
 		});
 		btnEdit.setFont(new Font("Arial", Font.PLAIN, 15));
-		btnEdit.setBounds(4, 211, 147, 39);
-		add(btnEdit);
 
 		textField = new JTextField();
 		textField.addKeyListener(new KeyAdapter() {
@@ -83,21 +76,15 @@ public class AlterDatas extends JPanel {
 			}
 		});
 		textField.setFont(new Font("Arial", Font.PLAIN, 20));
-		textField.setBounds(113, 59, 339, 28);
-		add(textField);
 		textField.setColumns(10);
 		textField.setDocument(new Validador(30));
 		textField.setText(p.getNome());
 
 		JLabel lblNewSenha = new JLabel("Nova senha:");
 		lblNewSenha.setFont(new Font("Arial", Font.PLAIN, 20));
-		lblNewSenha.setBounds(10, 135, 141, 28);
-		add(lblNewSenha);
 
 		JLabel lblRepeatNewSenha = new JLabel("Repetir nova senha:");
 		lblRepeatNewSenha.setFont(new Font("Arial", Font.PLAIN, 20));
-		lblRepeatNewSenha.setBounds(10, 173, 199, 28);
-		add(lblRepeatNewSenha);
 
 		passwordField = new JPasswordField();
 		passwordField.addKeyListener(new KeyAdapter() {
@@ -118,8 +105,6 @@ public class AlterDatas extends JPanel {
 			}
 		});
 		passwordField.setFont(new Font("Arial", Font.PLAIN, 20));
-		passwordField.setBounds(161, 97, 291, 28);
-		add(passwordField);
 		passwordField.setDocument(new Validador(100));
 
 		newPasswordField = new JPasswordField();
@@ -141,8 +126,6 @@ public class AlterDatas extends JPanel {
 			}
 		});
 		newPasswordField.setFont(new Font("Arial", Font.PLAIN, 20));
-		newPasswordField.setBounds(161, 135, 291, 28);
-		add(newPasswordField);
 		newPasswordField.setDocument(new Validador(100));
 
 		RepeatPasswordField = new JPasswordField();
@@ -164,13 +147,10 @@ public class AlterDatas extends JPanel {
 			}
 		});
 		RepeatPasswordField.setFont(new Font("Arial", Font.PLAIN, 20));
-		RepeatPasswordField.setBounds(219, 173, 233, 28);
-		add(RepeatPasswordField);
 
 		JLabel lblIMG = new JLabel("");
+		lblIMG.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIMG.setIcon(new ImageIcon(AlterDatas.class.getResource("/img/TonyStark.png")));
-		lblIMG.setBounds(10, 276, 623, 385);
-		add(lblIMG);
 
 		JButton btnCancel = new JButton("Cancelar");
 		btnCancel.addActionListener(new ActionListener() {
@@ -181,8 +161,72 @@ public class AlterDatas extends JPanel {
 			}
 		});
 		btnCancel.setFont(new Font("Arial", Font.PLAIN, 15));
-		btnCancel.setBounds(161, 211, 147, 39);
-		add(btnCancel);
+		GroupLayout groupLayout = new GroupLayout(this);
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblTitulo, GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
+					.addGap(162))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 81, GroupLayout.PREFERRED_SIZE)
+					.addGap(22)
+					.addComponent(textField, GroupLayout.PREFERRED_SIZE, 339, GroupLayout.PREFERRED_SIZE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblSenha, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 291, GroupLayout.PREFERRED_SIZE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblNewSenha, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(newPasswordField, GroupLayout.PREFERRED_SIZE, 291, GroupLayout.PREFERRED_SIZE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblRepeatNewSenha, GroupLayout.PREFERRED_SIZE, 199, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(RepeatPasswordField, GroupLayout.PREFERRED_SIZE, 233, GroupLayout.PREFERRED_SIZE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(4)
+					.addComponent(btnEdit, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(btnCancel, GroupLayout.PREFERRED_SIZE, 147, GroupLayout.PREFERRED_SIZE))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblIMG, GroupLayout.DEFAULT_SIZE, 623, Short.MAX_VALUE)
+					.addGap(4))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblTitulo)
+					.addGap(10)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textField, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
+					.addGap(10)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblSenha, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+						.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
+					.addGap(10)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNewSenha, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+						.addComponent(newPasswordField, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
+					.addGap(10)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblRepeatNewSenha, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+						.addComponent(RepeatPasswordField, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
+					.addGap(10)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnEdit, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnCancel, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
+					.addGap(26)
+					.addComponent(lblIMG, GroupLayout.PREFERRED_SIZE, 385, Short.MAX_VALUE))
+		);
+		setLayout(groupLayout);
 
 	}
 
