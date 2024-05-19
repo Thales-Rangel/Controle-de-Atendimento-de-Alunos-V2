@@ -231,7 +231,7 @@ public class PagInicial extends JPanel {
 			}
 		};
 
-		String readTurmas = "select t.nome from estuda es "
+		String readTurmas = "select distinct t.nome from estuda es "
 				+ "inner join turmas t "
 				+ "on t.id = es.id_turma "
 				+ "inner join ensina en "

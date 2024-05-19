@@ -158,6 +158,7 @@ public class AlterDatas extends JPanel {
 				pv.viewPanel.setVisible(false);
 				pv.viewPanel = new ViewDatas(pv);
 				pv.contentPane.add(pv.viewPanel);
+				pv.dimensionar();
 			}
 		});
 		btnCancel.setFont(new Font("Arial", Font.PLAIN, 15));

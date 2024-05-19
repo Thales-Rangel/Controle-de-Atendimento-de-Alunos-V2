@@ -105,6 +105,14 @@ public class ProfessorView extends JFrame {
 		btnVerSolicitations.setFont(new Font("Arial", Font.PLAIN, 15));
 		
 		btnVerTurmas = new JButton("Ver minhas turmas");
+		btnVerTurmas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				viewPanel.setVisible(false);
+				viewPanel = new ViewTurmasList(prof, pv);
+				contentPane.add(viewPanel);
+				dimensionar();
+			}
+		});
 		btnVerTurmas.setFont(new Font("Arial", Font.PLAIN, 13));
 		
 		btnVerDisciplinas = new JButton("Ver minhas disciplinas");
@@ -119,6 +127,7 @@ public class ProfessorView extends JFrame {
 				viewPanel.setVisible(false);
 				viewPanel = new PagInicial(prof);
 				contentPane.add(viewPanel);
+				dimensionar();
 			}
 		});
 		btnPaginaInicial.setFont(new Font("Arial", Font.PLAIN, 15));

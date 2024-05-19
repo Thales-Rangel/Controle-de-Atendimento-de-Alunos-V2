@@ -48,6 +48,7 @@ public class ViewSolicitation extends JPanel {
 		lblDuvida.setFont(new Font("Arial", Font.BOLD, 15));
 		
 		JTextPane txtpnDuvida = new JTextPane();
+		txtpnDuvida.setEditable(false);
 		txtpnDuvida.setFont(new Font("Arial", Font.PLAIN, 15));
 		txtpnDuvida.setText(s.getDuvida());
 		
