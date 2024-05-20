@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import javax.swing.JOptionPane;
+
 public abstract class User {
 	
 	protected Connection con;
@@ -20,6 +22,43 @@ public abstract class User {
 		this.senha = senha;
 	}
 	
+	public User(String matricula) {
+		try {
+			if(this.getClass() == Professor.class) {
+				String read = "select * from professores where matricula= '"+ matricula +"'";
+				
+				con = DAO.conectar();
+				pst = con.prepareStatement(read);
+				rs = pst.executeQuery();
+				if(rs.next()) {
+					this.nome = rs.getString(1);
+					this.matricula = matricula;
+					this.senha = rs.getString(3);
+				} else {
+					JOptionPane.showMessageDialog(null, "Não foi possivel localizar o professor");
+				}
+				
+				con.close();
+			} else if (this.getClass() == Student.class) {
+				String read = "select  * from alunos where matricula= '"+ matricula +"'";
+				
+				con = DAO.conectar();
+				pst = con.prepareStatement(read);
+				rs = pst.executeQuery();
+				if(rs.next()) {
+					this.nome = rs.getString(1);
+					this.matricula = matricula;
+					this.senha = rs.getString(3);
+				} else {
+					JOptionPane.showMessageDialog(null, "Não foi possivel localizar o estudante");
+				}
+				
+				con.close();
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Não foi possivel buscar o usúario:\n"+e);
+		}
+	}
 	
 	public void setNome(String nome) {
 		this.nome = nome;

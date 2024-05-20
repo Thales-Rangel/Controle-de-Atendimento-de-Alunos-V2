@@ -1,6 +1,8 @@
 package View.Professor;
 
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,13 +12,16 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.LayoutStyle.ComponentPlacement;
-
-import Models.DAO;
-import Models.Student;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
+
+import Models.DAO;
+import Models.Disciplane;
+import Models.Professor;
+import Models.Solicitation;
+import Models.Student;
 
 public class ViewStudentP extends JPanel {
 	
@@ -86,6 +91,12 @@ public class ViewStudentP extends JPanel {
 		);
 		
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				select();
+			}
+		});
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -152,6 +163,27 @@ public class ViewStudentP extends JPanel {
 			con.close();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Não foi possivel buscar as solicitações do alunos:\n"+e);
+		}
+	}
+	
+	private void select() {
+		try {
+			String read = "select * from solicitacoes where id= ?";
+			
+			con = DAO.conectar();
+			pst = con.prepareStatement(read);
+			pst.setInt(1, (int) table.getValueAt(table.getSelectedRow(), 0));
+			rs = pst.executeQuery();
+			if(rs.next()) {
+				Solicitation solicitacao = new Solicitation(rs.getInt(1), new Student(rs.getString(2)), new Professor(rs.getString(3)), new Disciplane(rs.getInt(4)), rs.getString(5), (rs.getString(7).equals("T")));
+				
+				pv.viewPanel.setVisible(false);
+				pv.viewPanel = new ViewSolicitation(solicitacao, pv);
+				pv.contentPane.add(pv.viewPanel);
+				pv.dimensionar();
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Não foi possivel buscar a solicitação:\n"+e);
 		}
 	}
 }

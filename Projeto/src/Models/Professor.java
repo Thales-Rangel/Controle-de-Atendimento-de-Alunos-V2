@@ -31,6 +31,10 @@ public class Professor extends User {
 			JOptionPane.showMessageDialog(null, e);
 		}
 	}
+	
+	public Professor(String matricula) {
+		super(matricula);
+	}
 
 	@Override
 	public void setNome(String nome) {

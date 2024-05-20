@@ -2,6 +2,7 @@ package Models;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import javax.swing.JOptionPane;
 
@@ -9,6 +10,7 @@ public class Disciplane {
 	
 	private Connection con;
 	private PreparedStatement pst;
+	private ResultSet rs;
 
 	private int id;
 	private String nome;
@@ -17,6 +19,23 @@ public class Disciplane {
 	public Disciplane(int id, String nome) {
 		this.id = id;
 		this.nome = nome;
+	}
+	
+	public Disciplane(int id) {
+		String read = "select * from disciplinas where id= '"+ id +"'";
+		
+		try {
+			con = DAO.conectar();
+			pst = con.prepareStatement(read);
+			rs = pst.executeQuery();
+			
+			if(rs.next()) {
+				this.id = id;
+				this.nome = rs.getString(2);
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Não foi possível achar a disciplina:\n"+ e);
+		}
 	}
 	
 	public int getId() {

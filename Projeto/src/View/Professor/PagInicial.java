@@ -184,7 +184,7 @@ public class PagInicial extends JPanel {
 		
 		String readDisciplinas = "select count(*) from ensina where matricula_professor= '"+ p.getMatricula() +"'";
 		
-		String readTurmas = "select count(*) from estuda es "
+		String readTurmas = "select count(distinct es.id_turma) from estuda es "
 				+ "inner join ensina en "
 				+ "on en.id_disciplina = es.id_disciplina "
 				+ "where en.matricula_professor= '"+ p.getMatricula() +"'";
@@ -258,7 +258,7 @@ public class PagInicial extends JPanel {
 				+ "order by d.nome";
 		
 		DefaultTableModel modelDisciplinas = new DefaultTableModel(new Object[][] {},
-				new String[] { "Minhas turmas" }) {
+				new String[] { "Minhas Disciplinas" }) {
 			/**
 			 * 
 			 */

@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class ProfessorView extends JFrame {
 
@@ -31,7 +32,6 @@ public class ProfessorView extends JFrame {
 	private JButton btnVerDados;
 	private JButton btnVerSolicitations;
 	private JButton btnVerTurmas;
-	private JButton btnVerDisciplinas;
 	private JButton btnPaginaInicial;
 	private JLabel lblIFLogo;
 	private JButton btnSair;
@@ -115,9 +115,6 @@ public class ProfessorView extends JFrame {
 		});
 		btnVerTurmas.setFont(new Font("Arial", Font.PLAIN, 13));
 		
-		btnVerDisciplinas = new JButton("Ver minhas disciplinas");
-		btnVerDisciplinas.setFont(new Font("Arial", Font.PLAIN, 10));
-		
 		btnSair = new JButton("Sair");
 		btnSair.setFont(new Font("Arial", Font.PLAIN, 15));
 		
@@ -165,18 +162,14 @@ public class ProfessorView extends JFrame {
 					.addComponent(btnVerSolicitations, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE))
 				.addGroup(gl_panel.createSequentialGroup()
 					.addGap(32)
-					.addComponent(btnVerTurmas, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(32)
-					.addComponent(btnVerDisciplinas, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(32)
-					.addComponent(btnPaginaInicial, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(32)
 					.addComponent(lblIFLogo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGap(33))
 				.addComponent(btnSair, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(32)
+					.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(btnPaginaInicial, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnVerTurmas, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -189,12 +182,10 @@ public class ProfessorView extends JFrame {
 					.addComponent(btnVerSolicitations)
 					.addGap(10)
 					.addComponent(btnVerTurmas, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-					.addGap(10)
-					.addComponent(btnVerDisciplinas, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-					.addGap(10)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(btnPaginaInicial)
-					.addGap(84)
-					.addComponent(lblIFLogo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGap(121)
+					.addComponent(lblIFLogo, GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
 					.addGap(103)
 					.addComponent(btnSair))
 		);
