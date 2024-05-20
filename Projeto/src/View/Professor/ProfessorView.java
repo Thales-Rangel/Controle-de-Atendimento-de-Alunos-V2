@@ -1,25 +1,25 @@
 package View.Professor;
 
-import java.awt.EventQueue;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import Models.Professor;
+import View.Login;
 import View.Admin.Admin;
-import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class ProfessorView extends JFrame {
 
@@ -36,22 +36,6 @@ public class ProfessorView extends JFrame {
 	private JLabel lblIFLogo;
 	private JButton btnSair;
 	private JPanel panel;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ProfessorView frame = new ProfessorView(new Professor("Carlos", "1002", "senha p2"));
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the frame.
@@ -116,6 +100,12 @@ public class ProfessorView extends JFrame {
 		btnVerTurmas.setFont(new Font("Arial", Font.PLAIN, 13));
 		
 		btnSair = new JButton("Sair");
+		btnSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new Login().setVisible(true);
+			}
+		});
 		btnSair.setFont(new Font("Arial", Font.PLAIN, 15));
 		
 		btnPaginaInicial = new JButton("Página Inicial");
