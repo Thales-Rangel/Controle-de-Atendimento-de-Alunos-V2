@@ -76,6 +76,19 @@ create table if not exists estuda(
     foreign key (id_turma) references turmas(id)
 )DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+create table if not exists solicitacoes(
+	id int auto_increment primary key,
+    matricula_a varchar(20),
+    matricula_p varchar(20),
+    id_disciplina int,
+    duvida text not null,
+    resposta text,
+    respondido enum('T', 'F') default 'F',
+    foreign key (matricula_a) references alunos(matricula),
+    foreign key (matricula_p) references professores(matricula),
+    foreign key (id_disciplina) references disciplinas(id)
+)DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 ```
 ---
 - O projeto foi inteiramente feito com a linguagem de programação Java e com Banco de Dados MySQL.

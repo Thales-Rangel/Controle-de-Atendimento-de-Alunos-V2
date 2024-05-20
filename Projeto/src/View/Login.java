@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import Models.DAO;
+import Models.Professor;
 import Utils.Validador;
 import View.Admin.Admin;
 import View.Professor.ProfessorView;
@@ -168,7 +169,10 @@ public class Login extends JFrame {
 					if (rs.getString(3).equals(senha)) {
 						JOptionPane.showMessageDialog(null, rs.getString(1));
 						dispose();
-						new ProfessorView().setVisible(true);
+						
+						Professor p = new Professor(rs.getString(1), rs.getString(2), rs.getString(3));
+						
+						new ProfessorView(p).setVisible(true);
 					} else {
 						JOptionPane.showMessageDialog(null, "Senha incorreta!");
 					}

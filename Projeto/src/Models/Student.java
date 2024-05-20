@@ -1,12 +1,8 @@
 package Models;
 
-import java.sql.ResultSet;
-
 import javax.swing.JOptionPane;
 
 public class Student extends User {
-	
-	private ResultSet rs;
 	
 	int id_turma;
 	private Turma turma;
@@ -29,6 +25,38 @@ public class Student extends User {
 		} catch (Exception e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, e);
+		}
+	}
+	
+	public Student(String matricula) {
+		super(matricula);
+		
+		String read = "select * from alunos where matricula= '"+ matricula +"'";
+		
+		try {
+			con = DAO.conectar();
+			pst = con.prepareStatement(read);
+			rs = pst.executeQuery();
+			
+			if(rs.next()){
+				this.id_turma = rs.getInt(4);
+				
+				pst = con.prepareStatement("select * from turmas where id= ?");
+				pst.setInt(1, rs.getInt(4));
+				rs = pst.executeQuery();
+				
+				if (rs.next()) {
+					this.turma = new Turma(rs.getInt(1), rs.getString(2));
+				}
+				
+			} else {
+				JOptionPane.showMessageDialog(null, "Aluno não encontrado");
+				return;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e);
+			return;
 		}
 	}
 
