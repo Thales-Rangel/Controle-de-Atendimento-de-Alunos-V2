@@ -397,12 +397,8 @@ public class EditDisciplane extends JDialog {
 			textFieldNome.setText("");
 
 			adm.listagens();
-			adm.vdl.listagem();
-			adm.cadastroProfessor.listarDisciplinas();
-			adm.cadastroTurma.listarDisciplinas();
-			adm.vd.lblNome.setText(d.getNome());
-			adm.vd.listar();
-			select();
+			adm.getContentPane().setVisible(false);
+			adm.setContentPane(new ViewDisciplane(adm, d));
 
 			dispose();
 

@@ -19,15 +19,16 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import Models.DAO;
+import Models.Turma;
 import Utils.Validador;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
 
 public class CdstrTurma extends JDialog {
 
@@ -165,7 +166,7 @@ public class CdstrTurma extends JDialog {
 		}
 	}
 
-	public void listarDisciplinas() {
+	private void listarDisciplinas() {
 		DefaultTableModel model = new DefaultTableModel(new Object[][] {}, new String[] { "" }) {
 			/**
 			 * 
@@ -217,8 +218,9 @@ public class CdstrTurma extends JDialog {
 	}
 
 	private void cadastrar() {
-		String nome;
-
+		String nome = "";
+		int idTurma = 0;
+		
 		if (!textFieldNome.getText().isEmpty()) {
 
 			nome = textFieldNome.getText().trim();
@@ -239,8 +241,8 @@ public class CdstrTurma extends JDialog {
 					int confirma = pst.executeUpdate();
 
 					if (tableDisciplinas.getSelectedRows().length > 0) {
-						int i;
-						for (i = 0; i < tableDisciplinas.getSelectedRows().length; i++) {
+
+						for (int i = 0; i < tableDisciplinas.getSelectedRows().length; i++) {
 							String disciplina = (String) tableDisciplinas.getValueAt(tableDisciplinas.getSelectedRows()[i],
 									0);
 
@@ -255,7 +257,6 @@ public class CdstrTurma extends JDialog {
 							pst = con.prepareStatement("select id from turmas where nome= ?");
 							pst.setString(1, nome);
 							rs = pst.executeQuery();
-							int idTurma = 0;
 							if (rs.next()) {
 								idTurma = rs.getInt(1);
 							}
@@ -274,25 +275,21 @@ public class CdstrTurma extends JDialog {
 
 					if (confirma == 1 && tableDisciplinas.getSelectedRows().length == 0) {
 						JOptionPane.showMessageDialog(null, "Turma cadastrada com sucesso!");
-						
+					} else if (confirma == 1){
+						JOptionPane.showMessageDialog(null, "Turma cadastrada, mas não foi possível designar as turmas");
 					} else {
 						JOptionPane.showMessageDialog(null, "Não foi possível fazer o cadastro!");
 					}
 
-					// ir para a página de visualização da Turma
-
-					textFieldNome.setText("");
-					tableDisciplinas.removeRowSelectionInterval(0, tableDisciplinas.getSelectedRows().length);
-
+					Turma turma = new Turma(idTurma, nome);
+					
 					adm.listagens();
 					adm.status();
-					adm.vtl.listagem();
-					adm.vdl.listagem();
-					adm.cadastroDisciplina.listar();
-					adm.cadastroEstudante.listarTurmas();
+					adm.getContentPane().setVisible(false);
+					adm.setContentPane(new ViewTurma(adm, turma));
 
 					dispose();
-
+					
 					con.close();
 				} else {
 					JOptionPane.showMessageDialog(null, "Nome da turma já cadastrado!\nTente outro nome");

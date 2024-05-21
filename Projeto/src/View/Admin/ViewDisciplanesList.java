@@ -72,9 +72,8 @@ public class ViewDisciplanesList extends JPanel {
 		JMenuItem mntmViewAllStudents = new JMenuItem("Ver os estudantes cadastrados");
 		mntmViewAllStudents.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				adm.vdl.setVisible(false);
-				adm.vsl.setVisible(true);
-				adm.setContentPane(adm.vsl);
+				setVisible(false);
+				adm.setContentPane(new ViewStudentsList(adm));
 			}
 		});
 		mntmViewAllStudents.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -83,7 +82,7 @@ public class ViewDisciplanesList extends JPanel {
 		JMenuItem mntmCdstStudent = new JMenuItem("Cadastrar um estudante");
 		mntmCdstStudent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				adm.cadastroEstudante.setVisible(true);
+				new CdstrStudent(adm).setVisible(true);
 			}
 		});
 		mntmCdstStudent.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -97,9 +96,8 @@ public class ViewDisciplanesList extends JPanel {
 		JMenuItem mntmViewAllProfessors = new JMenuItem("Ver professores cadastrados");
 		mntmViewAllProfessors.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				adm.vdl.setVisible(false);
-				adm.vpl.setVisible(true);
-				adm.setContentPane(adm.vpl);
+				setVisible(false);
+				adm.setContentPane(new ViewProfessorsList(adm));
 			}
 		});
 		mntmViewAllProfessors.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -108,7 +106,7 @@ public class ViewDisciplanesList extends JPanel {
 		JMenuItem mntmCadstProfessor = new JMenuItem("Cadastrar um professor");
 		mntmCadstProfessor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				adm.cadastroProfessor.setVisible(true);
+				new CdstrProfessor(adm).setVisible(true);
 			}
 		});
 		mntmCadstProfessor.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -122,9 +120,8 @@ public class ViewDisciplanesList extends JPanel {
 		JMenuItem mntmViewAllTurmas = new JMenuItem("Ver Turmas Cadastradas\r\n");
 		mntmViewAllTurmas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				adm.vdl.setVisible(false);
-				adm.vtl.setVisible(true);
-				adm.setContentPane(adm.vtl);
+				setVisible(false);
+				adm.setContentPane(new ViewTurmasList(adm));
 			}
 		});
 		mntmViewAllTurmas.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -133,18 +130,13 @@ public class ViewDisciplanesList extends JPanel {
 		JMenuItem mntmCdstTurma = new JMenuItem("Cadastrar uma turma");
 		mntmCdstTurma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				adm.cadastroTurma.setVisible(true);
+				new CdstrTurma(adm).setVisible(true);
 			}
 		});
 		mntmCdstTurma.setFont(new Font("Arial", Font.PLAIN, 13));
 		mnTurmas.add(mntmCdstTurma);
 
 		JMenu mnDisciplinas = new JMenu("Disciplinas");
-		mnDisciplinas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				adm.cadastroDisciplina.setVisible(true);
-			}
-		});
 		mnDisciplinas.setForeground(Color.BLACK);
 		mnDisciplinas.setFont(new Font("Arial", Font.PLAIN, 13));
 		menuBar.add(mnDisciplinas);
@@ -156,7 +148,7 @@ public class ViewDisciplanesList extends JPanel {
 		JMenuItem mntmCdstDisciplina = new JMenuItem("Cadastrar uma disciplina");
 		mntmCdstDisciplina.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				adm.cadastroDisciplina.setVisible(true);
+				new CdstrDisciplane(adm).setVisible(true);
 			}
 		});
 		mntmCdstDisciplina.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -372,7 +364,7 @@ public class ViewDisciplanesList extends JPanel {
 
 	}
 
-	public void listagem() {
+	private void listagem() {
 
 		DefaultTableModel model = new DefaultTableModel(new Object[][] {},
 				new String[] { "ID", "Disciplina", "Qnt. de Turmas" }) {
@@ -549,16 +541,8 @@ public class ViewDisciplanesList extends JPanel {
 			if (rs.next()) {
 				Disciplane disciplina = new Disciplane(rs.getInt(1), rs.getString(2));
 
-				adm.vd = new ViewDisciplane(adm, disciplina);
-				textFieldSearch.setText("");
-				textFieldSearchID.setText("");
-				textFieldFilterClass.setText("");
-				scrollPaneFilterClass.setVisible(false);
-				listTurmas.setVisible(false);
-				listagem();
-				adm.vd.setVisible(true);
-				adm.vdl.setVisible(false);
-				adm.setContentPane(adm.vd);
+				setVisible(false);
+				adm.setContentPane(new ViewDisciplane(adm, disciplina));
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e);
@@ -566,7 +550,6 @@ public class ViewDisciplanesList extends JPanel {
 	}
 
 	private void retorno(Admin adm) {
-		adm.vsl.setVisible(false);
 		adm.contentPane.setVisible(true);
 		adm.setContentPane(adm.contentPane);
 	}

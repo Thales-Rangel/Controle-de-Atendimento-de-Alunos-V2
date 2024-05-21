@@ -72,7 +72,7 @@ public class ViewStudentsList extends JPanel {
 		JMenuItem mntmCdstStudent = new JMenuItem("Cadastrar um estudante");
 		mntmCdstStudent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				adm.cadastroEstudante.setVisible(true);
+				new CdstrStudent(adm).setVisible(true);
 			}
 		});
 		mntmCdstStudent.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -86,9 +86,8 @@ public class ViewStudentsList extends JPanel {
 		JMenuItem mntmViewAllProfessors = new JMenuItem("Ver professores cadastrados");
 		mntmViewAllProfessors.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				adm.vsl.setVisible(false);
-				adm.vpl.setVisible(true);
-				adm.setContentPane(adm.vpl);
+				setVisible(false);
+				adm.setContentPane(new ViewProfessorsList(adm));
 			}
 		});
 		mntmViewAllProfessors.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -97,7 +96,7 @@ public class ViewStudentsList extends JPanel {
 		JMenuItem mntmCadstProfessor = new JMenuItem("Cadastrar um professor");
 		mntmCadstProfessor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				adm.cadastroProfessor.setVisible(true);
+				new CdstrProfessor(adm).setVisible(true);
 			}
 		});
 		mntmCadstProfessor.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -108,12 +107,11 @@ public class ViewStudentsList extends JPanel {
 		mnTurmas.setFont(new Font("Arial", Font.PLAIN, 13));
 		menuBar.add(mnTurmas);
 
-		JMenuItem mntmViewAllTurmas = new JMenuItem("Ver Turmas Cadastradas\r\n");
+		JMenuItem mntmViewAllTurmas = new JMenuItem("Ver Turmas Cadastradas");
 		mntmViewAllTurmas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				adm.vsl.setVisible(false);
-				adm.vtl.setVisible(true);
-				adm.setContentPane(adm.vtl);
+				setVisible(false);
+				adm.setContentPane(new ViewTurmasList(adm));
 			}
 		});
 		mntmViewAllTurmas.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -122,7 +120,7 @@ public class ViewStudentsList extends JPanel {
 		JMenuItem mntmCdstTurma = new JMenuItem("Cadastrar uma turma");
 		mntmCdstTurma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				adm.cadastroTurma.setVisible(true);
+				new CdstrTurma(adm).setVisible(true);
 			}
 		});
 		mntmCdstTurma.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -136,9 +134,8 @@ public class ViewStudentsList extends JPanel {
 		JMenuItem mntmViewAllDisciplinas = new JMenuItem("Ver disciplinas cadastradas");
 		mntmViewAllDisciplinas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				adm.vsl.setVisible(false);
-				adm.vdl.setVisible(true);
-				adm.setContentPane(adm.vdl);
+				setVisible(false);
+				adm.setContentPane(new ViewDisciplanesList(adm));
 			}
 		});
 		mntmViewAllDisciplinas.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -147,7 +144,7 @@ public class ViewStudentsList extends JPanel {
 		JMenuItem mntmCdstDisciplina = new JMenuItem("Cadastrar uma disciplina");
 		mntmCdstDisciplina.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				adm.cadastroDisciplina.setVisible(true);
+				new CdstrDisciplane(adm).setVisible(true);
 			}
 		});
 		mntmCdstDisciplina.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -353,7 +350,7 @@ public class ViewStudentsList extends JPanel {
 
 	}
 
-	public void listagem() {
+	private void listagem() {
 
 		DefaultTableModel model = new DefaultTableModel(new Object[][] {},
 				new String[] { "Nome", "Matricula", "Turma" }) {
@@ -490,16 +487,8 @@ public class ViewStudentsList extends JPanel {
 			if (rs.next()) {
 				Student student = new Student(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4));
 
-				adm.vs = new ViewStudent(adm, student);
-				textFieldSearch.setText("");
-				textFieldSearchMatricula.setText("");
-				textFieldFilterClass.setText("");
-				scrollPaneFilterClass.setVisible(false);
-				listTurmas.setVisible(false);
-				listagem();
-				adm.vs.setVisible(true);
-				adm.vsl.setVisible(false);
-				adm.setContentPane(adm.vs);
+				setVisible(false);
+				adm.setContentPane(new ViewStudent(adm, student));
 			}
 			
 			con.close();
@@ -510,7 +499,7 @@ public class ViewStudentsList extends JPanel {
 	}
 
 	private void retorno(Admin adm) {
-		adm.vsl.setVisible(false);
+		setVisible(false);
 		adm.contentPane.setVisible(true);
 		adm.setContentPane(adm.contentPane);
 	}

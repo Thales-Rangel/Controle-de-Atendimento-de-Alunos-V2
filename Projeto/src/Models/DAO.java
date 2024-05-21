@@ -10,7 +10,7 @@ public class DAO {
 	static String Driver = "com.mysql.cj.jdbc.Driver";
 	static String url = "jdbc:mysql://localhost:3306/project_pabd";
 	static String user = "root";
-	static String password = "";
+	static String password = "ThServer460288";
 	
 	public static Connection conectar() {
 		Connection con;

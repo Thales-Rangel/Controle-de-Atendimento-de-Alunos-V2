@@ -110,12 +110,10 @@ public class Login extends JFrame {
 		passwordField = new JPasswordField();
 		passwordField.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
-				if (!textMatricula.getText().isEmpty()) {
-					if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					if (!textMatricula.getText().isEmpty()) {
 						entrar();
-					}
-				} else {
-					if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					} else {
 						textMatricula.requestFocus();
 					}
 				}
@@ -132,13 +130,8 @@ public class Login extends JFrame {
 
 		JButton btnNewButton = new JButton("Entrar");
 		btnNewButton.addActionListener(new ActionListener() {
-			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
-				if (textMatricula.getText().isEmpty() || passwordField.getText().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Preencha os campos de nome e senha!");
-				} else {
-					entrar();
-				}
+				entrar();		
 			}
 		});
 		btnNewButton.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -151,58 +144,59 @@ public class Login extends JFrame {
 		contentPane.add(lblIcon);
 	}
 
+	@SuppressWarnings("deprecation")
 	private void entrar() {
-		String matricula = textMatricula.getText();
-		@SuppressWarnings("deprecation")
-		String senha = passwordField.getText();
+		if (!(textMatricula.getText().isBlank() || passwordField.getText().isBlank())) {
+			
+			String matricula = textMatricula.getText();
+			String senha = passwordField.getText();
 
-		String insert = "select * from professores where matricula = ? ";
-
-		if (!(matricula.equals("0001") && senha.equals("admin"))) {
-			try {
-				con = DAO.conectar();
-				pst = con.prepareStatement(insert);
-				pst.setString(1, matricula);
-
-				rs = pst.executeQuery();
-				if (rs.next()) {
-					if (rs.getString(3).equals(senha)) {
-						JOptionPane.showMessageDialog(null, rs.getString(1));
-						dispose();
-						
-						Professor p = new Professor(rs.getString(1), rs.getString(2), rs.getString(3));
-						
-						new ProfessorView(p).setVisible(true);
-					} else {
-						JOptionPane.showMessageDialog(null, "Senha incorreta!");
-					}
-				} else {
-					insert = "select * from alunos where matricula = ?";
-					pst = con.prepareStatement(insert);
-					pst.setString(1, matricula);
+			if (!(matricula.equals("0001") && senha.equals("admin"))) {
+				try {
+					con = DAO.conectar();
+					pst = con.prepareStatement("select * from professores where matricula= '"+ matricula +"' ");
 
 					rs = pst.executeQuery();
 					if (rs.next()) {
 						if (rs.getString(3).equals(senha)) {
 							JOptionPane.showMessageDialog(null, rs.getString(1));
 							dispose();
-							new StudentView().setVisible(true);
+						
+							Professor p = new Professor(rs.getString(1), rs.getString(2), rs.getString(3));
+						
+							new ProfessorView(p).setVisible(true);
 						} else {
 							JOptionPane.showMessageDialog(null, "Senha incorreta!");
 						}
 					} else {
-						JOptionPane.showMessageDialog(null, "Matrícula não encontrada!");
-					}
-				}
+						pst = con.prepareStatement("select * from alunos where matricula= '"+ matricula +"'");
 
-				con.close();
-			} catch (Exception e) {
-				JOptionPane.showMessageDialog(null, "Não foi possivel fazer o login:\n"+e);
+						rs = pst.executeQuery();
+						if (rs.next()) {
+							if (rs.getString(3).equals(senha)) {
+								JOptionPane.showMessageDialog(null, rs.getString(1));
+								dispose();
+								new StudentView().setVisible(true);
+							} else {
+								JOptionPane.showMessageDialog(null, "Senha incorreta!");
+							}
+						} else {
+							JOptionPane.showMessageDialog(null, "Matrícula não encontrada!");
+						}
+					}
+
+					con.close();
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Não foi possivel fazer o login:\n"+e);
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "Admin");
+				dispose();
+				new Admin().setVisible(true);
 			}
 		} else {
-			JOptionPane.showMessageDialog(null, "Admin");
-			dispose();
-			new Admin().setVisible(true);
+			JOptionPane.showMessageDialog(null, "Preencha os campos de nome e senha!");
+			passwordField.setText("");
 		}
 	}
 }

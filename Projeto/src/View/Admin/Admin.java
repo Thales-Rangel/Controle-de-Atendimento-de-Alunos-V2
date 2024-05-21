@@ -42,18 +42,6 @@ public class Admin extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	public JPanel contentPane;
-	public ViewStudentsList vsl = new ViewStudentsList(this);
-	public ViewProfessorsList vpl = new ViewProfessorsList(this);
-	public ViewTurmasList vtl = new ViewTurmasList(this);
-	public ViewDisciplanesList vdl = new ViewDisciplanesList(this);
-	public CdstrStudent cadastroEstudante = new CdstrStudent(this);
-	public CdstrProfessor cadastroProfessor = new CdstrProfessor(this);
-	public CdstrTurma cadastroTurma = new CdstrTurma(this);
-	public CdstrDisciplane cadastroDisciplina = new CdstrDisciplane(this);
-	public ViewStudent vs;
-	public ViewProfessor vp;
-	public ViewTurma vt;
-	public ViewDisciplane vd;
 	private JLabel lblUsersDB;
 	private JLabel lblTurmasDB;
 	private JLabel lblDisciplinasDB;
@@ -83,6 +71,8 @@ public class Admin extends JFrame {
 	 * Create the frame.
 	 */
 	public Admin() {
+		Admin adm = this;
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Admin.class.getResource("/img/IF Logo - Remove.png")));
 		setTitle("Página de Admin");
 		setResizable(false);
@@ -109,8 +99,7 @@ public class Admin extends JFrame {
 		mntmViewAllStudents.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				contentPane.setVisible(false);
-				vsl.setVisible(true);
-				setContentPane(vsl);
+				setContentPane(new ViewStudentsList(adm));
 			}
 		});
 		mntmViewAllStudents.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -119,7 +108,7 @@ public class Admin extends JFrame {
 		JMenuItem mntmCdstStudent = new JMenuItem("Cadastrar um estudante");
 		mntmCdstStudent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cadastroEstudante.setVisible(true);
+				new CdstrStudent(adm).setVisible(true);
 			}
 		});
 		mntmCdstStudent.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -134,8 +123,7 @@ public class Admin extends JFrame {
 		mntmViewAllProfessors.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				contentPane.setVisible(false);
-				vpl.setVisible(true);
-				setContentPane(vpl);
+				setContentPane(new ViewProfessorsList(adm));
 			}
 		});
 		mntmViewAllProfessors.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -144,7 +132,7 @@ public class Admin extends JFrame {
 		JMenuItem mntmCadstProfessor = new JMenuItem("Cadastrar um professor");
 		mntmCadstProfessor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cadastroProfessor.setVisible(true);
+				new CdstrProfessor(adm).setVisible(true);
 			}
 		});
 		mntmCadstProfessor.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -159,8 +147,7 @@ public class Admin extends JFrame {
 		mntmViewAllTurmas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				contentPane.setVisible(false);
-				vtl.setVisible(true);
-				setContentPane(vtl);
+				setContentPane(new ViewTurmasList(adm));
 			}
 		});
 		mntmViewAllTurmas.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -169,7 +156,7 @@ public class Admin extends JFrame {
 		JMenuItem mntmCdstTurma = new JMenuItem("Cadastrar uma turma");
 		mntmCdstTurma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cadastroTurma.setVisible(true);
+				new CdstrTurma(adm).setVisible(true);
 			}
 		});
 		mntmCdstTurma.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -184,8 +171,7 @@ public class Admin extends JFrame {
 		mntmViewAllDisciplinas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				contentPane.setVisible(false);
-				vdl.setVisible(true);
-				setContentPane(vdl);
+				setContentPane(new ViewDisciplanesList(adm));
 			}
 		});
 		mntmViewAllDisciplinas.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -194,7 +180,7 @@ public class Admin extends JFrame {
 		JMenuItem mntmCdstDisciplina = new JMenuItem("Cadastrar uma disciplina");
 		mntmCdstDisciplina.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cadastroDisciplina.setVisible(true);
+				new CdstrDisciplane(adm).setVisible(true);
 			}
 		});
 		mntmCdstDisciplina.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -291,8 +277,7 @@ public class Admin extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				contentPane.setVisible(false);
-				vsl.setVisible(true);
-				setContentPane(vsl);
+				setContentPane(new ViewStudentsList(adm));
 			}
 		});
 		listStudents.setToolTipText("Lista de alunos cadastrados");
@@ -308,8 +293,7 @@ public class Admin extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				contentPane.setVisible(false);
-				vpl.setVisible(true);
-				setContentPane(vpl);
+				setContentPane(new ViewProfessorsList(adm));
 			}
 		});
 		listProfessores.setToolTipText("Lista de professores cadastrados");
@@ -325,8 +309,7 @@ public class Admin extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				contentPane.setVisible(false);
-				vtl.setVisible(true);
-				setContentPane(vtl);
+				setContentPane(new ViewTurmasList(adm));
 			}
 		});
 		listTurmas.setToolTipText("Lista de turmas cadastradas");
@@ -342,8 +325,7 @@ public class Admin extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				contentPane.setVisible(false);
-				vdl.setVisible(true);
-				setContentPane(vdl);
+				setContentPane(new ViewDisciplanesList(adm));
 			}
 		});
 		listDisciplinas.setToolTipText("Lista de disciplinas cadastradas");
@@ -355,8 +337,7 @@ public class Admin extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				contentPane.setVisible(false);
-				vsl.setVisible(true);
-				setContentPane(vsl);
+				setContentPane(new ViewStudentsList(adm));
 			}
 		});
 		lblListStudents.setLabelFor(listStudents);
@@ -371,8 +352,7 @@ public class Admin extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				contentPane.setVisible(false);
-				vpl.setVisible(true);
-				setContentPane(vpl);
+				setContentPane(new ViewProfessorsList(adm));
 			}
 		});
 		lblListProfessores.setLabelFor(listProfessores);
@@ -387,8 +367,7 @@ public class Admin extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				contentPane.setVisible(false);
-				vtl.setVisible(true);
-				setContentPane(vtl);
+				setContentPane(new ViewTurmasList(adm));
 			}
 		});
 		lblListTurmas.setLabelFor(listTurmas);
@@ -403,8 +382,7 @@ public class Admin extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				contentPane.setVisible(false);
-				vdl.setVisible(true);
-				setContentPane(vdl);
+				setContentPane(new ViewDisciplanesList(adm));
 			}
 		});
 		lblListDisciplinas.setLabelFor(listDisciplinas);
@@ -430,7 +408,7 @@ public class Admin extends JFrame {
 		JButton btnCdstStudent = new JButton("Cadastrar Aluno");
 		btnCdstStudent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cadastroEstudante.setVisible(true);
+				new CdstrStudent(adm).setVisible(true);
 			}
 		});
 		btnCdstStudent.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -441,7 +419,7 @@ public class Admin extends JFrame {
 		JButton btnCdstProfessor = new JButton("Cadastrar Professor");
 		btnCdstProfessor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cadastroProfessor.setVisible(true);
+				new CdstrProfessor(adm).setVisible(true);
 			}
 		});
 		btnCdstProfessor.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -452,7 +430,7 @@ public class Admin extends JFrame {
 		JButton btnCdstDisciplane = new JButton("Cadastrar Disciplina");
 		btnCdstDisciplane.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cadastroDisciplina.setVisible(true);
+				new CdstrDisciplane(adm).setVisible(true);
 			}
 		});
 		btnCdstDisciplane.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -463,7 +441,7 @@ public class Admin extends JFrame {
 		JButton btnCdstTurma = new JButton("Cadastrar Turma");
 		btnCdstTurma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cadastroTurma.setVisible(true);
+				new CdstrTurma(adm).setVisible(true);
 			}
 		});
 		btnCdstTurma.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

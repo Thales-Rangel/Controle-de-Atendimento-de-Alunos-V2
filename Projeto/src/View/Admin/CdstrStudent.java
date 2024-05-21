@@ -275,7 +275,7 @@ public class CdstrStudent extends JDialog {
 		}
 	}
 	
-	public void listarTurmas() {
+	private void listarTurmas() {
 		DefaultListModel<String> model = new DefaultListModel<String>();
 		
 		String readTurmas = "select nome from turmas order by nome";
@@ -345,23 +345,12 @@ public class CdstrStudent extends JDialog {
 							JOptionPane.showMessageDialog(null, "Não foi possível fazer o cadastro!");
 						}
 						
-						Student student = new Student(nome, matricula, senha, id_turma);
-						
-						System.out.println(student.getNome());
-						System.out.println(student.getMatricula());
-						System.out.println(student.getSenha());
-						System.out.println(student.getId_turma());
-						//ir para a página de visualização do estudante
-						
-						textFieldNome.setText("");
-						textFieldMatricula.setText("");
-						textFieldSenha.setText("");
-						textFieldTurma.setText("");
+						Student aluno = new Student(nome, matricula, senha, id_turma);
 						
 						adm.listagens();
 						adm.status();
-						adm.vsl.listagem();
-						adm.vtl.listagem();
+						adm.getContentPane().setVisible(false);
+						adm.setContentPane(new ViewStudent(adm, aluno));
 						
 						dispose();
 					} else {

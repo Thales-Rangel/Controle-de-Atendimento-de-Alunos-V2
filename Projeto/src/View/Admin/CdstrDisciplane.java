@@ -28,6 +28,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Models.DAO;
+import Models.Disciplane;
 import Utils.Validador;
 
 public class CdstrDisciplane extends JDialog {
@@ -199,7 +200,7 @@ public class CdstrDisciplane extends JDialog {
 		}
 	}
 
-	public void listar() {
+	private void listar() {
 		DefaultTableModel model1 = new DefaultTableModel(new Object[][] {}, new String[] { "", "" }) {
 			/**
 			 * 
@@ -287,7 +288,8 @@ public class CdstrDisciplane extends JDialog {
 	}
 
 	private void cadastrar() {
-		String nome;
+		String nome = "";
+		int idDisciplina = 0;
 
 		if (!textFieldNome.getText().isEmpty()) {
 
@@ -314,7 +316,6 @@ public class CdstrDisciplane extends JDialog {
 							pst = con.prepareStatement("select id from disciplinas where nome= ?");
 							pst.setString(1, nome);
 							rs = pst.executeQuery();
-							int idDisciplina = 0;
 							if (rs.next()) {
 								idDisciplina = rs.getInt(1);
 							}
@@ -340,7 +341,6 @@ public class CdstrDisciplane extends JDialog {
 							pst = con.prepareStatement("select id from disciplinas where nome= ?");
 							pst.setString(1, nome);
 							rs = pst.executeQuery();
-							int idDisciplina = 0;
 							if (rs.next()) {
 								idDisciplina = rs.getInt(1);
 							}
@@ -374,28 +374,22 @@ public class CdstrDisciplane extends JDialog {
 					}
 
 					if (confirma == 1) {
-						JOptionPane.showMessageDialog(null, "Turma cadastrada com sucesso!");
+						JOptionPane.showMessageDialog(null, "Disciplina cadastrada com sucesso!");
 
 					} else {
 						JOptionPane.showMessageDialog(null, "Não foi possível fazer o cadastro!");
 					}
 
-					// ir para a página de visualização da Turma
-
-					textFieldNome.setText("");
-					tableProfessores.removeRowSelectionInterval(0, tableProfessores.getSelectedRows().length);
-
 					adm.listagens();
 					adm.status();
-					adm.vdl.listagem();
-					adm.cadastroProfessor.listarDisciplinas();
-					adm.cadastroTurma.listarDisciplinas();
+					adm.getContentPane().setVisible(false);
+					adm.setContentPane(new ViewDisciplane(adm, new Disciplane(idDisciplina, nome)));
 
 					dispose();
 
 					con.close();
 				} else {
-					JOptionPane.showMessageDialog(null, "Nome da turma já cadastrado!\nTente outro nome");
+					JOptionPane.showMessageDialog(null, "Nome da disciplina já cadastrado!\nTente outro nome");
 				}
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "Não foi possível fazer o cadastro:\n" + e);

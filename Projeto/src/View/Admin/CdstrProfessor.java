@@ -275,7 +275,7 @@ public class CdstrProfessor extends JDialog {
 		}
 	}
 
-	public void listarDisciplinas() {
+	private void listarDisciplinas() {
 		DefaultListModel<String> model = new DefaultListModel<String>();
 		
 		String readTurmas = "select nome from disciplinas order by nome";
@@ -358,20 +358,10 @@ public class CdstrProfessor extends JDialog {
 						
 						Professor professor= new Professor(nome, matricula, senha);
 						
-						System.out.println(professor.getNome());
-						System.out.println(professor.getMatricula());
-						System.out.println(professor.getSenha());
-						//ir para a página de visualização do estudante
-						
-						textFieldNome.setText("");
-						textFieldMatricula.setText("");
-						textFieldSenha.setText("");
-						textFieldDisciplina.setText("");
-						
 						adm.listagens();
 						adm.status();
-						adm.vpl.listagem();
-						adm.cadastroDisciplina.listar();
+						adm.getContentPane().setVisible(false);
+						adm.setContentPane(new ViewProfessor(adm, professor));
 						
 						dispose();
 					} else {

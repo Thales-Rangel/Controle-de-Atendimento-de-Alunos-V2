@@ -71,9 +71,8 @@ public class ViewTurmasList extends JPanel {
 		JMenuItem mntmViewAllStudents = new JMenuItem("Ver os estudantes cadastrados");
 		mntmViewAllStudents.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				adm.vtl.setVisible(false);
-				adm.vsl.setVisible(true);
-				adm.setContentPane(adm.vsl);
+				setVisible(false);
+				adm.setContentPane(new ViewStudentsList(adm));
 			}
 		});
 		mntmViewAllStudents.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -82,7 +81,7 @@ public class ViewTurmasList extends JPanel {
 		JMenuItem mntmCdstStudent = new JMenuItem("Cadastrar um estudante");
 		mntmCdstStudent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				adm.cadastroEstudante.setVisible(true);
+				new CdstrStudent(adm).setVisible(true);
 			}
 		});
 		mntmCdstStudent.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -96,9 +95,8 @@ public class ViewTurmasList extends JPanel {
 		JMenuItem mntmViewAllProfessors = new JMenuItem("Ver professores cadastrados");
 		mntmViewAllProfessors.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				adm.vtl.setVisible(false);
-				adm.vpl.setVisible(true);
-				adm.setContentPane(adm.vpl);
+				setVisible(false);
+				adm.setContentPane(new ViewProfessorsList(adm));
 			}
 		});
 		mntmViewAllProfessors.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -107,7 +105,7 @@ public class ViewTurmasList extends JPanel {
 		JMenuItem mntmCadstProfessor = new JMenuItem("Cadastrar um professor");
 		mntmCadstProfessor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				adm.cadastroProfessor.setVisible(true);
+				new CdstrProfessor(adm).setVisible(true);
 			}
 		});
 		mntmCadstProfessor.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -125,7 +123,7 @@ public class ViewTurmasList extends JPanel {
 		JMenuItem mntmCdstTurma = new JMenuItem("Cadastrar uma turma");
 		mntmCdstTurma.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				adm.cadastroTurma.setVisible(true);
+				new CdstrTurma(adm).setVisible(true);
 			}
 		});
 		mntmCdstTurma.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -139,9 +137,8 @@ public class ViewTurmasList extends JPanel {
 		JMenuItem mntmViewAllDisciplinas = new JMenuItem("Ver disciplinas cadastradas");
 		mntmViewAllDisciplinas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				adm.vtl.setVisible(false);
-				adm.vdl.setVisible(true);
-				adm.setContentPane(adm.vdl);
+				setVisible(false);
+				adm.setContentPane(new ViewDisciplanesList(adm));
 			}
 		});
 		mntmViewAllDisciplinas.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -150,7 +147,7 @@ public class ViewTurmasList extends JPanel {
 		JMenuItem mntmCdstDisciplina = new JMenuItem("Cadastrar uma disciplina");
 		mntmCdstDisciplina.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				adm.cadastroDisciplina.setVisible(true);
+				new CdstrDisciplane(adm).setVisible(true);
 			}
 		});
 		mntmCdstDisciplina.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -364,7 +361,7 @@ public class ViewTurmasList extends JPanel {
 
 	}
 
-	public void listagem() {
+	private void listagem() {
 
 		DefaultTableModel model = new DefaultTableModel(new Object[][] {},
 				new String[] { "ID", "Turma", "Qnt. de Alunos" }) {
@@ -514,16 +511,8 @@ public class ViewTurmasList extends JPanel {
 			if (rs.next()) {
 				Turma turma = new Turma(rs.getInt(1), rs.getString(2));
 
-				adm.vt = new ViewTurma(adm, turma);
-				textFieldSearch.setText("");
-				textFieldSearchID.setText("");
-				textFieldFilterDisciplane.setText("");
-				scrollPaneFilterDisciplane.setVisible(false);
-				listDisciplanes.setVisible(false);
-				listagem();
-				adm.vt.setVisible(true);
-				adm.vtl.setVisible(false);
-				adm.setContentPane(adm.vt);
+				setVisible(false);
+				adm.setContentPane(new ViewTurma(adm, turma));
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e);
@@ -531,7 +520,6 @@ public class ViewTurmasList extends JPanel {
 	}
 
 	private void retorno(Admin adm) {
-		adm.vsl.setVisible(false);
 		adm.contentPane.setVisible(true);
 		adm.setContentPane(adm.contentPane);
 	}

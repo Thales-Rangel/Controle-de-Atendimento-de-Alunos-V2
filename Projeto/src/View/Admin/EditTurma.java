@@ -288,11 +288,10 @@ public class EditTurma extends JDialog {
 			}
 
 			t.atualizaDisciplinas();
-			adm.vt.listagem();
-			adm.vt.lblNome.setText(t.getNome()+ " - ID: "+ t.getId());
+			adm.getContentPane().setVisible(false);
+			adm.setContentPane(new ViewTurma(adm, t));
 			adm.listagens();
-			adm.vtl.listagem();
-			selectDisciplinas();
+			
 			dispose();
 
 			con.close();
