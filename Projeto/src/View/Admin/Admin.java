@@ -33,6 +33,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Cursor;
 import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 public class Admin extends JFrame {
 
@@ -75,7 +77,6 @@ public class Admin extends JFrame {
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Admin.class.getResource("/img/IF Logo - Remove.png")));
 		setTitle("Página de Admin");
-		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 860, 630);
 		contentPane = new JPanel();
@@ -84,11 +85,8 @@ public class Admin extends JFrame {
 		setLocationRelativeTo(null);
 
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 846, 22);
-		contentPane.add(menuBar);
 
 		JMenu mnStudents = new JMenu("Alunos");
 		mnStudents.setForeground(Color.BLACK);
@@ -199,49 +197,27 @@ public class Admin extends JFrame {
 
 		JPanel panelCabeçalho = new JPanel();
 		panelCabeçalho.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		panelCabeçalho.setBounds(10, 32, 826, 133);
-		contentPane.add(panelCabeçalho);
-		panelCabeçalho.setLayout(null);
-
-		JLabel label = new JLabel("New label");
-		label.setBounds(781, 0, -134, 123);
-		panelCabeçalho.add(label);
 
 		JLabel ifLogo = new JLabel("");
 		ifLogo.setHorizontalAlignment(SwingConstants.CENTER);
 		ifLogo.setIcon(new ImageIcon(Admin.class.getResource("/img/IF Logo - Remove.png")));
-		ifLogo.setBounds(693, 0, 133, 133);
-		panelCabeçalho.add(ifLogo);
 
 		JLabel lblIFTitle = new JLabel("Instituto Federal de Educação, Ciência e Tecnologia do Rio Grande do Norte");
 		lblIFTitle.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		lblIFTitle.setBounds(10, 10, 673, 24);
-		panelCabeçalho.add(lblIFTitle);
 
 		JLabel lblIFSubtitle = new JLabel("Campus Avançado Lajes");
 		lblIFSubtitle.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		lblIFSubtitle.setBounds(10, 33, 673, 18);
-		panelCabeçalho.add(lblIFSubtitle);
 
 		JLabel lblPagAdmin = new JLabel("Página do Admin - Controle de Atendimento de Alunos");
 		lblPagAdmin.setFont(new Font("Times New Roman", Font.BOLD, 22));
-		lblPagAdmin.setBounds(10, 61, 673, 24);
-		panelCabeçalho.add(lblPagAdmin);
 
 		JLabel lblDados_do_Projeto = new JLabel("Autor: Thales Rangel;  Matéria: PABD;  Professor: Danilo");
 		lblDados_do_Projeto.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-		lblDados_do_Projeto.setBounds(10, 84, 673, 24);
-		panelCabeçalho.add(lblDados_do_Projeto);
 
 		JPanel panelDBInformation = new JPanel();
 		panelDBInformation.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panelDBInformation.setBounds(10, 175, 826, 48);
-		contentPane.add(panelDBInformation);
-		panelDBInformation.setLayout(null);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(10, 10, 765, 28);
-		panelDBInformation.add(panel_1);
 		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.X_AXIS));
 		
 		lblUsersDB = new JLabel("Usúarios cadastrados: x (A: y, P: z);");
@@ -257,20 +233,13 @@ public class Admin extends JFrame {
 		lblDisciplinasDB.setFont(new Font("Arial", Font.PLAIN, 15));
 		
 		lblStatusDB = new JLabel("");
-		lblStatusDB.setBounds(778, 0, 48, 48);
-		panelDBInformation.add(lblStatusDB);
 		lblStatusDB.setIcon(new ImageIcon(Admin.class.getResource("/img/dboff.png")));
 		lblStatusDB.setToolTipText("Conexão com o Banco de Dados: Não conectado");
 		
 		JPanel panelLists = new JPanel();
 		panelLists.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panelLists.setBounds(10, 233, 529, 360);
-		contentPane.add(panelLists);
-		panelLists.setLayout(null);
 		
 		JScrollPane scrollPaneStudents = new JScrollPane();
-		scrollPaneStudents.setBounds(10, 36, 240, 139);
-		panelLists.add(scrollPaneStudents);
 		
 		listStudents = new JList<String>();
 		listStudents.addMouseListener(new MouseAdapter() {
@@ -285,8 +254,6 @@ public class Admin extends JFrame {
 		scrollPaneStudents.setViewportView(listStudents);
 		
 		JScrollPane scrollPaneProfessores = new JScrollPane();
-		scrollPaneProfessores.setBounds(279, 36, 240, 139);
-		panelLists.add(scrollPaneProfessores);
 		
 		listProfessores = new JList<String>();
 		listProfessores.addMouseListener(new MouseAdapter() {
@@ -301,8 +268,6 @@ public class Admin extends JFrame {
 		scrollPaneProfessores.setViewportView(listProfessores);
 		
 		JScrollPane scrollPaneTurmas = new JScrollPane();
-		scrollPaneTurmas.setBounds(10, 211, 240, 139);
-		panelLists.add(scrollPaneTurmas);
 		
 		listTurmas = new JList<String>();
 		listTurmas.addMouseListener(new MouseAdapter() {
@@ -317,8 +282,6 @@ public class Admin extends JFrame {
 		scrollPaneTurmas.setViewportView(listTurmas);
 		
 		JScrollPane scrollPaneDisciplinas = new JScrollPane();
-		scrollPaneDisciplinas.setBounds(279, 211, 240, 139);
-		panelLists.add(scrollPaneDisciplinas);
 		
 		listDisciplinas = new JList<String>();
 		listDisciplinas.addMouseListener(new MouseAdapter() {
@@ -344,8 +307,6 @@ public class Admin extends JFrame {
 		lblListStudents.setToolTipText("Lista de alunos cadastrados");
 		lblListStudents.setHorizontalAlignment(SwingConstants.CENTER);
 		lblListStudents.setFont(new Font("Arial", Font.BOLD, 18));
-		lblListStudents.setBounds(10, 13, 240, 25);
-		panelLists.add(lblListStudents);
 		
 		JLabel lblListProfessores = new JLabel("Professores");
 		lblListProfessores.addMouseListener(new MouseAdapter() {
@@ -359,8 +320,6 @@ public class Admin extends JFrame {
 		lblListProfessores.setToolTipText("Lista de professores cadastrados");
 		lblListProfessores.setHorizontalAlignment(SwingConstants.CENTER);
 		lblListProfessores.setFont(new Font("Arial", Font.BOLD, 18));
-		lblListProfessores.setBounds(279, 13, 240, 25);
-		panelLists.add(lblListProfessores);
 		
 		JLabel lblListTurmas = new JLabel("Turmas");
 		lblListTurmas.addMouseListener(new MouseAdapter() {
@@ -374,8 +333,6 @@ public class Admin extends JFrame {
 		lblListTurmas.setToolTipText("Lista de turmas cadastrados");
 		lblListTurmas.setHorizontalAlignment(SwingConstants.CENTER);
 		lblListTurmas.setFont(new Font("Arial", Font.BOLD, 18));
-		lblListTurmas.setBounds(10, 185, 240, 25);
-		panelLists.add(lblListTurmas);
 		
 		JLabel lblListDisciplinas = new JLabel("Disciplinas");
 		lblListDisciplinas.addMouseListener(new MouseAdapter() {
@@ -389,14 +346,10 @@ public class Admin extends JFrame {
 		lblListDisciplinas.setToolTipText("Lista de disciplinas cadastrados");
 		lblListDisciplinas.setHorizontalAlignment(SwingConstants.CENTER);
 		lblListDisciplinas.setFont(new Font("Arial", Font.BOLD, 18));
-		lblListDisciplinas.setBounds(279, 185, 240, 25);
-		panelLists.add(lblListDisciplinas);
 		
 		JPanel panelADM = new JPanel();
 		panelADM.setBackground(SystemColor.control);
 		panelADM.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panelADM.setBounds(549, 233, 287, 360);
-		contentPane.add(panelADM);
 		panelADM.setLayout(null);
 		
 		JLabel lblADM = new JLabel("Ações Administrativas");
@@ -448,6 +401,135 @@ public class Admin extends JFrame {
 		btnCdstTurma.setFont(new Font("Arial", Font.PLAIN, 13));
 		btnCdstTurma.setBounds(65, 148, 156, 27);
 		panelADM.add(btnCdstTurma);
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addComponent(menuBar, GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(10)
+					.addComponent(panelCabeçalho, GroupLayout.DEFAULT_SIZE, 826, Short.MAX_VALUE)
+					.addGap(10))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(10)
+					.addComponent(panelDBInformation, GroupLayout.DEFAULT_SIZE, 826, Short.MAX_VALUE)
+					.addGap(10))
+				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+					.addGap(10)
+					.addComponent(panelLists, GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+					.addGap(10)
+					.addComponent(panelADM, GroupLayout.PREFERRED_SIZE, 287, GroupLayout.PREFERRED_SIZE)
+					.addGap(10))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(menuBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(panelCabeçalho, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(panelDBInformation, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(panelLists, GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+						.addComponent(panelADM, GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)))
+		);
+		GroupLayout gl_panelLists = new GroupLayout(panelLists);
+		gl_panelLists.setHorizontalGroup(
+			gl_panelLists.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelLists.createSequentialGroup()
+					.addGap(8)
+					.addGroup(gl_panelLists.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelLists.createSequentialGroup()
+							.addGroup(gl_panelLists.createParallelGroup(Alignment.LEADING)
+								.addComponent(scrollPaneStudents, GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+								.addComponent(lblListStudents, GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE))
+							.addGap(29)
+							.addGroup(gl_panelLists.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblListProfessores, GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+								.addComponent(scrollPaneProfessores, GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)))
+						.addGroup(gl_panelLists.createSequentialGroup()
+							.addComponent(lblListTurmas, GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+							.addGap(29)
+							.addComponent(lblListDisciplinas, GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE))
+						.addGroup(gl_panelLists.createSequentialGroup()
+							.addComponent(scrollPaneTurmas, GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+							.addGap(29)
+							.addComponent(scrollPaneDisciplinas, GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)))
+					.addGap(8))
+		);
+		gl_panelLists.setVerticalGroup(
+			gl_panelLists.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelLists.createSequentialGroup()
+					.addGap(11)
+					.addGroup(gl_panelLists.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelLists.createSequentialGroup()
+							.addGap(23)
+							.addComponent(scrollPaneStudents, GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE))
+						.addComponent(lblListStudents, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblListProfessores, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panelLists.createSequentialGroup()
+							.addGap(23)
+							.addComponent(scrollPaneProfessores, GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)))
+					.addGap(10)
+					.addGroup(gl_panelLists.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblListTurmas, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblListDisciplinas, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+					.addGap(1)
+					.addGroup(gl_panelLists.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollPaneDisciplinas, GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+						.addComponent(scrollPaneTurmas, GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE))
+					.addGap(8))
+		);
+		panelLists.setLayout(gl_panelLists);
+		GroupLayout gl_panelDBInformation = new GroupLayout(panelDBInformation);
+		gl_panelDBInformation.setHorizontalGroup(
+			gl_panelDBInformation.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelDBInformation.createSequentialGroup()
+					.addGap(9)
+					.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 764, Short.MAX_VALUE)
+					.addGap(4)
+					.addComponent(lblStatusDB))
+		);
+		gl_panelDBInformation.setVerticalGroup(
+			gl_panelDBInformation.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelDBInformation.createSequentialGroup()
+					.addGap(10)
+					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE))
+				.addComponent(lblStatusDB)
+		);
+		panelDBInformation.setLayout(gl_panelDBInformation);
+		GroupLayout gl_panelCabeçalho = new GroupLayout(panelCabeçalho);
+		gl_panelCabeçalho.setHorizontalGroup(
+			gl_panelCabeçalho.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelCabeçalho.createSequentialGroup()
+					.addGap(8)
+					.addGroup(gl_panelCabeçalho.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblIFSubtitle, GroupLayout.DEFAULT_SIZE, 673, Short.MAX_VALUE)
+						.addComponent(lblIFTitle, GroupLayout.DEFAULT_SIZE, 673, Short.MAX_VALUE)
+						.addComponent(lblPagAdmin, GroupLayout.DEFAULT_SIZE, 673, Short.MAX_VALUE)
+						.addComponent(lblDados_do_Projeto, GroupLayout.DEFAULT_SIZE, 673, Short.MAX_VALUE))
+					.addGap(10)
+					.addComponent(ifLogo, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE))
+		);
+		gl_panelCabeçalho.setVerticalGroup(
+			gl_panelCabeçalho.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelCabeçalho.createSequentialGroup()
+					.addGap(10)
+					.addGroup(gl_panelCabeçalho.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelCabeçalho.createSequentialGroup()
+							.addGap(23)
+							.addComponent(lblIFSubtitle))
+						.addComponent(lblIFTitle))
+					.addGap(10)
+					.addGroup(gl_panelCabeçalho.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblPagAdmin, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panelCabeçalho.createSequentialGroup()
+							.addGap(23)
+							.addComponent(lblDados_do_Projeto))))
+				.addComponent(ifLogo)
+		);
+		panelCabeçalho.setLayout(gl_panelCabeçalho);
+		contentPane.setLayout(gl_contentPane);
 		
 		status();
 		listagens();
