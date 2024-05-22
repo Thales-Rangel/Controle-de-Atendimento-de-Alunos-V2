@@ -53,6 +53,8 @@ public class CdstrDisciplane extends JDialog {
 	 * Create the dialog.
 	 */
 	public CdstrDisciplane(Admin adm) {
+		this.adm = adm;
+		
 		setResizable(false);
 		setTitle("Cadastro de disciplinas");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(CdstrStudent.class.getResource("/img/IF Logo - Remove.png")));
@@ -161,7 +163,6 @@ public class CdstrDisciplane extends JDialog {
 
 		listar();
 
-		this.adm = adm;
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -179,18 +180,6 @@ public class CdstrDisciplane extends JDialog {
 				JButton cancelButton = new JButton("Cancelar");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						textFieldNome.setText("");
-						
-						for (int i = 0; i < selectedRowsP.length; i++) {
-							selectedRowsP[i] = false;
-						}
-						
-						for (int i = 0; i < selectedRowsT.length; i++) {
-							selectedRowsT[i] = false;
-						}
-						
-						select();
-						
 						dispose();
 					}
 				});
@@ -202,9 +191,6 @@ public class CdstrDisciplane extends JDialog {
 
 	private void listar() {
 		DefaultTableModel model1 = new DefaultTableModel(new Object[][] {}, new String[] { "", "" }) {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false, false };
 
@@ -214,9 +200,6 @@ public class CdstrDisciplane extends JDialog {
 		};
 
 		DefaultTableModel model2 = new DefaultTableModel(new Object[][] {}, new String[] { "" }) {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false };
 
@@ -226,6 +209,8 @@ public class CdstrDisciplane extends JDialog {
 		};
 
 		String readProfs = "select nome, matricula from professores order by nome";
+		
+		String readTurmas = "select nome from turmas order by nome";
 
 		try {
 			con = DAO.conectar();
@@ -253,7 +238,7 @@ public class CdstrDisciplane extends JDialog {
 			if (rs.next())
 				selectedRowsT = new boolean[rs.getInt(1)];
 
-			pst = con.prepareStatement("select nome from turmas order by nome");
+			pst = con.prepareStatement(readTurmas);
 			rs = pst.executeQuery();
 
 			for (int i = 0; rs.next(); i++) {
@@ -291,11 +276,11 @@ public class CdstrDisciplane extends JDialog {
 		String nome = "";
 		int idDisciplina = 0;
 
-		if (!textFieldNome.getText().isEmpty()) {
+		if (!textFieldNome.getText().isBlank()) {
 
 			nome = textFieldNome.getText().trim();
 
-			String insert = "insert into disciplinas values " + "(default , ? )";
+			String insert = "insert into disciplinas values (default , ? )";
 
 			try {
 				con = DAO.conectar();
@@ -310,15 +295,15 @@ public class CdstrDisciplane extends JDialog {
 
 					int confirma = pst.executeUpdate();
 
+					pst = con.prepareStatement("select id from disciplinas where nome= ?");
+					pst.setString(1, nome);
+					rs = pst.executeQuery();
+					if (rs.next()) {
+						idDisciplina = rs.getInt(1);
+					}
+					
 					try {
 						if (tableProfessores.getSelectedRows().length > 0) {
-
-							pst = con.prepareStatement("select id from disciplinas where nome= ?");
-							pst.setString(1, nome);
-							rs = pst.executeQuery();
-							if (rs.next()) {
-								idDisciplina = rs.getInt(1);
-							}
 
 							for (int i = 0; i < tableProfessores.getSelectedRows().length; i++) {
 								String matriculaProfessor = (String) tableProfessores
@@ -329,21 +314,10 @@ public class CdstrDisciplane extends JDialog {
 								pst.setInt(2, idDisciplina);
 
 								pst.executeUpdate();
-
-								selectedRowsP[tableProfessores.getSelectedRows()[i]] = false;
 							}
-
-							select();
 						}
 
 						if (tableTurmas.getSelectedRows().length > 0) {
-
-							pst = con.prepareStatement("select id from disciplinas where nome= ?");
-							pst.setString(1, nome);
-							rs = pst.executeQuery();
-							if (rs.next()) {
-								idDisciplina = rs.getInt(1);
-							}
 
 							for (int i = 0; i < tableTurmas.getSelectedRows().length; i++) {
 								String turma = (String) tableTurmas.getValueAt(tableTurmas.getSelectedRows()[i], 0);
@@ -361,11 +335,7 @@ public class CdstrDisciplane extends JDialog {
 								pst.setInt(2, idTurma);
 
 								pst.executeUpdate();
-
-								selectedRowsT[tableTurmas.getSelectedRows()[i]] = false;
 							}
-
-							select();
 						}
 
 					} catch (Exception e) {

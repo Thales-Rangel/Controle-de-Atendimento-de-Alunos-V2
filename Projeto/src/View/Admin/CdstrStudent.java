@@ -55,6 +55,8 @@ public class CdstrStudent extends JDialog {
 	 * Create the dialog.
 	 */
 	public CdstrStudent(Admin adm) {
+		this.adm = adm;
+		
 		setResizable(false);
 		setTitle("Cadastro de alunos");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(CdstrStudent.class.getResource("/img/IF Logo - Remove.png")));
@@ -82,7 +84,7 @@ public class CdstrStudent extends JDialog {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					if (textFieldMatricula.getText().isEmpty()) {
 						textFieldMatricula.requestFocus();
-					} else if (textFieldSenha.getText().isEmpty()) {
+					} else if (textFieldSenha.getText().isBlank()) {
 						textFieldSenha.requestFocus();
 					} else {
 						cadastrar();
@@ -116,9 +118,9 @@ public class CdstrStudent extends JDialog {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					if (textFieldSenha.getText().isEmpty()) {
+					if (textFieldSenha.getText().isBlank()) {
 						textFieldSenha.requestFocus();
-					} else if(textFieldNome.getText().isEmpty()){
+					} else if(textFieldNome.getText().isBlank()){
 						textFieldNome.requestFocus();
 					} else {
 						cadastrar();
@@ -146,7 +148,7 @@ public class CdstrStudent extends JDialog {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					if (textFieldMatricula.getText().isEmpty()) {
 						textFieldMatricula.requestFocus();
-					} else if (textFieldNome.getText().isEmpty()) {
+					} else if (textFieldNome.getText().isBlank()) {
 						textFieldNome.requestFocus();
 					} else {
 						cadastrar();
@@ -173,14 +175,7 @@ public class CdstrStudent extends JDialog {
 		textFieldTurma.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (scrollPane.isVisible() && listTurmas.isVisible()) {
-					listTurmas.setVisible(false);
-					scrollPane.setVisible(false);
-					textFieldTurma.setText("");
-					btnTurmas.setIcon(new ImageIcon(CdstrStudent.class.getResource("/img/seta_de_itens_icon.png")));
-				} else {
-					listarTurmas();
-				}
+				listarTurmas();
 			}
 		});
 		lblTurma.setLabelFor(textFieldTurma);
@@ -215,14 +210,7 @@ public class CdstrStudent extends JDialog {
 		btnTurmas.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnTurmas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (scrollPane.isVisible() && listTurmas.isVisible()) {
-					listTurmas.setVisible(false);
-					scrollPane.setVisible(false);
-					textFieldTurma.setText("");
-					btnTurmas.setIcon(new ImageIcon(CdstrStudent.class.getResource("/img/seta_de_itens_icon.png")));
-				} else {
-					listarTurmas();
-				}
+				listarTurmas();
 			}
 		});
 		btnTurmas.setIcon(new ImageIcon(CdstrStudent.class.getResource("/img/seta_de_itens_icon.png")));
@@ -243,7 +231,6 @@ public class CdstrStudent extends JDialog {
 		lblDesenho.setBounds(249, 188, 187, 134);
 		contentPanel.add(lblDesenho);
 		
-		this.adm = adm;
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -261,11 +248,6 @@ public class CdstrStudent extends JDialog {
 				JButton cancelButton = new JButton("Cancelar");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						textFieldNome.setText("");
-						textFieldMatricula.setText("");
-						textFieldSenha.setText("");
-						textFieldTurma.setText("");
-						
 						dispose();
 					}
 				});
@@ -276,6 +258,15 @@ public class CdstrStudent extends JDialog {
 	}
 	
 	private void listarTurmas() {
+		if (scrollPane.isVisible() && listTurmas.isVisible()) {
+			listTurmas.setVisible(false);
+			scrollPane.setVisible(false);
+			textFieldTurma.setText("");
+			btnTurmas.setIcon(new ImageIcon(CdstrStudent.class.getResource("/img/seta_de_itens_icon.png")));
+			
+			return;
+		}
+		
 		DefaultListModel<String> model = new DefaultListModel<String>();
 		
 		String readTurmas = "select nome from turmas order by nome";
@@ -306,11 +297,11 @@ public class CdstrStudent extends JDialog {
 		String senha;
 		int id_turma = 0;
 		
-		if(!(textFieldNome.getText().isEmpty() || textFieldMatricula.getText().isEmpty() || textFieldSenha.getText().isEmpty() || textFieldTurma.getText().isEmpty())) {
+		if(!(textFieldNome.getText().isBlank() || textFieldMatricula.getText().isEmpty() || textFieldSenha.getText().isBlank() || textFieldTurma.getText().isBlank())) {
 			
-			if (textFieldMatricula.getText().trim().length() == 14) {
+			if (textFieldMatricula.getText().length() == 14) {
 				nome = textFieldNome.getText().trim();
-				matricula = textFieldMatricula.getText().trim();
+				matricula = textFieldMatricula.getText();
 				senha = textFieldSenha.getText().trim();
 				
 				try {

@@ -50,6 +50,8 @@ public class CdstrTurma extends JDialog {
 	 * Create the dialog.
 	 */
 	public CdstrTurma(Admin adm) {
+		this.adm = adm;
+		
 		setResizable(false);
 		setTitle("Cadastro de turmas");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(CdstrStudent.class.getResource("/img/IF Logo - Remove.png")));
@@ -131,7 +133,6 @@ public class CdstrTurma extends JDialog {
 
 		listarDisciplinas();
 
-		this.adm = adm;
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -149,14 +150,6 @@ public class CdstrTurma extends JDialog {
 				JButton cancelButton = new JButton("Cancelar");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						textFieldNome.setText("");
-						
-						for (int i = 0; i < selectedRows.length; i++) {
-							selectedRows[i] = false;
-						}
-						
-						selectDisciplinas();
-						
 						dispose();
 					}
 				});
@@ -168,9 +161,6 @@ public class CdstrTurma extends JDialog {
 
 	private void listarDisciplinas() {
 		DefaultTableModel model = new DefaultTableModel(new Object[][] {}, new String[] { "" }) {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false };
 
@@ -179,7 +169,7 @@ public class CdstrTurma extends JDialog {
 			}
 		};
 
-		String readTurmas = "select nome from disciplinas order by nome";
+		String readDisciplinas = "select nome from disciplinas order by nome";
 
 		try {
 			con = DAO.conectar();
@@ -191,7 +181,7 @@ public class CdstrTurma extends JDialog {
 				selectedRows = new boolean[rs.getInt(1)];
 			}
 
-			pst = con.prepareStatement(readTurmas);
+			pst = con.prepareStatement(readDisciplinas);
 			rs = pst.executeQuery();
 
 			for (int i = 0; rs.next(); i++) {
@@ -221,7 +211,7 @@ public class CdstrTurma extends JDialog {
 		String nome = "";
 		int idTurma = 0;
 		
-		if (!textFieldNome.getText().isEmpty()) {
+		if (!textFieldNome.getText().isBlank()) {
 
 			nome = textFieldNome.getText().trim();
 
@@ -240,6 +230,13 @@ public class CdstrTurma extends JDialog {
 
 					int confirma = pst.executeUpdate();
 
+					pst = con.prepareStatement("select id from turmas where nome= ?");
+					pst.setString(1, nome);
+					rs = pst.executeQuery();
+					if (rs.next()) {
+						idTurma = rs.getInt(1);
+					}
+					
 					if (tableDisciplinas.getSelectedRows().length > 0) {
 
 						for (int i = 0; i < tableDisciplinas.getSelectedRows().length; i++) {
@@ -252,13 +249,6 @@ public class CdstrTurma extends JDialog {
 							int idDisciplina = 0;
 							if (rs.next()) {
 								idDisciplina = rs.getInt(1);
-							}
-
-							pst = con.prepareStatement("select id from turmas where nome= ?");
-							pst.setString(1, nome);
-							rs = pst.executeQuery();
-							if (rs.next()) {
-								idTurma = rs.getInt(1);
 							}
 
 							pst = con.prepareStatement("insert into estuda values (default, ?, ?)");
@@ -290,10 +280,11 @@ public class CdstrTurma extends JDialog {
 
 					dispose();
 					
-					con.close();
 				} else {
 					JOptionPane.showMessageDialog(null, "Nome da turma já cadastrado!\nTente outro nome");
-				}	
+				}
+
+				con.close();
 			} catch (Exception e) {
 				JOptionPane.showMessageDialog(null, "Não foi possível fazer o cadastro:\n" + e);
 			}

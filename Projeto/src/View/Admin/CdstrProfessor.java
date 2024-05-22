@@ -55,6 +55,8 @@ public class CdstrProfessor extends JDialog {
 	 * Create the dialog.
 	 */
 	public CdstrProfessor(Admin adm) {
+		this.adm = adm;
+		
 		setResizable(false);
 		setTitle("Cadastro de professores");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(CdstrStudent.class.getResource("/img/IF Logo - Remove.png")));
@@ -82,7 +84,7 @@ public class CdstrProfessor extends JDialog {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					if (textFieldMatricula.getText().isEmpty()) {
 						textFieldMatricula.requestFocus();
-					} else if (textFieldSenha.getText().isEmpty()) {
+					} else if (textFieldSenha.getText().isBlank()) {
 						textFieldSenha.requestFocus();
 					} else {
 						cadastrar();
@@ -116,9 +118,9 @@ public class CdstrProfessor extends JDialog {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					if (textFieldSenha.getText().isEmpty()) {
+					if (textFieldSenha.getText().isBlank()) {
 						textFieldSenha.requestFocus();
-					} else if(textFieldNome.getText().isEmpty()){
+					} else if(textFieldNome.getText().isBlank()){
 						textFieldNome.requestFocus();
 					} else {
 						cadastrar();
@@ -146,7 +148,7 @@ public class CdstrProfessor extends JDialog {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					if (textFieldMatricula.getText().isEmpty()) {
 						textFieldMatricula.requestFocus();
-					} else if (textFieldNome.getText().isEmpty()) {
+					} else if (textFieldNome.getText().isBlank()) {
 						textFieldNome.requestFocus();
 					} else {
 						cadastrar();
@@ -173,14 +175,7 @@ public class CdstrProfessor extends JDialog {
 		textFieldDisciplina.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (scrollPane.isVisible() && listDisciplinas.isVisible()) {
-					listDisciplinas.setVisible(false);
-					scrollPane.setVisible(false);
-					textFieldDisciplina.setText("");
-					btnDisciplinas.setIcon(new ImageIcon(CdstrStudent.class.getResource("/img/seta_de_itens_icon.png")));
-				} else {
-					listarDisciplinas();
-				}
+				listarDisciplinas();
 			}
 		});
 		lblDisciplina.setLabelFor(textFieldDisciplina);
@@ -198,7 +193,6 @@ public class CdstrProfessor extends JDialog {
 		listDisciplinas = new JList<String>();
 		listDisciplinas.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		listDisciplinas.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
 				textFieldDisciplina.setText(listDisciplinas.getSelectedValue());
 
@@ -215,14 +209,7 @@ public class CdstrProfessor extends JDialog {
 		btnDisciplinas.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnDisciplinas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (scrollPane.isVisible() && listDisciplinas.isVisible()) {
-					listDisciplinas.setVisible(false);
-					scrollPane.setVisible(false);
-					textFieldDisciplina.setText("");
-					btnDisciplinas.setIcon(new ImageIcon(CdstrStudent.class.getResource("/img/seta_de_itens_icon.png")));
-				} else {
-					listarDisciplinas();
-				}
+				listarDisciplinas();
 			}
 		});
 		btnDisciplinas.setIcon(new ImageIcon(CdstrStudent.class.getResource("/img/seta_de_itens_icon.png")));
@@ -243,7 +230,6 @@ public class CdstrProfessor extends JDialog {
 		lblDesenho.setBounds(249, 188, 187, 187);
 		contentPanel.add(lblDesenho);
 		
-		this.adm = adm;
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -261,11 +247,6 @@ public class CdstrProfessor extends JDialog {
 				JButton cancelButton = new JButton("Cancelar");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						textFieldNome.setText("");
-						textFieldMatricula.setText("");
-						textFieldSenha.setText("");
-						textFieldDisciplina.setText("");
-						
 						dispose();
 					}
 				});
@@ -276,6 +257,15 @@ public class CdstrProfessor extends JDialog {
 	}
 
 	private void listarDisciplinas() {
+		if (scrollPane.isVisible() && listDisciplinas.isVisible()) {
+			listDisciplinas.setVisible(false);
+			scrollPane.setVisible(false);
+			textFieldDisciplina.setText("");
+			btnDisciplinas.setIcon(new ImageIcon(CdstrStudent.class.getResource("/img/seta_de_itens_icon.png")));
+			
+			return;
+		}
+		
 		DefaultListModel<String> model = new DefaultListModel<String>();
 		
 		String readTurmas = "select nome from disciplinas order by nome";
@@ -306,11 +296,11 @@ public class CdstrProfessor extends JDialog {
 		String senha;
 		int id_disciplina = 0;
 		
-		if(!(textFieldNome.getText().isEmpty() || textFieldMatricula.getText().isEmpty() || textFieldSenha.getText().isEmpty())) {
+		if(!(textFieldNome.getText().isBlank() || textFieldMatricula.getText().isEmpty() || textFieldSenha.getText().isBlank())) {
 			
 			if (textFieldMatricula.getText().trim().length() == 8) {
 				nome = textFieldNome.getText().trim();
-				matricula = textFieldMatricula.getText().trim();
+				matricula = textFieldMatricula.getText();
 				senha = textFieldSenha.getText().trim();
 				
 				try {
@@ -331,7 +321,7 @@ public class CdstrProfessor extends JDialog {
 						
 						int confirma = pst.executeUpdate();
 						
-						if (!textFieldDisciplina.getText().isEmpty()) {
+						if (!textFieldDisciplina.getText().isBlank()) {
 							pst = con.prepareStatement("select id from disciplinas where nome= ?");
 							pst.setString(1, textFieldDisciplina.getText());
 							rs = pst.executeQuery();
@@ -348,7 +338,7 @@ public class CdstrProfessor extends JDialog {
 							confirma += pst.executeUpdate();
 						}
 						
-						if (confirma == 2 || (confirma == 1 && textFieldDisciplina.getText().isEmpty())) {
+						if (confirma == 2 || (confirma == 1 && textFieldDisciplina.getText().isBlank())) {
 							JOptionPane.showMessageDialog(null, "Professor cadastrado com sucesso!");
 						} else if (confirma == 1 && !textFieldDisciplina.getText().isEmpty()) {
 							JOptionPane.showMessageDialog(null, "Não foi possível designar a disciplina!!\nProfessor cadastrado com sucesso!");
