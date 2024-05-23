@@ -432,7 +432,6 @@ public class ViewTurmasList extends JPanel {
 					+ "on es.id_turma = t.id "
 					+ "join disciplinas d on d.id = es.id_disciplina "
 					+ "where d.nome = '" + textFieldFilterDisciplane.getText() + "' ";
-
 		}
 
 		if (!textFieldSearch.getText().isBlank()) {
