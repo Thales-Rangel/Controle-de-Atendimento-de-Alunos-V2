@@ -45,7 +45,11 @@ public class ViewStudentsList extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField textFieldSearch;
 	private JTable table;
+	private JPanel panelFilters;
+	private JLabel lblFilters; 
+	private JLabel lblSearchMatricula;
 	private JTextField textFieldSearchMatricula;
+	private JLabel lblFilterClass;
 	private JTextField textFieldFilterClass;
 	private JList<String> listTurmas;
 	private JScrollPane scrollPaneFilterClass;
@@ -183,13 +187,7 @@ public class ViewStudentsList extends JPanel {
 		textFieldSearch.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				if (!textFieldSearch.getText().isEmpty()) {
-					buscar();
-				} else if (textFieldSearchMatricula.getText().isEmpty() && textFieldFilterClass.getText().isEmpty()) {
-					listagem();
-				} else {
-					buscar();
-				}
+				buscar();
 			}
 		});
 		textFieldSearch.setToolTipText("Pesquisar por nome do aluno");
@@ -211,15 +209,15 @@ public class ViewStudentsList extends JPanel {
 				new String[] { "Nome", "Matricula", "Turma" }));
 		scrollPane.setViewportView(table);
 
-		JPanel panelFilters = new JPanel();
+		panelFilters = new JPanel();
 		panelFilters.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 
-		JLabel lblFilters = new JLabel("Outros mecânismos de busca:");
+		lblFilters = new JLabel("Outros mecânismos de busca:");
 		lblFilters.setLabelFor(panelFilters);
 		lblFilters.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFilters.setFont(new Font("Arial", Font.BOLD, 15));
 
-		JLabel lblSearchMatricula = new JLabel("Buscar por matrícula:");
+		lblSearchMatricula = new JLabel("Buscar por matrícula:");
 		lblSearchMatricula.setFont(new Font("Arial", Font.PLAIN, 15));
 
 		textFieldSearchMatricula = new JTextField();
@@ -234,13 +232,7 @@ public class ViewStudentsList extends JPanel {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				if (!textFieldSearchMatricula.getText().isEmpty()) {
-					buscar();
-				} else if (textFieldSearch.getText().isEmpty() && textFieldFilterClass.getText().isEmpty()) {
-					listagem();
-				} else {
-					buscar();
-				}
+				buscar();
 			}
 		});
 		textFieldSearchMatricula.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -248,7 +240,7 @@ public class ViewStudentsList extends JPanel {
 		textFieldSearchMatricula.setColumns(10);
 		textFieldSearchMatricula.setDocument(new Validador(20));
 
-		JLabel lblFilterClass = new JLabel("Filtrar por turma:");
+		lblFilterClass = new JLabel("Filtrar por turma:");
 		lblFilterClass.setFont(new Font("Arial", Font.PLAIN, 15));
 
 		textFieldFilterClass = new JTextField();
@@ -261,11 +253,9 @@ public class ViewStudentsList extends JPanel {
 					textFieldFilterClass.setText("");
 					btnFilterClass
 							.setIcon(new ImageIcon(ViewStudentsList.class.getResource("/img/seta_de_itens_icon.png")));
-					if (textFieldSearch.getText().isEmpty() && textFieldSearchMatricula.getText().isEmpty()) {
-						listagem();
-					} else {
-						buscar();
-					}
+					
+					dimensionar();
+					buscar();
 				} else {
 					listarTurmas();
 				}
@@ -305,11 +295,9 @@ public class ViewStudentsList extends JPanel {
 					textFieldFilterClass.setText("");
 					btnFilterClass
 							.setIcon(new ImageIcon(ViewStudentsList.class.getResource("/img/seta_de_itens_icon.png")));
-					if (textFieldSearch.getText().isEmpty() && textFieldSearchMatricula.getText().isEmpty()) {
-						listagem();
-					} else {
-						buscar();
-					}
+					
+					dimensionar();	
+					buscar();
 				} else {
 					listarTurmas();
 					textFieldFilterClass.requestFocus();
@@ -317,41 +305,9 @@ public class ViewStudentsList extends JPanel {
 			}
 		});
 		btnFilterClass.setIcon(new ImageIcon(ViewStudentsList.class.getResource("/img/seta_de_itens_icon.png")));
-		GroupLayout gl_panelFilters = new GroupLayout(panelFilters);
-		gl_panelFilters.setHorizontalGroup(
-			gl_panelFilters.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelFilters.createSequentialGroup()
-					.addGap(8)
-					.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblFilters, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblSearchMatricula, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textFieldSearchMatricula, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblFilterClass, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textFieldFilterClass, GroupLayout.PREFERRED_SIZE, 230, GroupLayout.PREFERRED_SIZE)
-						.addComponent(scrollPaneFilterClass, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panelFilters.createSequentialGroup()
-							.addGap(230)
-							.addComponent(btnFilterClass, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))))
-		);
-		gl_panelFilters.setVerticalGroup(
-			gl_panelFilters.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelFilters.createSequentialGroup()
-					.addGap(8)
-					.addComponent(lblFilters, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-					.addGap(39)
-					.addComponent(lblSearchMatricula, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-					.addComponent(textFieldSearchMatricula, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-					.addGap(42)
-					.addComponent(lblFilterClass, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-					.addGap(10)
-					.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
-						.addComponent(textFieldFilterClass, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panelFilters.createSequentialGroup()
-							.addGap(25)
-							.addComponent(scrollPaneFilterClass, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE))
-						.addComponent(btnFilterClass, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)))
-		);
-		panelFilters.setLayout(gl_panelFilters);
+		
+		dimensionar();
+		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -446,19 +402,21 @@ public class ViewStudentsList extends JPanel {
 			scrollPaneFilterClass.setVisible(true);
 			btnFilterClass.setIcon(
 					new ImageIcon(ViewStudentsList.class.getResource("/img/seta_de_itens_para_cima_icon.png")));
+			dimensionar();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e);
 		}
 	}
 
 	private void buscar() {
-		String insert = "select a.nome, a.matricula, t.nome from alunos as a inner join turmas as t ";
+		String insert = "select a.nome, a.matricula, t.nome from alunos a "
+				+ "join turmas t on t.id= a.id_turma ";
 
-		if (!textFieldSearch.getText().isEmpty()) {
+		if (!textFieldSearch.getText().isBlank()) {
 			insert += "where a.nome like '" + textFieldSearch.getText() + "%' ";
 		}
 		if (!textFieldSearchMatricula.getText().isEmpty()) {
-			if (textFieldSearch.getText().isEmpty()) {
+			if (textFieldSearch.getText().isBlank()) {
 				insert += "where a.matricula like '" + textFieldSearchMatricula.getText() + "%' ";
 			} else {
 				insert += "and a.matricula like '" + textFieldSearchMatricula.getText() + "%' ";
@@ -466,30 +424,14 @@ public class ViewStudentsList extends JPanel {
 		}
 		if (!textFieldFilterClass.getText().isEmpty()) {
 
-			String insertBuscarTurma = "select * from turmas where nome= '" + textFieldFilterClass.getText() + "'";
-			int id_turma = 0;
-			try {
-				con = DAO.conectar();
-				pst = con.prepareStatement(insertBuscarTurma);
-				rs = pst.executeQuery();
-
-				if (rs.next()) {
-					id_turma = rs.getInt(1);
-				}
-
-				con.close();
-			} catch (Exception e) {
-				JOptionPane.showMessageDialog(null, e);
-			}
-
-			if (textFieldSearch.getText().isEmpty() && textFieldSearchMatricula.getText().isEmpty()) {
-				insert += "where a.id_turma = '" + id_turma + "' ";
+			if (textFieldSearch.getText().isBlank() && textFieldSearchMatricula.getText().isEmpty()) {
+				insert += "where t.nome = '" + textFieldFilterClass.getText() + "' ";
 			} else {
-				insert += "and a.id_turma = '" + id_turma + "' ";
+				insert += "and t.nome = '" + textFieldFilterClass.getText() + "' ";
 			}
 		}
 
-		insert += "and a.id_turma = t.id order by a.nome";
+		insert += "order by a.nome";
 
 		DefaultTableModel model = new DefaultTableModel(new Object[][] {},
 				new String[] { "Nome", "Matricula", "Turma" }) {
@@ -525,6 +467,44 @@ public class ViewStudentsList extends JPanel {
 
 		setVisible(false);
 		adm.setContentPane(new ViewStudent(adm, new Student(matriculaSelect)));
+	}
+	
+	private void dimensionar() {
+		GroupLayout gl_panelFilters = new GroupLayout(panelFilters);
+		gl_panelFilters.setHorizontalGroup(
+			gl_panelFilters.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelFilters.createSequentialGroup()
+					.addGap(8)
+					.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblFilters, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblSearchMatricula, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textFieldSearchMatricula, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblFilterClass, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE)
+						.addComponent(textFieldFilterClass, GroupLayout.PREFERRED_SIZE, 230, GroupLayout.PREFERRED_SIZE)
+						.addComponent(scrollPaneFilterClass, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panelFilters.createSequentialGroup()
+							.addGap(230)
+							.addComponent(btnFilterClass, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))))
+		);
+		gl_panelFilters.setVerticalGroup(
+			gl_panelFilters.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelFilters.createSequentialGroup()
+					.addGap(8)
+					.addComponent(lblFilters, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+					.addGap(39)
+					.addComponent(lblSearchMatricula, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+					.addComponent(textFieldSearchMatricula, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+					.addGap(42)
+					.addComponent(lblFilterClass, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
+						.addComponent(textFieldFilterClass, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panelFilters.createSequentialGroup()
+							.addGap(25)
+							.addComponent(scrollPaneFilterClass, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE))
+						.addComponent(btnFilterClass, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)))
+		);
+		panelFilters.setLayout(gl_panelFilters);
 	}
 
 	private void retorno(Admin adm) {

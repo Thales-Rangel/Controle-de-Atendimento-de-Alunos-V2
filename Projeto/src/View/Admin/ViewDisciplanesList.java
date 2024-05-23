@@ -53,6 +53,10 @@ public class ViewDisciplanesList extends JPanel {
 	private JButton btnFilterClass;
 	
 	private Admin adm;
+	private JPanel panelFilters;
+	private JLabel lblFilters;
+	private JLabel lblSearchID;
+	private JLabel lblFilterClass;
 
 	/**
 	 * Create the panel.
@@ -188,13 +192,7 @@ public class ViewDisciplanesList extends JPanel {
 		textFieldSearch.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				if (!textFieldSearch.getText().isEmpty()) {
-					buscar();
-				} else if (textFieldSearchID.getText().isEmpty() && textFieldFilterClass.getText().isEmpty()) {
-					listagem();
-				} else {
-					buscar();
-				}
+				buscar();
 			}
 		});
 		textFieldSearch.setToolTipText("Pesquisar por nome da disciplina");
@@ -226,15 +224,15 @@ public class ViewDisciplanesList extends JPanel {
 		table.getColumnModel().getColumn(3).setPreferredWidth(150);
 		scrollPane.setViewportView(table);
 
-		JPanel panelFilters = new JPanel();
+		panelFilters = new JPanel();
 		panelFilters.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 
-		JLabel lblFilters = new JLabel("Outros mecânismos de busca:");
+		lblFilters = new JLabel("Outros mecânismos de busca:");
 		lblFilters.setLabelFor(panelFilters);
 		lblFilters.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFilters.setFont(new Font("Arial", Font.BOLD, 15));
 
-		JLabel lblSearchID = new JLabel("Buscar por ID:");
+		lblSearchID = new JLabel("Buscar por ID:");
 		lblSearchID.setFont(new Font("Arial", Font.PLAIN, 15));
 
 		textFieldSearchID = new JTextField();
@@ -249,13 +247,7 @@ public class ViewDisciplanesList extends JPanel {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				if (!textFieldSearchID.getText().isEmpty()) {
 					buscar();
-				} else if (textFieldSearch.getText().isEmpty() && textFieldFilterClass.getText().isEmpty()) {
-					listagem();
-				} else {
-					buscar();
-				}
 			}
 		});
 		textFieldSearchID.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -263,7 +255,7 @@ public class ViewDisciplanesList extends JPanel {
 		textFieldSearchID.setColumns(10);
 		textFieldSearchID.setDocument(new Validador(20));
 
-		JLabel lblFilterClass = new JLabel("Filtrar por turma:");
+		lblFilterClass = new JLabel("Filtrar por turma:");
 		lblFilterClass.setFont(new Font("Arial", Font.PLAIN, 15));
 
 		textFieldFilterClass = new JTextField();
@@ -276,11 +268,9 @@ public class ViewDisciplanesList extends JPanel {
 					textFieldFilterClass.setText("");
 					btnFilterClass
 							.setIcon(new ImageIcon(ViewStudentsList.class.getResource("/img/seta_de_itens_icon.png")));
-					if (textFieldSearch.getText().isEmpty() && textFieldSearchID.getText().isEmpty()) {
-						listagem();
-					} else {
-						buscar();
-					}
+					
+					dimensionar();	
+					buscar();
 				} else {
 					listarTurmas();
 				}
@@ -320,11 +310,10 @@ public class ViewDisciplanesList extends JPanel {
 					textFieldFilterClass.setText("");
 					btnFilterClass
 							.setIcon(new ImageIcon(ViewStudentsList.class.getResource("/img/seta_de_itens_icon.png")));
-					if (textFieldSearch.getText().isEmpty() && textFieldSearchID.getText().isEmpty()) {
-						listagem();
-					} else {
-						buscar();
-					}
+					
+					dimensionar();
+					
+					buscar();
 				} else {
 					listarTurmas();
 					textFieldFilterClass.requestFocus();
@@ -332,51 +321,9 @@ public class ViewDisciplanesList extends JPanel {
 			}
 		});
 		btnFilterClass.setIcon(new ImageIcon(ViewStudentsList.class.getResource("/img/seta_de_itens_icon.png")));
-		GroupLayout gl_panelFilters = new GroupLayout(panelFilters);
-		gl_panelFilters.setHorizontalGroup(
-			gl_panelFilters.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelFilters.createSequentialGroup()
-					.addGap(8)
-					.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_panelFilters.createSequentialGroup()
-							.addComponent(textFieldSearchID)
-							.addContainerGap())
-						.addComponent(lblFilters, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblSearchID, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE)))
-				.addGroup(gl_panelFilters.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_panelFilters.createSequentialGroup()
-							.addGap(227)
-							.addComponent(btnFilterClass, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
-							.addComponent(scrollPaneFilterClass, GroupLayout.PREFERRED_SIZE, 247, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblFilterClass, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
-							.addComponent(textFieldFilterClass, GroupLayout.PREFERRED_SIZE, 227, GroupLayout.PREFERRED_SIZE))))
-		);
-		gl_panelFilters.setVerticalGroup(
-			gl_panelFilters.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelFilters.createSequentialGroup()
-					.addGap(8)
-					.addComponent(lblFilters, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-					.addGap(39)
-					.addComponent(lblSearchID, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textFieldSearchID, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-					.addGap(40)
-					.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panelFilters.createSequentialGroup()
-							.addComponent(lblFilterClass, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-							.addGap(10)
-							.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
-								.addComponent(textFieldFilterClass, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnFilterClass, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(gl_panelFilters.createSequentialGroup()
-							.addGap(61)
-							.addComponent(scrollPaneFilterClass, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(138, Short.MAX_VALUE))
-		);
-		panelFilters.setLayout(gl_panelFilters);
+		
+		dimensionar();
+		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -424,7 +371,7 @@ public class ViewDisciplanesList extends JPanel {
 	private void listagem() {
 
 		DefaultTableModel model = new DefaultTableModel(new Object[][] {},
-				new String[] { "ID", "Disciplina", "Qnt. de Turmas" }) {
+				new String[] { "ID", "Disciplina", "Qnt. de Turmas", "Qnt. de Professores" }) {
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false, false, false, false };
 
@@ -433,8 +380,10 @@ public class ViewDisciplanesList extends JPanel {
 			}
 		};
 
-		String readLista = "select d.id, d.nome, count(es.id_turma) " + "from disciplinas as d "
-				+ "left outer join estuda as es " + "on d.id = es.id_disciplina " + "group by d.id "
+		String readLista = "select d.id, d.nome, count(distinct es.id_turma), count(distinct en.matricula_professor) from disciplinas d "
+				+ "left join estuda es on d.id = es.id_disciplina "
+				+ "left join ensina en on d.id = en.id_disciplina "
+				+ "group by d.id "
 				+ "order by d.nome;";
 
 		try {
@@ -443,14 +392,15 @@ public class ViewDisciplanesList extends JPanel {
 			rs = pst.executeQuery();
 
 			while (rs.next()) {
-				model.addRow(new Object[] { rs.getString(1), rs.getString(2), rs.getInt(3) });
+				model.addRow(new Object[] { rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4) });
 			}
 
 			table.setModel(model);
 
 			table.getColumnModel().getColumn(0).setPreferredWidth(45);
-			table.getColumnModel().getColumn(1).setPreferredWidth(400);
-			table.getColumnModel().getColumn(2).setPreferredWidth(100);
+			table.getColumnModel().getColumn(1).setPreferredWidth(300);
+			table.getColumnModel().getColumn(2).setPreferredWidth(150);
+			table.getColumnModel().getColumn(3).setPreferredWidth(150);
 
 			con.close();
 		} catch (Exception e) {
@@ -477,56 +427,42 @@ public class ViewDisciplanesList extends JPanel {
 			scrollPaneFilterClass.setVisible(true);
 			btnFilterClass.setIcon(
 					new ImageIcon(ViewStudentsList.class.getResource("/img/seta_de_itens_para_cima_icon.png")));
+			
+			dimensionar();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e);
 		}
 	}
 
 	private void buscar() {
-		String insert = "select d.id, d.nome, count(es.id_turma) from disciplinas as d "
-				+ "left outer join estuda as es on d.id = es.id_disciplina ";
+		String insert = "select d.id, d.nome, count(distinct es.id_turma), count(distinct en.matricula_professor) from disciplinas d "
+				+ "left join estuda es on d.id = es.id_disciplina "
+				+ "left join ensina en on d.id - en.id_disciplina "
+				+ "join turmas t on t.id = es.id_turma ";
 
-		if (!textFieldSearch.getText().isEmpty()) {
+		if (!textFieldSearch.getText().isBlank()) {
 			insert += "where d.nome like '" + textFieldSearch.getText() + "%' ";
 		}
 		if (!textFieldSearchID.getText().isEmpty()) {
-			if (textFieldSearch.getText().isEmpty()) {
+			if (textFieldSearch.getText().isBlank()) {
 				insert += "where d.id like '" + textFieldSearchID.getText() + "%' ";
 			} else {
 				insert += "and d.id like '" + textFieldSearchID.getText() + "%' ";
 			}
 		}
-		if (!textFieldFilterClass.getText().isEmpty()) {
-
-			String insertBuscarTurma = "select * from turmas where nome= '" + textFieldFilterClass.getText() + "'";
-			int id_turma = 0;
-			try {
-				con = DAO.conectar();
-				pst = con.prepareStatement(insertBuscarTurma);
-				rs = pst.executeQuery();
-
-				if (rs.next()) {
-					id_turma = rs.getInt(1);
-				}
-
-				con.close();
-			} catch (Exception e) {
-				JOptionPane.showMessageDialog(null, e);
-			}
-
-			if (textFieldSearch.getText().isEmpty() && textFieldSearchID.getText().isEmpty()) {
-				insert += "where es.id_turma = '" + id_turma + "' ";
-			} else {
-				insert += "and es.id_turma = '" + id_turma + "' ";
-			}
+		
+		insert += "group by d.id ";
+		
+		if (!textFieldFilterClass.getText().isBlank()) {
+			insert += "having group_concat(distinct t.nome) like '%"+ textFieldFilterClass.getText() +"%' ";
 		}
 
-		insert += "group by d.id, d.nome order by d.nome";
+		insert += "order by d.nome";
 
 		DefaultTableModel model = new DefaultTableModel(new Object[][] {},
-				new String[] { "ID", "Disciplina", "Qnt. de Turmas" }) {
+				new String[] { "ID", "Disciplina", "Qnt. de Turmas", "Qnt. de Professores" }) {
 			private static final long serialVersionUID = 1L;
-			boolean[] columnEditables = new boolean[] { false, false, false };
+			boolean[] columnEditables = new boolean[] { false, false, false, false };
 
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
@@ -539,47 +475,19 @@ public class ViewDisciplanesList extends JPanel {
 			rs = pst.executeQuery();
 
 			while (rs.next()) {
-				model.addRow(new Object[] { rs.getString(1), rs.getString(2), rs.getInt(3) });
+				model.addRow(new Object[] { rs.getString(1), rs.getString(2), rs.getInt(3), rs.getInt(4) });
 			}
 
 			table.setModel(model);
 
 			table.getColumnModel().getColumn(0).setPreferredWidth(45);
-			table.getColumnModel().getColumn(1).setPreferredWidth(400);
-			table.getColumnModel().getColumn(2).setPreferredWidth(100);
+			table.getColumnModel().getColumn(1).setPreferredWidth(300);
+			table.getColumnModel().getColumn(2).setPreferredWidth(150);
+			table.getColumnModel().getColumn(3).setPreferredWidth(150);
 
 			con.close();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e);
-		}
-
-		if (!textFieldFilterClass.getText().isEmpty()) {
-			model = new DefaultTableModel(new Object[][] {}, new String[] { "ID", "Disciplina" }) {
-				private static final long serialVersionUID = 1L;
-				boolean[] columnEditables = new boolean[] { false, false };
-
-				public boolean isCellEditable(int row, int column) {
-					return columnEditables[column];
-				}
-			};
-
-			try {
-				con = DAO.conectar();
-				pst = con.prepareStatement(insert);
-				rs = pst.executeQuery();
-
-				while (rs.next()) {
-					model.addRow(new Object[] { rs.getString(1), rs.getString(2) });
-				}
-
-				table.setModel(model);
-
-				table.getColumnModel().getColumn(0).setPreferredWidth(15);
-				table.getColumnModel().getColumn(1).setPreferredWidth(400);
-				con.close();
-			} catch (Exception e) {
-				JOptionPane.showMessageDialog(null, e);
-			}
 		}
 	}
 
@@ -600,6 +508,54 @@ public class ViewDisciplanesList extends JPanel {
 	private void sair(Admin adm) {
 		adm.dispose();
 		new Login().setVisible(true);
+	}
+	
+	private void dimensionar() {
+		GroupLayout gl_panelFilters = new GroupLayout(panelFilters);
+		gl_panelFilters.setHorizontalGroup(
+			gl_panelFilters.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelFilters.createSequentialGroup()
+					.addGap(8)
+					.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(gl_panelFilters.createSequentialGroup()
+							.addComponent(textFieldSearchID)
+							.addContainerGap())
+						.addComponent(lblFilters, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblSearchID, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE)))
+				.addGroup(gl_panelFilters.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(gl_panelFilters.createSequentialGroup()
+							.addGap(227)
+							.addComponent(btnFilterClass, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
+							.addComponent(scrollPaneFilterClass, GroupLayout.PREFERRED_SIZE, 247, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblFilterClass, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
+							.addComponent(textFieldFilterClass, GroupLayout.PREFERRED_SIZE, 227, GroupLayout.PREFERRED_SIZE))))
+		);
+		gl_panelFilters.setVerticalGroup(
+			gl_panelFilters.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelFilters.createSequentialGroup()
+					.addGap(8)
+					.addComponent(lblFilters, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+					.addGap(39)
+					.addComponent(lblSearchID, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(textFieldSearchID, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+					.addGap(40)
+					.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelFilters.createSequentialGroup()
+							.addComponent(lblFilterClass, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+							.addGap(10)
+							.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
+								.addComponent(textFieldFilterClass, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnFilterClass, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_panelFilters.createSequentialGroup()
+							.addGap(61)
+							.addComponent(scrollPaneFilterClass, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(138, Short.MAX_VALUE))
+		);
+		panelFilters.setLayout(gl_panelFilters);
 	}
 
 }

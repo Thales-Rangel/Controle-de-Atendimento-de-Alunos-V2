@@ -53,6 +53,10 @@ public class ViewProfessorsList extends JPanel {
 	private JButton btnFilterDisciplane;
 
 	private Admin adm;
+	private JPanel panelFilters;
+	private JLabel lblFilters;
+	private JLabel lblSearchMatricula;
+	private JLabel lblFilterDisciplane;
 	/**
 	 * Create the panel.
 	 */
@@ -187,14 +191,7 @@ public class ViewProfessorsList extends JPanel {
 		textFieldSearch.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				if (!textFieldSearch.getText().isEmpty()) {
 					buscar();
-				} else if (textFieldSearchMatricula.getText().isEmpty()
-						&& textFieldFilterDisciplane.getText().isEmpty()) {
-					listagem();
-				} else {
-					buscar();
-				}
 			}
 		});
 		textFieldSearch.setToolTipText("Pesquisar por nome do professor");
@@ -215,15 +212,15 @@ public class ViewProfessorsList extends JPanel {
 				new String[] { "Nome", "Matricula" }));
 		scrollPane.setViewportView(table);
 
-		JPanel panelFilters = new JPanel();
+		panelFilters = new JPanel();
 		panelFilters.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 
-		JLabel lblFilters = new JLabel("Outros mecânismos de busca:");
+		lblFilters = new JLabel("Outros mecânismos de busca:");
 		lblFilters.setLabelFor(panelFilters);
 		lblFilters.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFilters.setFont(new Font("Arial", Font.BOLD, 15));
 
-		JLabel lblSearchMatricula = new JLabel("Buscar por matrícula:");
+		lblSearchMatricula = new JLabel("Buscar por matrícula:");
 		lblSearchMatricula.setFont(new Font("Arial", Font.PLAIN, 15));
 
 		textFieldSearchMatricula = new JTextField();
@@ -238,13 +235,7 @@ public class ViewProfessorsList extends JPanel {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				if (!textFieldSearchMatricula.getText().isEmpty()) {
 					buscar();
-				} else if (textFieldSearch.getText().isEmpty() && textFieldFilterDisciplane.getText().isEmpty()) {
-					listagem();
-				} else {
-					buscar();
-				}
 			}
 		});
 		textFieldSearchMatricula.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -252,7 +243,7 @@ public class ViewProfessorsList extends JPanel {
 		textFieldSearchMatricula.setColumns(10);
 		textFieldSearchMatricula.setDocument(new Validador(20));
 
-		JLabel lblFilterDisciplane = new JLabel("Filtrar por disciplina:");
+		lblFilterDisciplane = new JLabel("Filtrar por disciplina:");
 		lblFilterDisciplane.setFont(new Font("Arial", Font.PLAIN, 15));
 
 		textFieldFilterDisciplane = new JTextField();
@@ -265,11 +256,9 @@ public class ViewProfessorsList extends JPanel {
 					textFieldFilterDisciplane.setText("");
 					btnFilterDisciplane
 							.setIcon(new ImageIcon(ViewStudentsList.class.getResource("/img/seta_de_itens_icon.png")));
-					if (textFieldSearch.getText().isEmpty() && textFieldSearchMatricula.getText().isEmpty()) {
-						listagem();
-					} else {
-						buscar();
-					}
+					
+					dimensionar();
+					buscar();
 				} else {
 					listarDisciplinas();
 				}
@@ -309,11 +298,9 @@ public class ViewProfessorsList extends JPanel {
 					textFieldFilterDisciplane.setText("");
 					btnFilterDisciplane
 							.setIcon(new ImageIcon(ViewStudentsList.class.getResource("/img/seta_de_itens_icon.png")));
-					if (textFieldSearch.getText().isEmpty() && textFieldSearchMatricula.getText().isEmpty()) {
-						listagem();
-					} else {
-						buscar();
-					}
+					
+					dimensionar();
+					buscar();
 				} else {
 					listarDisciplinas();
 					textFieldFilterDisciplane.requestFocus();
@@ -321,51 +308,9 @@ public class ViewProfessorsList extends JPanel {
 			}
 		});
 		btnFilterDisciplane.setIcon(new ImageIcon(ViewStudentsList.class.getResource("/img/seta_de_itens_icon.png")));
-		GroupLayout gl_panelFilters = new GroupLayout(panelFilters);
-		gl_panelFilters.setHorizontalGroup(
-			gl_panelFilters.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelFilters.createSequentialGroup()
-					.addGap(8)
-					.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_panelFilters.createSequentialGroup()
-							.addComponent(textFieldSearchMatricula)
-							.addContainerGap())
-						.addComponent(lblFilters, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblSearchMatricula, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE)))
-				.addGroup(gl_panelFilters.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_panelFilters.createSequentialGroup()
-							.addGap(225)
-							.addComponent(btnFilterDisciplane, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
-							.addComponent(scrollPaneFilterDisciplane, GroupLayout.PREFERRED_SIZE, 245, GroupLayout.PREFERRED_SIZE)
-							.addComponent(textFieldFilterDisciplane, GroupLayout.PREFERRED_SIZE, 225, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblFilterDisciplane, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE))))
-		);
-		gl_panelFilters.setVerticalGroup(
-			gl_panelFilters.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelFilters.createSequentialGroup()
-					.addGap(8)
-					.addComponent(lblFilters, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-					.addGap(39)
-					.addComponent(lblSearchMatricula, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textFieldSearchMatricula, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-					.addGap(36)
-					.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panelFilters.createSequentialGroup()
-							.addComponent(lblFilterDisciplane, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-							.addGap(10)
-							.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
-								.addComponent(textFieldFilterDisciplane, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnFilterDisciplane, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(gl_panelFilters.createSequentialGroup()
-							.addGap(61)
-							.addComponent(scrollPaneFilterDisciplane, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(142, Short.MAX_VALUE))
-		);
-		panelFilters.setLayout(gl_panelFilters);
+		
+		dimensionar();
+		
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -412,16 +357,20 @@ public class ViewProfessorsList extends JPanel {
 
 	private void listagem() {
 
-		DefaultTableModel model = new DefaultTableModel(new Object[][] {}, new String[] { "Nome", "Matricula" }) {
+		DefaultTableModel model = new DefaultTableModel(new Object[][] {}, new String[] { "Nome", "Matricula", "Disciplinas" }) {
 			private static final long serialVersionUID = 1L;
-			boolean[] columnEditables = new boolean[] { false, false };
+			boolean[] columnEditables = new boolean[] { false, false, false };
 
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
 		};
 
-		String readLista = "select nome, matricula from professores order by nome";
+		String readLista = "select p.nome, p.matricula, group_concat(d.nome) from professores p "
+				+ "left join ensina en on en.matricula_professor = p.matricula "
+				+ "join disciplinas d on d.id = en.id_disciplina "
+				+ "group by p.matricula "
+				+ "order by nome";
 
 		try {
 			con = DAO.conectar();
@@ -429,7 +378,7 @@ public class ViewProfessorsList extends JPanel {
 			rs = pst.executeQuery();
 
 			while (rs.next()) {
-				model.addRow(new Object[] { rs.getString(1), rs.getString(2) });
+				model.addRow(new Object[] { rs.getString(1), rs.getString(2), rs.getString(3) });
 			}
 
 			table.setModel(model);
@@ -459,57 +408,40 @@ public class ViewProfessorsList extends JPanel {
 			scrollPaneFilterDisciplane.setVisible(true);
 			btnFilterDisciplane.setIcon(
 					new ImageIcon(ViewStudentsList.class.getResource("/img/seta_de_itens_para_cima_icon.png")));
+			
+			dimensionar();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e);
 		}
 	}
 
 	private void buscar() {
-		String insert = "select p.nome, p.matricula from professores as p "
-				+ "left  outer join ensina as e "
-				+ "on p.matricula = e.matricula_professor ";
+		String insert = "select p.nome, p.matricula, group_concat(distinct d.nome) from professores p "
+				+ "left join ensina e on p.matricula = e.matricula_professor "
+				+ "join disciplinas d on d.id = e.id_disciplina ";
 
-		if (!textFieldSearch.getText().isEmpty()) {
+		if (!textFieldSearch.getText().isBlank()) {
 			insert += "where p.nome like '" + textFieldSearch.getText() + "%' ";
 		}
 		if (!textFieldSearchMatricula.getText().isEmpty()) {
-			if (textFieldSearch.getText().isEmpty()) {
+			if (textFieldSearch.getText().isBlank()) {
 				insert += "where p.matricula like '" + textFieldSearchMatricula.getText() + "%' ";
 			} else {
 				insert += "and p.matricula like '" + textFieldSearchMatricula.getText() + "%' ";
 			}
 		}
+		
+		insert += "group by p.matricula ";
+		
 		if (!textFieldFilterDisciplane.getText().isEmpty()) {
-
-			String insertBuscarDisciplina = "select * from disciplinas where nome= '"
-					+ textFieldFilterDisciplane.getText() + "'";
-			int id_disciplina = 0;
-			try {
-				con = DAO.conectar();
-				pst = con.prepareStatement(insertBuscarDisciplina);
-				rs = pst.executeQuery();
-
-				if (rs.next()) {
-					id_disciplina = rs.getInt(1);
-				}
-
-				con.close();
-			} catch (Exception e) {
-				JOptionPane.showMessageDialog(null, e);
-			}
-
-			if (textFieldSearch.getText().isEmpty() && textFieldSearchMatricula.getText().isEmpty()) {
-				insert += "where e.id_disciplina = '" + id_disciplina + "' ";
-			} else {
-				insert += "and e.id_disciplina = '" + id_disciplina + "' ";
-			}
+			insert += "having group_concat(distinct d.nome) like '%"+ textFieldFilterDisciplane.getText() +"%' ";
 		}
 
-		insert += "group by p.nome, p.matricula order by p.nome";
+		insert += "order by p.nome";
 
-		DefaultTableModel model = new DefaultTableModel(new Object[][] {}, new String[] { "Nome", "Matricula" }) {
+		DefaultTableModel model = new DefaultTableModel(new Object[][] {}, new String[] { "Nome", "Matricula", "Disciplinas" }) {
 			private static final long serialVersionUID = 1L;
-			boolean[] columnEditables = new boolean[] { false, false };
+			boolean[] columnEditables = new boolean[] { false, false, false };
 
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
@@ -522,7 +454,7 @@ public class ViewProfessorsList extends JPanel {
 			rs = pst.executeQuery();
 
 			while (rs.next()) {
-				model.addRow(new Object[] { rs.getString(1), rs.getString(2) });
+				model.addRow(new Object[] { rs.getString(1), rs.getString(2), rs.getString(3) });
 			}
 
 			table.setModel(model);
@@ -550,5 +482,53 @@ public class ViewProfessorsList extends JPanel {
 	private void sair(Admin adm) {
 		adm.dispose();
 		new Login().setVisible(true);
+	}
+	
+	private void dimensionar() {
+		GroupLayout gl_panelFilters = new GroupLayout(panelFilters);
+		gl_panelFilters.setHorizontalGroup(
+			gl_panelFilters.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelFilters.createSequentialGroup()
+					.addGap(8)
+					.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(gl_panelFilters.createSequentialGroup()
+							.addComponent(textFieldSearchMatricula)
+							.addContainerGap())
+						.addComponent(lblFilters, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblSearchMatricula, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE)))
+				.addGroup(gl_panelFilters.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(gl_panelFilters.createSequentialGroup()
+							.addGap(225)
+							.addComponent(btnFilterDisciplane, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
+							.addComponent(scrollPaneFilterDisciplane, GroupLayout.PREFERRED_SIZE, 245, GroupLayout.PREFERRED_SIZE)
+							.addComponent(textFieldFilterDisciplane, GroupLayout.PREFERRED_SIZE, 225, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblFilterDisciplane, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE))))
+		);
+		gl_panelFilters.setVerticalGroup(
+			gl_panelFilters.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelFilters.createSequentialGroup()
+					.addGap(8)
+					.addComponent(lblFilters, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+					.addGap(39)
+					.addComponent(lblSearchMatricula, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(textFieldSearchMatricula, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+					.addGap(36)
+					.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelFilters.createSequentialGroup()
+							.addComponent(lblFilterDisciplane, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+							.addGap(10)
+							.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
+								.addComponent(textFieldFilterDisciplane, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnFilterDisciplane, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_panelFilters.createSequentialGroup()
+							.addGap(61)
+							.addComponent(scrollPaneFilterDisciplane, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(142, Short.MAX_VALUE))
+		);
+		panelFilters.setLayout(gl_panelFilters);
 	}
 }
