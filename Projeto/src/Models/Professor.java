@@ -34,6 +34,26 @@ public class Professor extends User {
 	
 	public Professor(String matricula) {
 		super(matricula);
+		
+		String insert = "select d.id, d.nome from ensina en "
+				+ "inner join disciplinas d "
+				+ "on d.id = en.id_disciplina "
+				+ "where en.matricula_professor= ?";
+		
+		try {
+			con = DAO.conectar();
+			pst = con.prepareStatement(insert);
+			pst.setString(1, matricula);
+			rs = pst.executeQuery();
+			
+			while (rs.next()) {
+				disciplinas.add(new Disciplane(rs.getInt(1), rs.getString(2)));
+			}
+			
+			con.close();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e);
+		}
 	}
 
 	@Override

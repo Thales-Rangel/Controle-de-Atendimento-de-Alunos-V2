@@ -522,26 +522,9 @@ public class ViewStudentsList extends JPanel {
 
 		String matriculaSelect = (String) table.getValueAt(table.getSelectedRow(), 1);
 
-		String insert = "select * from alunos where matricula= ?";
 
-		try {
-			con = DAO.conectar();
-			pst = con.prepareStatement(insert);
-			pst.setString(1, matriculaSelect);
-			rs = pst.executeQuery();
-
-			if (rs.next()) {
-				Student student = new Student(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4));
-
-				setVisible(false);
-				adm.setContentPane(new ViewStudent(adm, student));
-			}
-			
-			con.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, e);
-		}
+		setVisible(false);
+		adm.setContentPane(new ViewStudent(adm, new Student(matriculaSelect)));
 	}
 
 	private void retorno(Admin adm) {

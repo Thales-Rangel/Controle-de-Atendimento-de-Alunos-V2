@@ -544,25 +544,11 @@ public class ViewTurmasList extends JPanel {
 
 	private void selecionar() {
 
-		String idSelect = (String) table.getValueAt(table.getSelectedRow(), 0);
-
-		String insert = "select * from turmas where id= ?";
-
-		try {
-			con = DAO.conectar();
-			pst = con.prepareStatement(insert);
-			pst.setString(1, idSelect);
-			rs = pst.executeQuery();
-
-			if (rs.next()) {
-				Turma turma = new Turma(rs.getInt(1), rs.getString(2));
-
-				setVisible(false);
-				adm.setContentPane(new ViewTurma(adm, turma));
-			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e);
-		}
+		int idSelect = Integer.parseInt((String) table.getValueAt(table.getSelectedRow(), 0));
+		String nomeSelect = (String) table.getValueAt(table.getSelectedRow(), 1);
+		
+		setVisible(false);
+		adm.setContentPane(new ViewTurma(adm, new Turma(idSelect, nomeSelect)));
 	}
 
 	private void retorno(Admin adm) {

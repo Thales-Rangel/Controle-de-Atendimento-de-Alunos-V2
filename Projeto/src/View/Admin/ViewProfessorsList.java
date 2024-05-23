@@ -537,23 +537,8 @@ public class ViewProfessorsList extends JPanel {
 
 		String matriculaSelect = (String) table.getValueAt(table.getSelectedRow(), 1);
 
-		String insert = "select * from professores where matricula= ?";
-
-		try {
-			con = DAO.conectar();
-			pst = con.prepareStatement(insert);
-			pst.setString(1, matriculaSelect);
-			rs = pst.executeQuery();
-
-			if (rs.next()) {
-				Professor professor = new Professor(rs.getString(1), rs.getString(2), rs.getString(3));
-
-				setVisible(false);
-				adm.setContentPane(new ViewProfessor(adm, professor));
-			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e);
-		}
+		setVisible(false);
+		adm.setContentPane(new ViewProfessor(adm, new Professor(matriculaSelect)));
 	}
 
 	private void retorno(Admin adm) {
