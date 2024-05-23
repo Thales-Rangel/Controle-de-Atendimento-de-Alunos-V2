@@ -25,6 +25,8 @@ import javax.swing.table.DefaultTableModel;
 import Models.DAO;
 import Models.Student;
 import View.Login;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 public class ViewStudent extends JPanel {
 	
@@ -45,11 +47,8 @@ public class ViewStudent extends JPanel {
 		this.s = s;
 		
 		setBounds(100, 100, 846, 621);
-		setLayout(null);
 		
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 846, 22);
-		add(menuBar);
 		
 		JMenu mnStudents = new JMenu("Alunos");
 		mnStudents.setForeground(Color.BLACK);
@@ -175,8 +174,6 @@ public class ViewStudent extends JPanel {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		panel.setBounds(10, 32, 826, 88);
-		add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 		
 		JLabel lblNome = new JLabel(s.getNome());
@@ -189,8 +186,6 @@ public class ViewStudent extends JPanel {
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_1.setBounds(10, 129, 826, 53);
-		add(panel_1);
 		panel_1.setLayout(new BoxLayout(panel_1, BoxLayout.X_AXIS));
 		
 		JLabel lblTurma = new JLabel("Turma: " + s.getTurma().getNome());
@@ -198,8 +193,6 @@ public class ViewStudent extends JPanel {
 		panel_1.add(lblTurma);
 		
 		JScrollPane scrollPaneDisciplinas = new JScrollPane();
-		scrollPaneDisciplinas.setBounds(10, 192, 287, 419);
-		add(scrollPaneDisciplinas);
 		
 		tableDisciplinas = new JTable();
 		tableDisciplinas.setRowSelectionAllowed(false);
@@ -214,8 +207,6 @@ public class ViewStudent extends JPanel {
 		scrollPaneDisciplinas.setViewportView(tableDisciplinas);
 		
 		JScrollPane scrollPaneProfessores = new JScrollPane();
-		scrollPaneProfessores.setBounds(307, 192, 287, 419);
-		add(scrollPaneProfessores);
 		
 		tableProfessores = new JTable();
 		tableProfessores.setRowSelectionAllowed(false);
@@ -261,8 +252,6 @@ public class ViewStudent extends JPanel {
 		btnDelete.setForeground(Color.WHITE);
 		btnDelete.setBackground(Color.RED);
 		btnDelete.setFont(new Font("Arial", Font.PLAIN, 20));
-		btnDelete.setBounds(604, 294, 232, 39);
-		add(btnDelete);
 		
 		JButton btnReturn = new JButton("Voltar");
 		btnReturn.addActionListener(new ActionListener() {
@@ -274,8 +263,49 @@ public class ViewStudent extends JPanel {
 		btnReturn.setForeground(Color.BLACK);
 		btnReturn.setFont(new Font("Arial", Font.PLAIN, 20));
 		btnReturn.setBackground(UIManager.getColor("Button.background"));
-		btnReturn.setBounds(604, 343, 232, 39);
-		add(btnReturn);
+		GroupLayout groupLayout = new GroupLayout(this);
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addComponent(menuBar, GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 826, Short.MAX_VALUE)
+					.addGap(10))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 826, Short.MAX_VALUE)
+					.addGap(10))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addComponent(scrollPaneDisciplinas, GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+					.addGap(10)
+					.addComponent(scrollPaneProfessores, GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+					.addGap(10)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 232, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 232, GroupLayout.PREFERRED_SIZE))
+					.addGap(10))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addComponent(menuBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+					.addGap(9)
+					.addComponent(panel_1, GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+					.addGap(10)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollPaneDisciplinas, GroupLayout.PREFERRED_SIZE, 419, GroupLayout.PREFERRED_SIZE)
+						.addComponent(scrollPaneProfessores, GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(102)
+							.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+							.addGap(10)
+							.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)))
+					.addGap(10))
+		);
+		setLayout(groupLayout);
 		
 		listar();
 

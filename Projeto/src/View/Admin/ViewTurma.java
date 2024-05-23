@@ -24,6 +24,8 @@ import Models.DAO;
 import Models.Turma;
 import View.Login;
 import javax.swing.JButton;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 public class ViewTurma extends JPanel {
 
@@ -48,11 +50,8 @@ public class ViewTurma extends JPanel {
 		this.t = t;
 
 		setBounds(100, 100, 846, 621);
-		setLayout(null);
 
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 846, 22);
-		add(menuBar);
 
 		JMenu mnStudents = new JMenu("Alunos");
 		mnStudents.setForeground(Color.BLACK);
@@ -178,8 +177,6 @@ public class ViewTurma extends JPanel {
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		panel.setBounds(10, 32, 826, 88);
-		add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
 		lblNome = new JLabel(t.getNome() + " - ID: " + t.getId());
@@ -187,8 +184,6 @@ public class ViewTurma extends JPanel {
 		panel.add(lblNome);
 
 		JScrollPane scrollPaneProfessores = new JScrollPane();
-		scrollPaneProfessores.setBounds(10, 130, 269, 239);
-		add(scrollPaneProfessores);
 
 		tableProfessores = new JTable();
 		tableProfessores.setRowSelectionAllowed(false);
@@ -207,8 +202,6 @@ public class ViewTurma extends JPanel {
 		scrollPaneProfessores.setViewportView(tableProfessores);
 
 		JScrollPane scrollPaneDisciplinas = new JScrollPane();
-		scrollPaneDisciplinas.setBounds(289, 130, 269, 239);
-		add(scrollPaneDisciplinas);
 
 		tableDisciplinas = new JTable();
 		tableDisciplinas.setRowSelectionAllowed(false);
@@ -227,8 +220,6 @@ public class ViewTurma extends JPanel {
 		scrollPaneDisciplinas.setViewportView(tableDisciplinas);
 
 		JScrollPane scrollPaneAlunos = new JScrollPane();
-		scrollPaneAlunos.setBounds(10, 379, 548, 232);
-		add(scrollPaneAlunos);
 
 		tableAlunos = new JTable();
 		tableAlunos.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Aluno", "Matricula" }) {
@@ -255,8 +246,6 @@ public class ViewTurma extends JPanel {
 		btnApagarTurma.setForeground(Color.WHITE);
 		btnApagarTurma.setFont(new Font("Arial", Font.PLAIN, 20));
 		btnApagarTurma.setBackground(Color.RED);
-		btnApagarTurma.setBounds(568, 306, 268, 39);
-		add(btnApagarTurma);
 		
 		JButton btnEdit = new JButton("Editar Turma");
 		btnEdit.addActionListener(new ActionListener() {
@@ -265,8 +254,6 @@ public class ViewTurma extends JPanel {
 			}
 		});
 		btnEdit.setFont(new Font("Arial", Font.PLAIN, 20));
-		btnEdit.setBounds(568, 355, 268, 39);
-		add(btnEdit);
 		
 		JButton btnReturn = new JButton("Voltar");
 		btnReturn.addActionListener(new ActionListener() {
@@ -276,8 +263,53 @@ public class ViewTurma extends JPanel {
 			}
 		});
 		btnReturn.setFont(new Font("Arial", Font.PLAIN, 20));
-		btnReturn.setBounds(568, 404, 268, 39);
-		add(btnReturn);
+		GroupLayout groupLayout = new GroupLayout(this);
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addComponent(menuBar, GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 826, Short.MAX_VALUE)
+					.addGap(10))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addComponent(scrollPaneProfessores, GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
+							.addGap(10)
+							.addComponent(scrollPaneDisciplinas, GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE))
+						.addComponent(scrollPaneAlunos, GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE))
+					.addGap(10)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnApagarTurma, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnEdit, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE))
+					.addGap(10))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addComponent(menuBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+					.addGap(10)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(scrollPaneProfessores, GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+								.addComponent(scrollPaneDisciplinas, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE))
+							.addGap(10)
+							.addComponent(scrollPaneAlunos, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(176)
+							.addComponent(btnApagarTurma, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+							.addGap(10)
+							.addComponent(btnEdit, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+							.addGap(10)
+							.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)))
+					.addGap(10))
+		);
+		setLayout(groupLayout);
 
 		listagem();
 

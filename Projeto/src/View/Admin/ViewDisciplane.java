@@ -25,6 +25,8 @@ import javax.swing.table.DefaultTableModel;
 import Models.DAO;
 import Models.Disciplane;
 import View.Login;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 
 public class ViewDisciplane extends JPanel {
 
@@ -48,11 +50,8 @@ public class ViewDisciplane extends JPanel {
 		this.adm = adm;
 
 		setBounds(100, 100, 846, 621);
-		setLayout(null);
 
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 846, 22);
-		add(menuBar);
 
 		JMenu mnStudents = new JMenu("Alunos");
 		mnStudents.setForeground(Color.BLACK);
@@ -178,8 +177,6 @@ public class ViewDisciplane extends JPanel {
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-		panel.setBounds(10, 32, 826, 88);
-		add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
 		lblNome = new JLabel(d.getNome());
@@ -191,8 +188,6 @@ public class ViewDisciplane extends JPanel {
 		panel.add(lblID);
 
 		JScrollPane scrollPaneProfessors = new JScrollPane();
-		scrollPaneProfessors.setBounds(10, 130, 287, 481);
-		add(scrollPaneProfessors);
 
 		tableProfessors = new JTable();
 		tableProfessors.setRowSelectionAllowed(false);
@@ -201,8 +196,6 @@ public class ViewDisciplane extends JPanel {
 		scrollPaneProfessors.setViewportView(tableProfessors);
 
 		JScrollPane scrollPaneTurmas = new JScrollPane();
-		scrollPaneTurmas.setBounds(307, 130, 287, 481);
-		add(scrollPaneTurmas);
 
 		tableTurmas = new JTable();
 		tableTurmas.setRowSelectionAllowed(false);
@@ -224,8 +217,6 @@ public class ViewDisciplane extends JPanel {
 		btnDelete.setForeground(Color.WHITE);
 		btnDelete.setBackground(Color.RED);
 		btnDelete.setFont(new Font("Arial", Font.PLAIN, 20));
-		btnDelete.setBounds(604, 294, 232, 39);
-		add(btnDelete);
 
 		JButton btnReturn = new JButton("Voltar");
 		btnReturn.addActionListener(new ActionListener() {
@@ -237,8 +228,6 @@ public class ViewDisciplane extends JPanel {
 		btnReturn.setForeground(Color.BLACK);
 		btnReturn.setFont(new Font("Arial", Font.PLAIN, 20));
 		btnReturn.setBackground(UIManager.getColor("Button.background"));
-		btnReturn.setBounds(604, 392, 232, 39);
-		add(btnReturn);
 		
 		JButton btnEdit = new JButton("Editar Disciplina");
 		btnEdit.addActionListener(new ActionListener() {
@@ -247,8 +236,46 @@ public class ViewDisciplane extends JPanel {
 			}
 		});
 		btnEdit.setFont(new Font("Arial", Font.PLAIN, 20));
-		btnEdit.setBounds(604, 343, 232, 39);
-		add(btnEdit);
+		GroupLayout groupLayout = new GroupLayout(this);
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addComponent(menuBar, GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 826, Short.MAX_VALUE)
+					.addGap(10))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addComponent(scrollPaneProfessors, GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+					.addGap(10)
+					.addComponent(scrollPaneTurmas, GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+					.addGap(10)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 232, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnEdit, GroupLayout.PREFERRED_SIZE, 232, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 232, GroupLayout.PREFERRED_SIZE))
+					.addGap(10))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addComponent(menuBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+					.addGap(10)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollPaneProfessors, GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
+						.addComponent(scrollPaneTurmas, GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(164)
+							.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+							.addGap(10)
+							.addComponent(btnEdit, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+							.addGap(10)
+							.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)))
+					.addGap(10))
+		);
+		setLayout(groupLayout);
 
 		listar();
 

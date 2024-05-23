@@ -33,6 +33,9 @@ import Models.DAO;
 import Models.Disciplane;
 import Utils.Validador;
 import View.Login;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class ViewDisciplanesList extends JPanel {
 
@@ -58,11 +61,8 @@ public class ViewDisciplanesList extends JPanel {
 		this.adm = adm;
 		
 		setBounds(100, 100, 846, 621);
-		setLayout(null);
 
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 846, 22);
-		add(menuBar);
 
 		JMenu mnStudents = new JMenu("Alunos");
 		mnStudents.setForeground(Color.BLACK);
@@ -180,13 +180,9 @@ public class ViewDisciplanesList extends JPanel {
 		JLabel lblPagina = new JLabel("Tabela de disciplinas cadastradas");
 		lblPagina.setHorizontalAlignment(SwingConstants.CENTER);
 		lblPagina.setFont(new Font("Arial Black", Font.PLAIN, 20));
-		lblPagina.setBounds(10, 40, 381, 32);
-		add(lblPagina);
 
 		JLabel lblIcon = new JLabel("");
 		lblIcon.setIcon(new ImageIcon(ViewTurmasList.class.getResource("/img/Search_Icon.png")));
-		lblIcon.setBounds(401, 40, 32, 32);
-		add(lblIcon);
 
 		textFieldSearch = new JTextField();
 		textFieldSearch.addKeyListener(new KeyAdapter() {
@@ -203,14 +199,10 @@ public class ViewDisciplanesList extends JPanel {
 		});
 		textFieldSearch.setToolTipText("Pesquisar por nome da disciplina");
 		textFieldSearch.setFont(new Font("Arial", Font.PLAIN, 15));
-		textFieldSearch.setBounds(443, 46, 359, 26);
 		textFieldSearch.setColumns(10);
 		textFieldSearch.setDocument(new Validador(30));
-		add(textFieldSearch);
 
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 88, 546, 523);
-		add(scrollPane);
 
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
@@ -236,21 +228,14 @@ public class ViewDisciplanesList extends JPanel {
 
 		JPanel panelFilters = new JPanel();
 		panelFilters.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		panelFilters.setBounds(566, 88, 280, 533);
-		add(panelFilters);
-		panelFilters.setLayout(null);
 
 		JLabel lblFilters = new JLabel("Outros mecânismos de busca:");
 		lblFilters.setLabelFor(panelFilters);
 		lblFilters.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFilters.setFont(new Font("Arial", Font.BOLD, 15));
-		lblFilters.setBounds(10, 10, 260, 26);
-		panelFilters.add(lblFilters);
 
 		JLabel lblSearchID = new JLabel("Buscar por ID:");
 		lblSearchID.setFont(new Font("Arial", Font.PLAIN, 15));
-		lblSearchID.setBounds(10, 75, 157, 26);
-		panelFilters.add(lblSearchID);
 
 		textFieldSearchID = new JTextField();
 		textFieldSearchID.addKeyListener(new KeyAdapter() {
@@ -275,15 +260,11 @@ public class ViewDisciplanesList extends JPanel {
 		});
 		textFieldSearchID.setFont(new Font("Arial", Font.PLAIN, 15));
 		lblSearchID.setLabelFor(textFieldSearchID);
-		textFieldSearchID.setBounds(10, 101, 260, 26);
-		panelFilters.add(textFieldSearchID);
 		textFieldSearchID.setColumns(10);
 		textFieldSearchID.setDocument(new Validador(20));
 
 		JLabel lblFilterClass = new JLabel("Filtrar por turma:");
 		lblFilterClass.setFont(new Font("Arial", Font.PLAIN, 15));
-		lblFilterClass.setBounds(10, 169, 157, 26);
-		panelFilters.add(lblFilterClass);
 
 		textFieldFilterClass = new JTextField();
 		textFieldFilterClass.addMouseListener(new MouseAdapter() {
@@ -309,13 +290,9 @@ public class ViewDisciplanesList extends JPanel {
 		textFieldFilterClass.setFont(new Font("Arial", Font.PLAIN, 15));
 		textFieldFilterClass.setBackground(Color.WHITE);
 		textFieldFilterClass.setEditable(false);
-		textFieldFilterClass.setBounds(10, 205, 240, 26);
-		panelFilters.add(textFieldFilterClass);
 		textFieldFilterClass.setColumns(10);
 
 		scrollPaneFilterClass = new JScrollPane();
-		scrollPaneFilterClass.setBounds(10, 230, 260, 149);
-		panelFilters.add(scrollPaneFilterClass);
 
 		listTurmas = new JList<String>();
 		listTurmas.addMouseListener(new MouseAdapter() {
@@ -355,8 +332,88 @@ public class ViewDisciplanesList extends JPanel {
 			}
 		});
 		btnFilterClass.setIcon(new ImageIcon(ViewStudentsList.class.getResource("/img/seta_de_itens_icon.png")));
-		btnFilterClass.setBounds(250, 205, 20, 26);
-		panelFilters.add(btnFilterClass);
+		GroupLayout gl_panelFilters = new GroupLayout(panelFilters);
+		gl_panelFilters.setHorizontalGroup(
+			gl_panelFilters.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelFilters.createSequentialGroup()
+					.addGap(8)
+					.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(gl_panelFilters.createSequentialGroup()
+							.addComponent(textFieldSearchID)
+							.addContainerGap())
+						.addComponent(lblFilters, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblSearchID, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE)))
+				.addGroup(gl_panelFilters.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(gl_panelFilters.createSequentialGroup()
+							.addGap(227)
+							.addComponent(btnFilterClass, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
+							.addComponent(scrollPaneFilterClass, GroupLayout.PREFERRED_SIZE, 247, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblFilterClass, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
+							.addComponent(textFieldFilterClass, GroupLayout.PREFERRED_SIZE, 227, GroupLayout.PREFERRED_SIZE))))
+		);
+		gl_panelFilters.setVerticalGroup(
+			gl_panelFilters.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelFilters.createSequentialGroup()
+					.addGap(8)
+					.addComponent(lblFilters, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+					.addGap(39)
+					.addComponent(lblSearchID, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(textFieldSearchID, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+					.addGap(40)
+					.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelFilters.createSequentialGroup()
+							.addComponent(lblFilterClass, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+							.addGap(10)
+							.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
+								.addComponent(textFieldFilterClass, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnFilterClass, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_panelFilters.createSequentialGroup()
+							.addGap(61)
+							.addComponent(scrollPaneFilterClass, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(138, Short.MAX_VALUE))
+		);
+		panelFilters.setLayout(gl_panelFilters);
+		GroupLayout groupLayout = new GroupLayout(this);
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addComponent(menuBar, GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addComponent(lblPagina, GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)
+					.addGap(10)
+					.addComponent(lblIcon)
+					.addGap(10)
+					.addComponent(textFieldSearch, GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
+					.addGap(44))
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(10)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
+					.addGap(10)
+					.addComponent(panelFilters, GroupLayout.PREFERRED_SIZE, 270, GroupLayout.PREFERRED_SIZE)
+					.addGap(10))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addComponent(menuBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblPagina, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblIcon)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(6)
+							.addComponent(textFieldSearch, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)))
+					.addGap(16)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
+						.addComponent(panelFilters, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addGap(10))
+		);
+		setLayout(groupLayout);
 
 		scrollPaneFilterClass.setVisible(false);
 		listTurmas.setVisible(false);
