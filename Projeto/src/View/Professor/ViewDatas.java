@@ -152,9 +152,9 @@ public class ViewDatas extends JPanel {
 		DefaultListModel<String> modeloTurmas = new DefaultListModel<String>();
 		
 		String readT = "select distinct t.nome from estuda es "
-				+ "inner join turmas t "
+				+ "join turmas t "
 				+ "on t.id = es.id_turma "
-				+ "inner join ensina en "
+				+ "join ensina en "
 				+ "on en.id_disciplina = es.id_disciplina "
 				+ "where en.matricula_professor= '"+ p.getMatricula()+"' "
 				+ "order by t.nome";

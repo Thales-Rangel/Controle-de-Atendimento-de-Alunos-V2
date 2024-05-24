@@ -63,11 +63,11 @@ public class AlterDatas extends JPanel {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					if (passwordField.getText().trim().isEmpty()) {
+					if (passwordField.getText().isBlank()) {
 						passwordField.requestFocus();
-					} else if (newPasswordField.getText().trim().isEmpty()) {
+					} else if (newPasswordField.getText().isBlank()) {
 						newPasswordField.requestFocus();
-					} else if (RepeatPasswordField.getText().trim().isEmpty()) {
+					} else if (RepeatPasswordField.getText().isBlank()) {
 						RepeatPasswordField.requestFocus();
 					} else {
 						atualizar();
@@ -92,11 +92,11 @@ public class AlterDatas extends JPanel {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					if (newPasswordField.getText().trim().isEmpty()) {
+					if (newPasswordField.getText().isBlank()) {
 						newPasswordField.requestFocus();
-					} else if (RepeatPasswordField.getText().trim().isEmpty()) {
+					} else if (RepeatPasswordField.getText().isBlank()) {
 						RepeatPasswordField.requestFocus();
-					} else if (textField.getText().trim().isEmpty()) {
+					} else if (textField.getText().isBlank()) {
 						textField.requestFocus();
 					} else {
 						atualizar();
@@ -113,11 +113,11 @@ public class AlterDatas extends JPanel {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					if (RepeatPasswordField.getText().trim().isEmpty()) {
+					if (RepeatPasswordField.getText().isBlank()) {
 						RepeatPasswordField.requestFocus();
-					} else if (textField.getText().trim().isEmpty()) {
+					} else if (textField.getText().isBlank()) {
 						textField.requestFocus();
-					} else if (passwordField.getText().trim().isEmpty()) {
+					} else if (passwordField.getText().isBlank()) {
 						passwordField.requestFocus();
 					} else {
 						atualizar();
@@ -134,11 +134,11 @@ public class AlterDatas extends JPanel {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					if (textField.getText().trim().isEmpty()) {
+					if (textField.getText().isBlank()) {
 						textField.requestFocus();
-					} else if (passwordField.getText().trim().isEmpty()) {
+					} else if (passwordField.getText().isBlank()) {
 						passwordField.requestFocus();
-					} else if (newPasswordField.getText().trim().isEmpty()) {
+					} else if (newPasswordField.getText().isBlank()) {
 						newPasswordField.requestFocus();
 					} else {
 						atualizar();
@@ -233,20 +233,19 @@ public class AlterDatas extends JPanel {
 
 	@SuppressWarnings("deprecation")
 	private void atualizar() {
-		if (!passwordField.getText().trim().isEmpty() && passwordField.getText().trim().equals(p.getSenha())) {
-			if (!((textField.getText().trim().isEmpty() || textField.getText().trim().equals(p.getNome()))
-					&& newPasswordField.getText().trim().isEmpty())) {
+		if (!passwordField.getText().isBlank() && passwordField.getText().trim().equals(p.getSenha())) {
+			if (!((textField.getText().isBlank() || textField.getText().trim().equals(p.getNome())) && newPasswordField.getText().isBlank())) {
 				int confirma = JOptionPane.showConfirmDialog(null, "Você tem certeza que deseja mudar esses dados?");
 
 				if (confirma == JOptionPane.YES_OPTION) {
 
-					if (!(textField.getText().trim().isEmpty() && textField.getText().trim().equals(p.getNome()))) {
+					if (!(textField.getText().isBlank() || textField.getText().trim().equals(p.getNome()))) {
 						String newNome = textField.getText().trim();
 
 						p.setNome(newNome);
 					}
 
-					if (!newPasswordField.getText().trim().isEmpty() && newPasswordField.getText().trim().equals(RepeatPasswordField.getText().trim())) {
+					if (!newPasswordField.getText().isBlank() && newPasswordField.getText().trim().equals(RepeatPasswordField.getText().trim())) {
 						String newSenha = newPasswordField.getText().trim();
 
 						p.setSenha(newSenha);
@@ -255,15 +254,16 @@ public class AlterDatas extends JPanel {
 						JOptionPane.showMessageDialog(null, "A nova senha não foi repetida corretamente!");
 					}
 					
-					if (newPasswordField.getText().trim().isEmpty() || newPasswordField.getText().trim().equals(RepeatPasswordField.getText().trim())) {
+					if (newPasswordField.getText().isBlank() || newPasswordField.getText().trim().equals(RepeatPasswordField.getText().trim())) {
 						pv.viewPanel.setVisible(false);
 						pv.viewPanel = new ViewDatas(pv);
 						pv.contentPane.add(pv.viewPanel);
+						
+						pv.dimensionar();
 					}
 				}
 			} else {
-				JOptionPane.showMessageDialog(null,
-						"Tu não vai editar nada?\nColoque um novo nome ou uma nova senha pelo menos!");
+				JOptionPane.showMessageDialog(null, "Tu não vai editar nada?\nColoque um novo nome ou uma nova senha pelo menos!");
 			}
 		} else {
 			JOptionPane.showMessageDialog(null,

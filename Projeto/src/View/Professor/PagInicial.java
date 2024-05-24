@@ -92,11 +92,7 @@ public class PagInicial extends JPanel {
 		JScrollPane scrollPaneSolicitations = new JScrollPane();
 
 		tableSolicitations = new JTable();
-		tableSolicitations
-				.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Solicita\u00E7\u00F5es" }) {
-					/**
-					 * 
-					 */
+		tableSolicitations.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Solicitações" }) {
 					private static final long serialVersionUID = 1L;
 					boolean[] columnEditables = new boolean[] { false };
 
@@ -112,9 +108,6 @@ public class PagInicial extends JPanel {
 
 		tableTurmas = new JTable();
 		tableTurmas.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Minhas turmas" }) {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false };
 
@@ -130,9 +123,6 @@ public class PagInicial extends JPanel {
 
 		tableDisciplinas = new JTable();
 		tableDisciplinas.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Minhas disciplinas" }) {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false };
 
@@ -185,7 +175,7 @@ public class PagInicial extends JPanel {
 		String readDisciplinas = "select count(*) from ensina where matricula_professor= '"+ p.getMatricula() +"'";
 		
 		String readTurmas = "select count(distinct es.id_turma) from estuda es "
-				+ "inner join ensina en "
+				+ "join ensina en "
 				+ "on en.id_disciplina = es.id_disciplina "
 				+ "where en.matricula_professor= '"+ p.getMatricula() +"'";
 		
@@ -219,10 +209,7 @@ public class PagInicial extends JPanel {
 		String readSolicitacoes = "select duvida from solicitacoes where respondido= 'F' and matricula_p= '"+p.getMatricula()+"'";
 		
 		DefaultTableModel modelSolicitacoes = new DefaultTableModel(new Object[][] {},
-				new String[] { "Solicita\u00E7\u00F5es" }) {
-			/**
-			 * 
-			 */
+				new String[] { "Solicitações" }) {
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false };
 
@@ -232,17 +219,14 @@ public class PagInicial extends JPanel {
 		};
 
 		String readTurmas = "select distinct t.nome from estuda es "
-				+ "inner join turmas t "
+				+ "join turmas t "
 				+ "on t.id = es.id_turma "
-				+ "inner join ensina en "
+				+ "join ensina en "
 				+ "on en.id_disciplina = es.id_disciplina "
 				+ "where en.matricula_professor = '"+p.getMatricula()+"' "
 				+ "order by t.nome";
 		
 		DefaultTableModel modelTurmas = new DefaultTableModel(new Object[][] {}, new String[] { "Minhas turmas" }) {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false };
 
@@ -252,16 +236,13 @@ public class PagInicial extends JPanel {
 		};
 
 		String readDisciplinas = "select d.nome from ensina en "
-				+ "inner join disciplinas d "
+				+ "join disciplinas d "
 				+ "on d.id = en.id_disciplina "
 				+ "where en.matricula_professor= '"+p.getMatricula()+"' "
 				+ "order by d.nome";
 		
 		DefaultTableModel modelDisciplinas = new DefaultTableModel(new Object[][] {},
 				new String[] { "Minhas Disciplinas" }) {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false };
 

@@ -108,7 +108,7 @@ public class ViewTurmasList extends JPanel {
 			new Object[][] {
 			},
 			new String[] {
-				"ID", "Turma", "Qnt. Alunos", "Solicita\u00E7\u00F5es"
+				"ID", "Turma", "Qnt. Alunos", "Solicitações"
 			}
 		) {
 			private static final long serialVersionUID = 1L;
@@ -133,7 +133,7 @@ public class ViewTurmasList extends JPanel {
 				new Object[][] {
 				},
 				new String[] {
-					"ID", "Turma", "Qnt. Alunos", "Solicita\u00E7\u00F5es"
+					"ID", "Turma", "Qnt. Alunos", "Solicitações"
 				}
 			) {
 				private static final long serialVersionUID = 1L;

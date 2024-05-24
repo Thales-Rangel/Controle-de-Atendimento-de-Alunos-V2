@@ -89,7 +89,7 @@ public class ViewSolicitationsList extends JPanel {
 			}
 		});
 		table.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Aluno", "D\u00FAvida", "Disciplina", "Respondido" }) {
+				new String[] { "Aluno", "Dúvida", "Disciplina", "Respondido" }) {
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false, false, false, false };
 
@@ -304,7 +304,7 @@ public class ViewSolicitationsList extends JPanel {
 	private void listar() {
 		DefaultTableModel model = new DefaultTableModel(new Object[][] {
 
-		}, new String[] { "ID", "Aluno", "D\u00FAvida", "Disciplina", "Respondido" }) {
+		}, new String[] { "ID", "Aluno", "Dúvida", "Disciplina", "Respondido" }) {
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false, false, false, false, false };
 
@@ -314,8 +314,10 @@ public class ViewSolicitationsList extends JPanel {
 		};
 
 		String readSolicitacoes = "select s.id, a.nome, s.duvida, d.nome, s.respondido from solicitacoes s "
-				+ "inner join alunos a " + "on a.matricula = s.matricula_a " + "inner join disciplinas d "
-				+ "on d.id = s.id_disciplina " + "where s.matricula_p= '" + p.getMatricula() + "' and s.respondido= 'F' " + "order by s.id";
+				+ "join alunos a on a.matricula = s.matricula_a "
+				+ "join disciplinas d on d.id = s.id_disciplina "
+				+ "where s.matricula_p= '" + p.getMatricula() + "' and s.respondido= 'F' "
+				+ "order by s.id desc";
 
 		try {
 			con = DAO.conectar();
@@ -344,8 +346,7 @@ public class ViewSolicitationsList extends JPanel {
 					model.addElement(p.getDisciplinas().get(i).getNome());
 				}
 
-				btnDisciplinas.setIcon(new ImageIcon(
-						ViewSolicitationsList.class.getResource("/img/seta_de_itens_para_cima_icon.png")));
+				btnDisciplinas.setIcon(new ImageIcon(ViewSolicitationsList.class.getResource("/img/seta_de_itens_para_cima_icon.png")));
 				listDisciplinas.setModel(model);
 				scrollPaneDisciplinas.setVisible(true);
 				listDisciplinas.setVisible(true);
@@ -353,13 +354,13 @@ public class ViewSolicitationsList extends JPanel {
 				dimensionar();
 			} else {
 				String readTurmas = "select t.nome from ensina en "
-						+ "inner join estuda es "
+						+ "join estuda es "
 						+ "on en.id_disciplina = es.id_disciplina "
-						+ "inner join turmas t "
+						+ "join turmas t "
 						+ "on t.id = es.id_turma "
 						+ "where en.matricula_professor= '"+p.getMatricula()+"' "
 						+ "group by t.id "
-						+ "order by t.nome;";
+						+ "order by t.nome";
 				
 				con = DAO.conectar();
 				pst = con.prepareStatement(readTurmas);
@@ -386,7 +387,7 @@ public class ViewSolicitationsList extends JPanel {
 	private void buscar() {
 		DefaultTableModel model = new DefaultTableModel(new Object[][] {
 
-		}, new String[] { "ID", "Aluno", "D\u00FAvida", "Disciplina", "Respondido" }) {
+		}, new String[] { "ID", "Aluno", "Dúvida", "Disciplina", "Respondido" }) {
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false, false, false, false, false };
 
@@ -396,9 +397,9 @@ public class ViewSolicitationsList extends JPanel {
 		};
 		
 		String busca = "select s.id, a.nome, s.duvida, d.nome, s.respondido from solicitacoes s "
-				+ "inner join alunos a "
+				+ "join alunos a "
 				+ "on a.matricula = s.matricula_a "
-				+ "inner join disciplinas d "
+				+ "join disciplinas d "
 				+ "on d.id = s.id_disciplina "
 				+ "where s.matricula_p= '"+p.getMatricula()+"' ";
 		try {
@@ -433,7 +434,7 @@ public class ViewSolicitationsList extends JPanel {
 				busca += "and a.nome like '"+textFieldSearch.getText().trim()+"%' ";
 			}
 			
-			busca += "order by s.id";
+			busca += "order by s.id desc";
 			
 			pst = con.prepareStatement(busca);
 			rs = pst.executeQuery();
@@ -457,24 +458,21 @@ public class ViewSolicitationsList extends JPanel {
 	}
 	
 	private void selecionar() {
-		String readSolicitation = "select s.id, a.nome, a.matricula, a.senha, a.id_turma, d.id, d.nome, s.duvida, s.respondido "
+		String readSolicitation = "select s.id, a.matricula, d.id, s.duvida, s.respondido "
 				+ "from solicitacoes s "
-				+ "inner join alunos a "
+				+ "join alunos a "
 				+ "on a.matricula = s.matricula_a "
-				+ "inner join disciplinas d "
+				+ "join disciplinas d "
 				+ "on d.id = s.id_disciplina "
 				+ "where s.id= '"+ table.getValueAt(table.getSelectedRow(), 0) +"'";
 		try {
 			Solicitation solicitacao = null;
-			Student aluno = null;
-			Disciplane disciplina = null;
+			
 			con = DAO.conectar();
 			pst = con.prepareStatement(readSolicitation);
 			rs = pst.executeQuery();
 			if (rs.next()) {
-				aluno = new Student(rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5));
-				disciplina = new Disciplane(rs.getInt(6), rs.getString(7));
-				solicitacao = new Solicitation(rs.getInt(1), aluno, p, disciplina, rs.getString(8), (rs.getString(9).equals("T")));
+				solicitacao = new Solicitation(rs.getInt(1), new Student(rs.getString(2)), p, new Disciplane(rs.getInt(3)), rs.getString(4), (rs.getString(5).equals("T")));
 			}
 				
 			if (solicitacao != null) {
@@ -482,6 +480,8 @@ public class ViewSolicitationsList extends JPanel {
 				pv.viewPanel = new ViewSolicitation(solicitacao, pv);
 				pv.contentPane.add(pv.viewPanel);
 				pv.dimensionar();
+			} else {
+				JOptionPane.showMessageDialog(null, "Não foi possivel mostrar a solicitação!");
 			}
 			
 			con.close();

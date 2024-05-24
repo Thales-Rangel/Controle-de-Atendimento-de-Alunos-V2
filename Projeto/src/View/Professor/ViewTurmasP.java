@@ -193,25 +193,12 @@ public class ViewTurmasP extends JPanel {
 	}
 	
 	private void select() {
-		String matricula = (String) table.getValueAt(table.getSelectedRow(), 0);
+		Student s = new Student((String) table.getValueAt(table.getSelectedRow(), 0));
+			
+		pv.viewPanel.setVisible(false);
+		pv.viewPanel = new ViewStudentP(s, pv);
+		pv.contentPane.add(pv.viewPanel);
+		pv.dimensionar();
 		
-		try {
-			con = DAO.conectar();
-			pst = con.prepareStatement("select * from alunos where matricula= ?");
-			pst.setString(1, matricula);
-			rs = pst.executeQuery();
-			if (rs.next()) {
-				Student s = new Student(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4));
-				
-				pv.viewPanel.setVisible(false);
-				pv.viewPanel = new ViewStudentP(s, pv);
-				pv.contentPane.add(pv.viewPanel);
-				pv.dimensionar();
-			} else {
-				JOptionPane.showMessageDialog(null, "Aluno não encontrado");
-			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Não foi possivel buscar pelo aluno:\n"+e);
-		}
 	}
 }
