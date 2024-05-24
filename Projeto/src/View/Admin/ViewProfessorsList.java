@@ -368,7 +368,7 @@ public class ViewProfessorsList extends JPanel {
 
 		String readLista = "select p.nome, p.matricula, group_concat(d.nome) from professores p "
 				+ "left join ensina en on en.matricula_professor = p.matricula "
-				+ "join disciplinas d on d.id = en.id_disciplina "
+				+ "left join disciplinas d on d.id = en.id_disciplina "
 				+ "group by p.matricula "
 				+ "order by nome";
 
@@ -418,7 +418,7 @@ public class ViewProfessorsList extends JPanel {
 	private void buscar() {
 		String insert = "select p.nome, p.matricula, group_concat(distinct d.nome) from professores p "
 				+ "left join ensina e on p.matricula = e.matricula_professor "
-				+ "join disciplinas d on d.id = e.id_disciplina ";
+				+ "left join disciplinas d on d.id = e.id_disciplina ";
 
 		if (!textFieldSearch.getText().isBlank()) {
 			insert += "where p.nome like '" + textFieldSearch.getText() + "%' ";

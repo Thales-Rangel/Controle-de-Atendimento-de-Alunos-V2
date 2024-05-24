@@ -324,7 +324,7 @@ public class ViewSolicitationsList extends JPanel {
 			pst = con.prepareStatement(readSolicitacoes);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				model.addRow(new Object[] { rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), "Sem resposta" });
+				model.addRow(new Object[] { rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), "Não respondido" });
 			}
 
 			table.setModel(model);
@@ -414,20 +414,11 @@ public class ViewSolicitationsList extends JPanel {
 			}
 		
 			if (!textFieldDisciplinas.getText().isEmpty()) {
-				for (int i = 0; i < p.getDisciplinas().size(); i++) {
-					if (p.getDisciplinas().get(i).getNome().equals(textFieldDisciplinas.getText())) {
-						busca += "and s.id_disciplina= '"+p.getDisciplinas().get(i).getId()+"' ";
-						break;
-					}
-				}
+				busca += "and d.nome = '"+ textFieldDisciplinas.getText() +"'";
 			}
 		
 			if (!textFieldTurmas.getText().isEmpty()) {
-				pst = con.prepareStatement("select id from turmas where nome= '"+textFieldTurmas.getText()+"'");
-				rs = pst.executeQuery();
-				if (rs.next()) {
-					busca += "and a.id_turma= '"+ rs.getInt(1)+"' ";
-				}
+				busca += "and a.id_turma= (select id from turmas where nome= '"+ textFieldTurmas.getText() +"') ";
 			}
 			
 			if (!textFieldSearch.getText().isBlank()) {
