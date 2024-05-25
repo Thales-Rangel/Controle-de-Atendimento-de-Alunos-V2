@@ -415,6 +415,8 @@ public class ViewTurma extends JPanel {
 						exTotal = rs.getInt(1);
 					}
 
+					// Não consegui fazer o comando "delete from alunos where id_turma= ?" funcionar nesse caso
+					
 					String deleteStudents = "select matricula from alunos where id_turma= ?";
 
 					pst = con.prepareStatement(deleteStudents);
