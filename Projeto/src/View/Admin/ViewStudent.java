@@ -226,11 +226,17 @@ public class ViewStudent extends JPanel {
 				int confirma = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir esse(a) aluno(a) permanentemente?");
 				
 				if (confirma == JOptionPane.YES_OPTION) {
-					String insert = "delete from alunos where matricula= ?";
+					String deleteStudent = "delete from alunos where matricula= ?";
 					
+					String deleteSolicitations = "delete from solicitacoes where matricula_a= ?";
 					try {
 						con = DAO.conectar();
-						pst = con.prepareStatement(insert);
+						
+						pst = con.prepareStatement(deleteSolicitations);
+						pst.setString(1, s.getMatricula());
+						pst.execute();
+						
+						pst = con.prepareStatement(deleteStudent);
 						pst.setString(1, s.getMatricula());
 						int confirmaExclusao = pst.executeUpdate();
 						

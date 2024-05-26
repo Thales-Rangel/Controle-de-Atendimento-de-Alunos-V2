@@ -341,32 +341,28 @@ public class ViewDisciplane extends JPanel {
 	}
 	
 	private void deletar() {
-		String readEstuda = "select id from estuda where id_disciplina= ?";
+		String deleteEstuda = "delete from estuda where id_disciplina= ?";
 		
-		String readEnsina = "select id from ensina where id_disciplina= ?";
+		String deleteEnsina = "delete from ensina where id_disciplina= ?";
+		
+		String deleteSolicitacoes = "delete from solicitacoes where id_disciplina= ?";
 		
 		String delete = "delete from disciplinas where id= ?";
 		
 		try {
 			con = DAO.conectar();
 			
-			pst = con.prepareStatement(readEstuda);
+			pst = con.prepareStatement(deleteEstuda);
 			pst.setInt(1, d.getId());
-			rs = pst.executeQuery();
-			while (rs.next()) {
-				pst = con.prepareStatement("delete from estuda where id= ?");
-				pst.setInt(1, rs.getInt(1));
-				pst.execute();
-			}
+			pst.execute();
 			
-			pst = con.prepareStatement(readEnsina);
+			pst = con.prepareStatement(deleteEnsina);
 			pst.setInt(1, d.getId());
-			rs = pst.executeQuery();
-			while(rs.next()) {
-				pst = con.prepareStatement("delete from ensina where id= ?");
-				pst.setInt(1, rs.getInt(1));
-				pst.execute();
-			}
+			pst.execute();
+			
+			pst = con.prepareStatement(deleteSolicitacoes);
+			pst.setInt(1, d.getId());
+			pst.execute();
 			
 			pst = con.prepareStatement(delete);
 			pst.setInt(1, d.getId());

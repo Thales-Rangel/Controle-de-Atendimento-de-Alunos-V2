@@ -191,9 +191,6 @@ public class ViewProfessor extends JPanel {
 		tableDisciplinas = new JTable();
 		tableDisciplinas.setRowSelectionAllowed(false);
 		tableDisciplinas.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Disciplinas" }) {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false };
 
@@ -209,9 +206,6 @@ public class ViewProfessor extends JPanel {
 		tableTurmas = new JTable();
 		tableTurmas.setRowSelectionAllowed(false);
 		tableTurmas.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Turmas" }) {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false };
 
@@ -338,21 +332,22 @@ public class ViewProfessor extends JPanel {
 	}
 	
 	private void deletar() {
-		String readEnsina = "select id from ensina where matricula_professor= ?";
+		String deleteEnsina = "delete from ensina where matricula_professor= ?";
+		
+		String deleteSolicitacoes = "delete from solicitacoes where matricula_p= ?";
 		
 		String insert = "delete from professores where matricula= ?";
 
 		try {
 			con = DAO.conectar();
 			
-			pst = con.prepareStatement(readEnsina);
+			pst = con.prepareStatement(deleteEnsina);
 			pst.setString(1, p.getMatricula());
-			rs = pst.executeQuery();
-			while (rs.next()) {
-				pst = con.prepareStatement("delete from ensina where id= ?");
-				pst.setInt(1, rs.getInt(1));
-				pst.execute();
-			}
+			pst.execute();
+			
+			pst = con.prepareStatement(deleteSolicitacoes);
+			pst.setString(1, p.getMatricula());
+			pst.execute();
 			
 			pst = con.prepareStatement(insert);
 			pst.setString(1, p.getMatricula());
