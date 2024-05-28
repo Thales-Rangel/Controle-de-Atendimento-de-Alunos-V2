@@ -47,10 +47,10 @@ public class EditTurma extends JDialog {
 
 	boolean[] selectedRows;
 
-	/**
-	 * Create the dialog.
-	 */
 	public EditTurma(Admin adm, Turma t) {
+		this.adm = adm;
+		this.t = t;
+
 		setResizable(false);
 		setTitle("Editar Turma");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(CdstrStudent.class.getResource("/img/IF Logo - Remove.png")));
@@ -92,7 +92,6 @@ public class EditTurma extends JDialog {
 
 		tableDisciplinas = new JTable();
 		tableDisciplinas.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
 
 				if (selectedRows[tableDisciplinas.getSelectedRow()]) {
@@ -105,9 +104,6 @@ public class EditTurma extends JDialog {
 			}
 		});
 		tableDisciplinas.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "New column" }) {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false };
 
@@ -130,9 +126,6 @@ public class EditTurma extends JDialog {
 		lblIF_logo.setBounds(317, 0, 87, 133);
 		contentPanel.add(lblIF_logo);
 
-		this.adm = adm;
-		this.t = t;
-
 		listarDisciplinas();
 		{
 			JPanel buttonPane = new JPanel();
@@ -151,14 +144,6 @@ public class EditTurma extends JDialog {
 				JButton cancelButton = new JButton("Cancelar");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						textFieldNome.setText("");
-
-						for (int i = 0; i < selectedRows.length; i++) {
-							selectedRows[i] = false;
-						}
-
-						selectDisciplinas();
-
 						dispose();
 					}
 				});
@@ -170,9 +155,6 @@ public class EditTurma extends JDialog {
 
 	public void listarDisciplinas() {
 		DefaultTableModel model = new DefaultTableModel(new Object[][] {}, new String[] { "" }) {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false };
 
@@ -183,8 +165,7 @@ public class EditTurma extends JDialog {
 
 		String readDisciplinas = "select * from disciplinas order by nome";
 		
-		String readEstuda = "select d.id from estuda es " + "inner join disciplinas d " + "on d.id = es.id_disciplina "
-				+ "where es.id_turma= " + t.getId() + " and d.id= ?";
+		String readEstuda = "select id_disciplina from estuda where id_turma= " + t.getId() + " and id_disciplina= ?";
 
 		try {
 			con = DAO.conectar();
@@ -236,22 +217,11 @@ public class EditTurma extends JDialog {
 		
 		try {
 			con = DAO.conectar();
+			pst = con.prepareStatement("delete from estuda where id_turma= " + t.getId());
+			pst.execute();
 			
-
-			pst = con.prepareStatement("select id from estuda where id_turma= " + t.getId());
-			rs = pst.executeQuery();
-
-			while (rs.next()) {
-				pst = con.prepareStatement("delete from estuda where id= ?");
-				pst.setInt(1, rs.getInt(1));
-				pst.execute();
-			}
-			t.atualizaDisciplinas();
-			
-			if (!textFieldNome.getText().isEmpty() && !textFieldNome.getText().equals(t.getNome())) {
-				String novoNome;
-				
-				novoNome = textFieldNome.getText().trim();
+			if (!textFieldNome.getText().isBlank() && !textFieldNome.getText().equals(t.getNome())) {
+				String novoNome = textFieldNome.getText().trim();
 
 				pst = con.prepareStatement("select * from turmas where nome= ?");
 				pst.setString(1, novoNome);
@@ -269,23 +239,16 @@ public class EditTurma extends JDialog {
 				for (int i = 0; i < tableDisciplinas.getSelectedRows().length; i++) {
 					String disciplina = (String) tableDisciplinas.getValueAt(tableDisciplinas.getSelectedRows()[i], 0);
 
-					pst = con.prepareStatement("select id from disciplinas where nome= ?");
+					pst = con.prepareStatement("insert into estuda values (default, (select id from disciplinas where nome= ?), ?)");
 					pst.setString(1, disciplina);
-					rs = pst.executeQuery();
-					int idDisciplina = 0;
-					if (rs.next()) {
-						idDisciplina = rs.getInt(1);
-					}
-
-					pst = con.prepareStatement("insert into estuda values (default, ?, ?)");
-					pst.setInt(1, idDisciplina);
 					pst.setInt(2, t.getId());
 
-					pst.executeUpdate();
+					pst.execute();
 
 					selectedRows[tableDisciplinas.getSelectedRows()[i]] = false;
 				}
 			}
+			con.close();
 
 			t.atualizaDisciplinas();
 			adm.getContentPane().setVisible(false);
@@ -293,8 +256,6 @@ public class EditTurma extends JDialog {
 			adm.listagens();
 			
 			dispose();
-
-			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Não foi possível fazer o cadastro:\n" + e);

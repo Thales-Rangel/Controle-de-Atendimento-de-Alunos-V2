@@ -48,9 +48,6 @@ public class EditDisciplane extends JDialog {
 	boolean[] selectedRowsT;
 	private JTable tableTurmas;
 
-	/**
-	 * Create the dialog.
-	 */
 	public EditDisciplane(Admin adm, Disciplane d) {
 		this.adm = adm;
 		this.d = d;
@@ -97,7 +94,6 @@ public class EditDisciplane extends JDialog {
 
 		tableProfessores = new JTable();
 		tableProfessores.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
 
 				if (selectedRowsP[tableProfessores.getSelectedRow()]) {
@@ -110,9 +106,6 @@ public class EditDisciplane extends JDialog {
 			}
 		});
 		tableProfessores.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "New column" }) {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false };
 
@@ -135,7 +128,6 @@ public class EditDisciplane extends JDialog {
 
 		tableTurmas = new JTable();
 		tableTurmas.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
 
 				if (selectedRowsT[tableTurmas.getSelectedRow()]) {
@@ -176,18 +168,6 @@ public class EditDisciplane extends JDialog {
 				JButton cancelButton = new JButton("Cancelar");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						textFieldNome.setText("");
-
-						for (int i = 0; i < selectedRowsP.length; i++) {
-							selectedRowsP[i] = false;
-						}
-
-						for (int i = 0; i < selectedRowsT.length; i++) {
-							selectedRowsT[i] = false;
-						}
-
-						select();
-
 						dispose();
 					}
 				});
@@ -199,9 +179,6 @@ public class EditDisciplane extends JDialog {
 
 	public void listar() {
 		DefaultTableModel model1 = new DefaultTableModel(new Object[][] {}, new String[] { "", "" }) {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false, false };
 
@@ -211,9 +188,6 @@ public class EditDisciplane extends JDialog {
 		};
 
 		DefaultTableModel model2 = new DefaultTableModel(new Object[][] {}, new String[] { "" }) {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false };
 
@@ -224,11 +198,9 @@ public class EditDisciplane extends JDialog {
 
 		String readProfs = "select nome, matricula from professores order by nome";
 
-		String readEnsina = "select * from ensina en " + "inner join professores p "
-				+ "on p.matricula = en.matricula_professor " + "where en.id_disciplina = " + d.getId()
-				+ " and p.matricula= ?";
+		String readEnsina = "select * from ensina where id_disciplina = " + d.getId() + " and matricula_professor= ?";
 
-		String readEstuda = "select * from estuda es " + "inner join turmas t " + "on t.id = es.id_turma "
+		String readEstuda = "select * from estuda es join turmas t on t.id = es.id_turma "
 				+ "where es.id_disciplina = " + d.getId() + " and t.nome= ?";
 		try {
 			con = DAO.conectar();
@@ -315,44 +287,29 @@ public class EditDisciplane extends JDialog {
 		try {
 			con = DAO.conectar();
 			
-			pst = con.prepareStatement("select id from ensina where id_disciplina= ?");
+			pst = con.prepareStatement("delete from ensina where id_disciplina= ?");
 			pst.setInt(1, d.getId());
-			rs = pst.executeQuery();
-			while (rs.next()) {
-				pst = con.prepareStatement("delete from ensina where id= ?");
-				pst.setInt(1, rs.getInt(1));
-				pst.execute();
-			}
+			pst.execute();
 			
-			pst = con.prepareStatement("select id from estuda where id_disciplina= ?");
+			pst = con.prepareStatement("delete from estuda where id_disciplina= ?");
 			pst.setInt(1, d.getId());
-			rs = pst.executeQuery();
-			while(rs.next()) {
-				pst = con.prepareStatement("delete from estuda where id= ?");
-				pst.setInt(1, rs.getInt(1));
-				pst.execute();
-			}
+			pst.execute();
 			
-			if (!textFieldNome.getText().isEmpty() && !textFieldNome.getText().equals(d.getNome())) {
-				String nome;
-
-				nome = textFieldNome.getText().trim();
+			if (!textFieldNome.getText().isBlank() && !textFieldNome.getText().equals(d.getNome())) {
+				String nome = textFieldNome.getText().trim();
 
 				pst = con.prepareStatement("select * from disciplinas where nome= ?");
 				pst.setString(1, nome);
 				rs = pst.executeQuery();
 
 				if (!rs.next()) {
-
 					d.setNome(nome);
-
 				} else {
 					JOptionPane.showMessageDialog(null, "Esse nome de disciplina já foi usado!\nTente outro nome");
 				}
 			}
 
 			if (tableProfessores.getSelectedRows().length > 0) {
-
 				for (int i = 0; i < tableProfessores.getSelectedRows().length; i++) {
 					String matriculaProfessor = (String) tableProfessores
 							.getValueAt(tableProfessores.getSelectedRows()[i], 1);
@@ -362,47 +319,27 @@ public class EditDisciplane extends JDialog {
 					pst.setInt(2, d.getId());
 
 					pst.executeUpdate();
-
-					selectedRowsP[tableProfessores.getSelectedRows()[i]] = false;
 				}
-
-				select();
 			}
 
 			if (tableTurmas.getSelectedRows().length > 0) {
-
 				for (int i = 0; i < tableTurmas.getSelectedRows().length; i++) {
 					String turma = (String) tableTurmas.getValueAt(tableTurmas.getSelectedRows()[i], 0);
 
-					pst = con.prepareStatement("select id from turmas where nome= ?");
-					pst.setString(1, turma);
-					rs = pst.executeQuery();
-					int idTurma = 0;
-					if (rs.next()) {
-						idTurma = rs.getInt(1);
-					}
-
-					pst = con.prepareStatement("insert into estuda values (default, ?, ?)");
+					pst = con.prepareStatement("insert into estuda values (default, ?, (select id from turmas where nome= ?))");
 					pst.setInt(1, d.getId());
-					pst.setInt(2, idTurma);
+					pst.setString(2, turma);
 
 					pst.executeUpdate();
-
-					selectedRowsT[tableTurmas.getSelectedRows()[i]] = false;
 				}
-
-				select();
 			}
+			con.close();
 			
-			textFieldNome.setText("");
-
 			adm.listagens();
 			adm.getContentPane().setVisible(false);
 			adm.setContentPane(new ViewDisciplane(adm, d));
 
 			dispose();
-
-			con.close();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Não foi possível fazer o cadastro:\n" + e);
 		}
