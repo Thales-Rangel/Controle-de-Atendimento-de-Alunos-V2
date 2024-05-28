@@ -27,6 +27,7 @@ import Models.Professor;
 import View.Login;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class ViewProfessor extends JPanel {
 
@@ -241,6 +242,14 @@ public class ViewProfessor extends JPanel {
 		btnReturn.setForeground(Color.BLACK);
 		btnReturn.setFont(new Font("Arial", Font.PLAIN, 20));
 		btnReturn.setBackground(UIManager.getColor("Button.background"));
+		
+		JButton btnEditDisciplanes = new JButton("Editar turmas");
+		btnEditDisciplanes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new EditProfessorDisciplanes(p, adm).setVisible(true);
+			}
+		});
+		btnEditDisciplanes.setFont(new Font("Arial", Font.PLAIN, 20));
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -254,11 +263,16 @@ public class ViewProfessor extends JPanel {
 					.addComponent(scrollPaneDisciplinas, GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
 					.addGap(10)
 					.addComponent(scrollPaneTurmas, GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
-					.addGap(10)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 232, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 232, GroupLayout.PREFERRED_SIZE))
-					.addGap(10))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(btnReturn, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+								.addComponent(btnEditDisciplanes, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(10)
+							.addComponent(btnDelete, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)))
+					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -270,10 +284,12 @@ public class ViewProfessor extends JPanel {
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(scrollPaneTurmas, GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(164)
-							.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-							.addGap(10)
-							.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
+							.addGap(170)
+							.addComponent(btnDelete)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnEditDisciplanes)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnReturn))
 						.addComponent(scrollPaneDisciplinas, GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE))
 					.addGap(10))
 		);

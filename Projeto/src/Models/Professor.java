@@ -108,4 +108,30 @@ public class Professor extends User {
 	public ArrayList<Disciplane> getDisciplinas() {
 		return disciplinas;
 	}
+	
+	public void atualizaDisciplinas() {
+		disciplinas = new ArrayList<Disciplane>();
+		
+		String insert = "select d.id, d.nome from ensina en "
+				+ "join disciplinas d "
+				+ "on d.id = en.id_disciplina "
+				+ "where en.matricula_professor= ? "
+				+ "order by d.nome";
+		
+		try {
+			con = DAO.conectar();
+			pst = con.prepareStatement(insert);
+			pst.setString(1, this.matricula);
+			rs = pst.executeQuery();
+			
+			while (rs.next()) {
+				disciplinas.add(new Disciplane(rs.getInt(1), rs.getString(2)));
+			}
+			
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e);
+		}
+	}
 }

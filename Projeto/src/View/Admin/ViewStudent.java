@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import javax.swing.BoxLayout;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -18,6 +20,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
@@ -25,8 +28,6 @@ import javax.swing.table.DefaultTableModel;
 import Models.DAO;
 import Models.Student;
 import View.Login;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 
 public class ViewStudent extends JPanel {
 	
@@ -269,6 +270,14 @@ public class ViewStudent extends JPanel {
 		btnReturn.setForeground(Color.BLACK);
 		btnReturn.setFont(new Font("Arial", Font.PLAIN, 20));
 		btnReturn.setBackground(UIManager.getColor("Button.background"));
+		
+		JButton btnEdit = new JButton("Alterar turma do aluno");
+		btnEdit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new EditStudentTurma(s, adm).setVisible(true);
+			}
+		});
+		btnEdit.setFont(new Font("Arial", Font.PLAIN, 20));
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -286,11 +295,17 @@ public class ViewStudent extends JPanel {
 					.addComponent(scrollPaneDisciplinas, GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
 					.addGap(10)
 					.addComponent(scrollPaneProfessores, GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
-					.addGap(10)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 232, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 232, GroupLayout.PREFERRED_SIZE))
-					.addGap(10))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 232, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 232, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnEdit))
+							.addGap(3)))
+					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -305,10 +320,12 @@ public class ViewStudent extends JPanel {
 						.addComponent(scrollPaneDisciplinas, GroupLayout.PREFERRED_SIZE, 419, GroupLayout.PREFERRED_SIZE)
 						.addComponent(scrollPaneProfessores, GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(102)
-							.addComponent(btnDelete, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-							.addGap(10)
-							.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)))
+							.addGap(108)
+							.addComponent(btnDelete)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnEdit)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnReturn)))
 					.addGap(10))
 		);
 		setLayout(groupLayout);
