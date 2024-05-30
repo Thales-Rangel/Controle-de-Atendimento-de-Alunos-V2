@@ -20,6 +20,8 @@ import javax.swing.SwingConstants;
 
 import Models.DAO;
 import Models.Student;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ViewDatasS extends JPanel {
 	
@@ -71,6 +73,11 @@ public class ViewDatasS extends JPanel {
 		JScrollPane scrollPane_1 = new JScrollPane();
 		
 		JButton btnEdit = new JButton("");
+		btnEdit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new EditDatasS(sv).setVisible(true);
+			}
+		});
 		btnEdit.setToolTipText("Editar dados pessoais");
 		btnEdit.setIcon(new ImageIcon(ViewDatasS.class.getResource("/img/Edit_Icon.png")));
 		GroupLayout groupLayout = new GroupLayout(this);
