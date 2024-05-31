@@ -1,24 +1,25 @@
 package View.Student;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import Models.Student;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import java.awt.Color;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JButton;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.ImageIcon;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import View.Login;
 
 public class StudentView extends JFrame {
 
@@ -80,6 +81,11 @@ public class StudentView extends JFrame {
 		btnVerDados.setFont(new Font("Arial", Font.PLAIN, 14));
 		
 		btnVerSolicitations = new JButton("Ver solicitações");
+		btnVerSolicitations.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setViewPanel(new ViewSolicitationsListS(sv));
+			}
+		});
 		btnVerSolicitations.setFont(new Font("Arial", Font.PLAIN, 15));
 		
 		lblIFLogo = new JLabel("");
@@ -87,6 +93,12 @@ public class StudentView extends JFrame {
 		lblIFLogo.setIcon(new ImageIcon(StudentView.class.getResource("/img/IF Logo Branca - Remove.png")));
 		
 		btnSair = new JButton("Sair");
+		btnSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new Login().setVisible(true);
+			}
+		});
 		btnSair.setFont(new Font("Arial", Font.PLAIN, 15));
 		
 		btnPaginaInicial = new JButton("Página Inicial");
