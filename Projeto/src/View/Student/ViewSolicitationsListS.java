@@ -33,6 +33,7 @@ import javax.swing.table.DefaultTableModel;
 import Models.DAO;
 import Models.Solicitation;
 import Models.Student;
+import java.awt.Color;
 
 public class ViewSolicitationsListS extends JPanel {
 	
@@ -133,7 +134,7 @@ public class ViewSolicitationsListS extends JPanel {
 		rdbtnResp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!rdbtnResp.isSelected()) {
-					rdbtnNoResp.setSelected(true);
+					rdbtnAllResp.setSelected(true);
 				} else {
 					rdbtnNoResp.setSelected(false);
 					rdbtnAllResp.setSelected(false);
@@ -149,7 +150,7 @@ public class ViewSolicitationsListS extends JPanel {
 		rdbtnNoResp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!rdbtnNoResp.isSelected()) {
-					rdbtnNoResp.setSelected(true);
+					rdbtnAllResp.setSelected(true);
 				} else {
 					rdbtnResp.setSelected(false);
 					rdbtnAllResp.setSelected(false);
@@ -158,15 +159,15 @@ public class ViewSolicitationsListS extends JPanel {
 				busca();
 			}
 		});
-		rdbtnNoResp.setSelected(true);
 		rdbtnNoResp.setBackground(SystemColor.activeCaptionBorder);
 		rdbtnNoResp.setFont(new Font("Arial", Font.PLAIN, 15));
 		
 		rdbtnAllResp = new JRadioButton("Todas");
+		rdbtnAllResp.setSelected(true);
 		rdbtnAllResp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (!rdbtnAllResp.isSelected()) {
-					rdbtnNoResp.setSelected(true);
+					rdbtnAllResp.setSelected(true);
 				} else {
 					rdbtnResp.setSelected(false);
 					rdbtnNoResp.setSelected(false);
@@ -182,6 +183,7 @@ public class ViewSolicitationsListS extends JPanel {
 		lblFilterDisciplane.setFont(new Font("Arial", Font.PLAIN, 15));
 		
 		textField = new JTextField();
+		textField.setBackground(new Color(255, 255, 255));
 		textField.setEditable(false);
 		textField.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {

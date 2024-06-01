@@ -28,7 +28,7 @@ public class StudentView extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPanel viewPanel;
-	private JPanel panel_1;
+	private JPanel panel;
 	private JLabel lblNome;
 	private JButton btnVerDados;
 	private JButton btnVerSolicitations;
@@ -36,6 +36,7 @@ public class StudentView extends JFrame {
 	private JButton btnPaginaInicial;
 	private JLabel lblIFLogo;
 	private JButton btnSair;
+	private JButton btnCreateSolicitation;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -65,8 +66,8 @@ public class StudentView extends JFrame {
 
 		setContentPane(contentPane);
 		
-		panel_1 = new JPanel();
-		panel_1.setBackground(new Color(26, 150, 3));
+		panel = new JPanel();
+		panel.setBackground(new Color(26, 150, 3));
 		
 		lblNome = new JLabel(s.getNome());
 		lblNome.setHorizontalAlignment(SwingConstants.CENTER);
@@ -87,6 +88,14 @@ public class StudentView extends JFrame {
 			}
 		});
 		btnVerSolicitations.setFont(new Font("Arial", Font.PLAIN, 15));
+		
+		btnCreateSolicitation = new JButton("Fazer uma solicitação");
+		btnCreateSolicitation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setViewPanel(new CreateSolicitation(sv));
+			}
+		});
+		btnCreateSolicitation.setFont(new Font("Arial", Font.PLAIN, 12));
 		
 		lblIFLogo = new JLabel("");
 		lblIFLogo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -127,50 +136,53 @@ public class StudentView extends JFrame {
 	}
 	
 	private void dimensionar() {
-		GroupLayout gl_panel_1 = new GroupLayout(panel_1);
-		gl_panel_1.setHorizontalGroup(
-			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 210, Short.MAX_VALUE)
-				.addGroup(gl_panel_1.createSequentialGroup()
+		
+		GroupLayout gl_panel = new GroupLayout(panel);
+		gl_panel.setHorizontalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
 					.addGap(10)
 					.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 190, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_panel_1.createSequentialGroup()
+				.addGroup(gl_panel.createSequentialGroup()
 					.addGap(32)
 					.addComponent(btnVerDados, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_panel_1.createSequentialGroup()
-					.addGap(32)
-					.addComponent(btnVerSolicitations, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE))
-				.addGroup(gl_panel_1.createSequentialGroup()
+				.addGroup(gl_panel.createSequentialGroup()
 					.addGap(32)
 					.addComponent(lblIFLogo, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGap(33))
 				.addComponent(btnSair, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
-				.addGroup(gl_panel_1.createSequentialGroup()
+				.addGroup(gl_panel.createSequentialGroup()
 					.addGap(32)
-					.addGroup(gl_panel_1.createParallelGroup(Alignment.TRAILING)
-						.addComponent(btnPaginaInicial, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnVerDisciplinas, GroupLayout.PREFERRED_SIZE, 145, GroupLayout.PREFERRED_SIZE)))
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+							.addComponent(btnPaginaInicial, GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+							.addComponent(btnVerDisciplinas, GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
+						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
+							.addComponent(btnVerSolicitations, GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+							.addComponent(btnCreateSolicitation, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+					.addGap(33))
 		);
-		gl_panel_1.setVerticalGroup(
-			gl_panel_1.createParallelGroup(Alignment.LEADING)
-				.addGap(0, 603, Short.MAX_VALUE)
-				.addGroup(gl_panel_1.createSequentialGroup()
+		gl_panel.setVerticalGroup(
+			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel.createSequentialGroup()
 					.addGap(10)
 					.addComponent(lblNome, GroupLayout.PREFERRED_SIZE, 42, GroupLayout.PREFERRED_SIZE)
 					.addGap(10)
 					.addComponent(btnVerDados, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
 					.addGap(10)
 					.addComponent(btnVerSolicitations)
-					.addGap(10)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(btnCreateSolicitation)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(btnVerDisciplinas, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(btnPaginaInicial)
-					.addGap(121)
-					.addComponent(lblIFLogo, GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+					.addGap(90)
+					.addComponent(lblIFLogo, GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
 					.addGap(103)
 					.addComponent(btnSair))
 		);
-		panel_1.setLayout(gl_panel_1);
+		panel.setLayout(gl_panel);
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -178,11 +190,11 @@ public class StudentView extends JFrame {
 				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
 					.addComponent(viewPanel, GroupLayout.DEFAULT_SIZE, 620, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE))
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 210, GroupLayout.PREFERRED_SIZE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addComponent(panel_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)
+				.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)
 				.addComponent(viewPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)
 		);
 		contentPane.setLayout(gl_contentPane);
