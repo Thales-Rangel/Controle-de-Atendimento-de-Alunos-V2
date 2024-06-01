@@ -2,6 +2,12 @@ package View.Student;
 
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,13 +31,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Models.DAO;
+import Models.Solicitation;
 import Models.Student;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class ViewSolicitationsListS extends JPanel {
 	
@@ -42,7 +43,6 @@ public class ViewSolicitationsListS extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private Student s;
-	private StudentView sv;
 	private JLabel lblFilterDisciplane;
 	private JRadioButton rdbtnAllResp;
 	private JRadioButton rdbtnNoResp;
@@ -60,7 +60,6 @@ public class ViewSolicitationsListS extends JPanel {
 
 	public ViewSolicitationsListS(StudentView sv) {
 		this.s = sv.s;
-		this.sv = sv;
 		
 		setBounds(100, 1000, 630, 593);
 		
@@ -98,6 +97,11 @@ public class ViewSolicitationsListS extends JPanel {
 		);
 		
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				sv.setViewPanel(new ViewSolicitationS(new Solicitation((int) table.getValueAt(table.getSelectedRow(), 0))));
+			}
+		});
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
