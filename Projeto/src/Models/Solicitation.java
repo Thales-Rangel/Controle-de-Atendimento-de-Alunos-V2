@@ -53,6 +53,34 @@ public class Solicitation {
 		}
 	}
 	
+	public Solicitation(int id) {
+		String insert = "select * from solicitacoes where id= '"+ id +"'";
+		
+		try {
+			con = DAO.conectar();
+			pst = con.prepareStatement(insert);
+			rs = pst.executeQuery();
+			
+			if(rs.next()) {
+				this.id = rs.getInt(1);
+				this.aluno = new Student(rs.getString(2));
+				this.professor = new Professor(rs.getString(3));
+				this.disciplina = new Disciplane(rs.getInt(4));
+				this.duvida = rs.getString(5);
+				if(rs.getString(7).equals("T"))
+					this.resposta = rs.getString(6);
+				this.respondido = rs.getString(7).equals("T");
+			} else {
+				JOptionPane.showMessageDialog(null, "Solicitação não encontrada!");
+			}
+			
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Não foi possivel buscar a solicitação"+e);
+		}
+	}
+	
 	public int getId() {
 		return id;
 	}
