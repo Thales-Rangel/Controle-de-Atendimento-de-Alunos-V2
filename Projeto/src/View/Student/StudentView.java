@@ -119,6 +119,11 @@ public class StudentView extends JFrame {
 		btnPaginaInicial.setFont(new Font("Arial", Font.PLAIN, 15));
 		
 		btnVerDisciplinas = new JButton("Ver minhas disciplinas");
+		btnVerDisciplinas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setViewPanel(new ViewDisciplanesListS(sv));
+			}
+		});
 		btnVerDisciplinas.setFont(new Font("Arial", Font.PLAIN, 10));
 		
 
