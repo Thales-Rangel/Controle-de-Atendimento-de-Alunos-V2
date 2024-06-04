@@ -33,14 +33,12 @@ public class ViewDisciplanesListS extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	
-	private StudentView sv;
 	private Student s;
 	
 	private JTextField textField;
 	private JTable table;
 
 	public ViewDisciplanesListS(StudentView sv) {
-		this.sv = sv;
 		this.s = sv.s;
 		
 		setBounds(0, 0, 637, 593);

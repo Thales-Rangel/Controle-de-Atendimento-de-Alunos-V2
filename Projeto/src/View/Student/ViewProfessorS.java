@@ -1,6 +1,5 @@
 package View.Student;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -8,7 +7,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
@@ -17,34 +15,29 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import Models.DAO;
-import Models.Disciplane;
 import Models.Professor;
+import Models.Solicitation;
 
-public class ViewDisciplaneS extends JPanel {
+public class ViewProfessorS extends JPanel {
 	
 	private Connection con;
 	private PreparedStatement pst;
 	private ResultSet rs;
 
 	private static final long serialVersionUID = 1L;
-
-	private Disciplane d;
-	private StudentView sv;
-	
 	private JTable table;
-	
-	public ViewDisciplaneS(Disciplane d, StudentView sv) {
-		this.d = d;
-		this.sv = sv;
-		
+
+	public ViewProfessorS(Professor p, StudentView sv) {
 		setBounds(0, 0, 637, 593);
 		
-		JPanel panel = new JPanel();
-		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		JLabel lblProfessor = new JLabel(p.getNome()+ " - "+ p.getMatricula());
+		lblProfessor.setFont(new Font("Arial", Font.PLAIN, 20));
+		
+		JLabel lblSolicitations = new JLabel("Total de solicitações enviadas: 0");
+		lblSolicitations.setFont(new Font("Arial", Font.PLAIN, 18));
 		
 		JScrollPane scrollPane = new JScrollPane();
 		GroupLayout groupLayout = new GroupLayout(this);
@@ -54,30 +47,33 @@ public class ViewDisciplaneS extends JPanel {
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 						.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
-						.addComponent(panel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE))
+						.addComponent(lblSolicitations, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+						.addComponent(lblProfessor, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 70, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
+					.addComponent(lblProfessor)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(lblSolicitations)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE)
 					.addContainerGap())
 		);
 		
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				sv.setViewPanel(new ViewProfessorS(new Professor((String) table.getValueAt(table.getSelectedRow(), 0)), sv));
+				sv.setViewPanel(new ViewSolicitationS(new Solicitation((int) table.getValueAt(table.getSelectedRow(), 0))));
 			}
 		});
 		DefaultTableModel model = new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
-				"Matricula", "Professor", "Solicitações"
+				"ID", "Dúvida", "Respondido"
 			}
 		) {
 			private static final long serialVersionUID = 1L;
@@ -88,37 +84,42 @@ public class ViewDisciplaneS extends JPanel {
 				return columnEditables[column];
 			}
 		};
-		table.setFont(new Font("Arial", Font.PLAIN, 15));
 		
-		String select = "select p.matricula, p.nome, count(s.id) from professores p "
-				+ "join ensina en on en.matricula_professor = p.matricula "
-				+ "left join solicitacoes s on s.matricula_p = p.matricula and s.id_disciplina = en.id_disciplina and s.matricula_a= '"+ sv.s.getMatricula()+"' "
-				+ "where en.id_disciplina= '"+ d.getId()+"' "
-				+ "group by p.matricula order by p.nome";
+		String select = "select id, duvida, respondido from solicitacoes where matricula_p= '"+ p.getMatricula()+"' and matricula_a= '"+ sv.s.getMatricula()+"'";
 		
 		try {
 			con = DAO.conectar();
 			pst = con.prepareStatement(select);
 			rs = pst.executeQuery();
 			
-			while(rs.next())
-				model.addRow(new Object[] { rs.getString(1), rs.getString(2), rs.getInt(3) });
+			int count = 0;
+			while(rs.next()) {
+				if (rs.getString(3).equals("T")) {
+					model.addRow(new Object[] { rs.getInt(1), rs.getString(2), "Respondido" });
+				} else {
+					model.addRow(new Object[] { rs.getInt(1), rs.getString(2), "Não respondido" });
+				}
+				count++;
+			}
 			
 			table.setModel(model);
+			lblSolicitations.setText("Total de solicitações enviadas: "+ count);
 			
 			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Não foi possivel buscar os professores:\n"+e);
+			JOptionPane.showMessageDialog(null, "Não foi possivel buscar as suas solicitações a esse professor(a):"+e);
 		}
 		
+		table.getColumnModel().getColumn(0).setPreferredWidth(35);
+		table.getColumnModel().getColumn(0).setMinWidth(25);
+		table.getColumnModel().getColumn(0).setMaxWidth(35);
+		table.getColumnModel().getColumn(1).setPreferredWidth(300);
+		table.getColumnModel().getColumn(1).setMinWidth(300);
+		table.setFont(new Font("Arial", Font.PLAIN, 15));
 		scrollPane.setViewportView(table);
-		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-		
-		JLabel lblDisciplane = new JLabel(d.getNome()+ " - ID: "+d.getId());
-		lblDisciplane.setFont(new Font("Arial", Font.PLAIN, 20));
-		panel.add(lblDisciplane);
 		setLayout(groupLayout);
 
 	}
+
 }
