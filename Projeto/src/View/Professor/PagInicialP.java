@@ -20,7 +20,7 @@ import Models.Professor;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
-public class PagInicial extends JPanel {
+public class PagInicialP extends JPanel {
 
 	private Connection con;
 	private PreparedStatement pst;
@@ -39,7 +39,7 @@ public class PagInicial extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PagInicial(Professor p) {
+	public PagInicialP(Professor p) {
 		this.p = p;
 		
 		setBounds(0, 0, 637, 593);

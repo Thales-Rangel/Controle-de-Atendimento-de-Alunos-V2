@@ -35,7 +35,7 @@ import Models.Professor;
 import Models.Solicitation;
 import Models.Student;
 
-public class ViewSolicitationsList extends JPanel {
+public class ViewSolicitationsListP extends JPanel {
 
 	private Connection con;
 	private PreparedStatement pst;
@@ -70,7 +70,7 @@ public class ViewSolicitationsList extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public ViewSolicitationsList(Professor p, ProfessorView pv) {
+	public ViewSolicitationsListP(Professor p, ProfessorView pv) {
 		this.p = p;
 		this.pv = pv;
 
@@ -118,7 +118,7 @@ public class ViewSolicitationsList extends JPanel {
 					textFieldDisciplinas.setText("");
 					scrollPaneDisciplinas.setVisible(false);
 					listDisciplinas.setVisible(false);
-					btnDisciplinas.setIcon(new ImageIcon(ViewSolicitationsList.class.getResource("/img/seta_de_itens_icon.png")));
+					btnDisciplinas.setIcon(new ImageIcon(ViewSolicitationsListP.class.getResource("/img/seta_de_itens_icon.png")));
 					
 					buscar();
 					dimensionar();
@@ -141,14 +141,14 @@ public class ViewSolicitationsList extends JPanel {
 					textFieldDisciplinas.setText("");
 					scrollPaneDisciplinas.setVisible(false);
 					listDisciplinas.setVisible(false);
-					btnDisciplinas.setIcon(new ImageIcon(ViewSolicitationsList.class.getResource("/img/seta_de_itens_icon.png")));
+					btnDisciplinas.setIcon(new ImageIcon(ViewSolicitationsListP.class.getResource("/img/seta_de_itens_icon.png")));
 					
 					buscar();
 					dimensionar();
 				}
 			}
 		});
-		btnDisciplinas.setIcon(new ImageIcon(ViewSolicitationsList.class.getResource("/img/seta_de_itens_icon.png")));
+		btnDisciplinas.setIcon(new ImageIcon(ViewSolicitationsListP.class.getResource("/img/seta_de_itens_icon.png")));
 
 		lblNewLabel = new JLabel("FIltrar solicitações por:");
 		lblNewLabel.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -209,7 +209,7 @@ public class ViewSolicitationsList extends JPanel {
 				
 				scrollPaneDisciplinas.setVisible(false);
 				listDisciplinas.setVisible(false);
-				btnTurmas.setIcon(new ImageIcon(ViewSolicitationsList.class.getResource("/img/seta_de_itens_icon.png")));
+				btnTurmas.setIcon(new ImageIcon(ViewSolicitationsListP.class.getResource("/img/seta_de_itens_icon.png")));
 				dimensionar();
 				
 				buscar();
@@ -245,7 +245,7 @@ public class ViewSolicitationsList extends JPanel {
 					textFieldTurmas.setText("");
 					scrollPaneTurmas.setVisible(false);
 					listTurmas.setVisible(false);
-					btnTurmas.setIcon(new ImageIcon(ViewSolicitationsList.class.getResource("/img/seta_de_itens_icon.png")));
+					btnTurmas.setIcon(new ImageIcon(ViewSolicitationsListP.class.getResource("/img/seta_de_itens_icon.png")));
 					
 					buscar();
 					dimensionar();
@@ -264,14 +264,14 @@ public class ViewSolicitationsList extends JPanel {
 					textFieldTurmas.setText("");
 					scrollPaneTurmas.setVisible(false);
 					listTurmas.setVisible(false);
-					btnTurmas.setIcon(new ImageIcon(ViewSolicitationsList.class.getResource("/img/seta_de_itens_icon.png")));
+					btnTurmas.setIcon(new ImageIcon(ViewSolicitationsListP.class.getResource("/img/seta_de_itens_icon.png")));
 					
 					buscar();
 					dimensionar();
 				}
 			}
 		});
-		btnTurmas.setIcon(new ImageIcon(ViewSolicitationsList.class.getResource("/img/seta_de_itens_icon.png")));
+		btnTurmas.setIcon(new ImageIcon(ViewSolicitationsListP.class.getResource("/img/seta_de_itens_icon.png")));
 
 		scrollPaneTurmas = new JScrollPane();
 
@@ -283,7 +283,7 @@ public class ViewSolicitationsList extends JPanel {
 				
 				scrollPaneTurmas.setVisible(false);
 				listTurmas.setVisible(false);
-				btnTurmas.setIcon(new ImageIcon(ViewSolicitationsList.class.getResource("/img/seta_de_itens_icon.png")));
+				btnTurmas.setIcon(new ImageIcon(ViewSolicitationsListP.class.getResource("/img/seta_de_itens_icon.png")));
 				dimensionar();
 				
 				buscar();
@@ -346,7 +346,7 @@ public class ViewSolicitationsList extends JPanel {
 					model.addElement(p.getDisciplinas().get(i).getNome());
 				}
 
-				btnDisciplinas.setIcon(new ImageIcon(ViewSolicitationsList.class.getResource("/img/seta_de_itens_para_cima_icon.png")));
+				btnDisciplinas.setIcon(new ImageIcon(ViewSolicitationsListP.class.getResource("/img/seta_de_itens_para_cima_icon.png")));
 				listDisciplinas.setModel(model);
 				scrollPaneDisciplinas.setVisible(true);
 				listDisciplinas.setVisible(true);
@@ -371,7 +371,7 @@ public class ViewSolicitationsList extends JPanel {
 				
 				listTurmas.setModel(model);			
 				
-				btnTurmas.setIcon(new ImageIcon(ViewSolicitationsList.class.getResource("/img/seta_de_itens_para_cima_icon.png")));
+				btnTurmas.setIcon(new ImageIcon(ViewSolicitationsListP.class.getResource("/img/seta_de_itens_para_cima_icon.png")));
 				listTurmas.setVisible(true);
 				scrollPaneTurmas.setVisible(true);
 				
@@ -468,7 +468,7 @@ public class ViewSolicitationsList extends JPanel {
 				
 			if (solicitacao != null) {
 				pv.viewPanel.setVisible(false);
-				pv.viewPanel = new ViewSolicitation(solicitacao, pv);
+				pv.viewPanel = new ViewSolicitationP(solicitacao, pv);
 				pv.contentPane.add(pv.viewPanel);
 				pv.dimensionar();
 			} else {

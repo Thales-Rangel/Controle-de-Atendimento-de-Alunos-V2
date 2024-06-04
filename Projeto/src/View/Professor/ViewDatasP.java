@@ -20,7 +20,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
-public class ViewDatas extends JPanel {
+public class ViewDatasP extends JPanel {
 	
 	private Connection con;
 	private PreparedStatement pst;
@@ -35,7 +35,7 @@ public class ViewDatas extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public ViewDatas(ProfessorView pv) {
+	public ViewDatasP(ProfessorView pv) {
 		this.p = pv.prof;
 
 		setBounds(0, 0, 637, 593);
@@ -74,7 +74,7 @@ public class ViewDatas extends JPanel {
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pv.viewPanel.setVisible(false);
-				pv.viewPanel = new AlterDatas(pv);
+				pv.viewPanel = new EditDatasP(pv);
 				pv.contentPane.add(pv.viewPanel);
 				pv.dimensionar();
 			}

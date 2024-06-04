@@ -20,7 +20,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.SwingConstants;
 
-public class AlterDatas extends JPanel {
+public class EditDatasP extends JPanel {
 
 	private ProfessorView pv;
 	private Professor p;
@@ -34,7 +34,7 @@ public class AlterDatas extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public AlterDatas(ProfessorView pv) {
+	public EditDatasP(ProfessorView pv) {
 		this.pv = pv;
 		this.p = pv.prof;
 
@@ -150,13 +150,13 @@ public class AlterDatas extends JPanel {
 
 		JLabel lblIMG = new JLabel("");
 		lblIMG.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIMG.setIcon(new ImageIcon(AlterDatas.class.getResource("/img/TonyStark.png")));
+		lblIMG.setIcon(new ImageIcon(EditDatasP.class.getResource("/img/TonyStark.png")));
 
 		JButton btnCancel = new JButton("Cancelar");
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pv.viewPanel.setVisible(false);
-				pv.viewPanel = new ViewDatas(pv);
+				pv.viewPanel = new ViewDatasP(pv);
 				pv.contentPane.add(pv.viewPanel);
 				pv.dimensionar();
 			}
@@ -256,7 +256,7 @@ public class AlterDatas extends JPanel {
 					
 					if (newPasswordField.getText().isBlank() || newPasswordField.getText().trim().equals(RepeatPasswordField.getText().trim())) {
 						pv.viewPanel.setVisible(false);
-						pv.viewPanel = new ViewDatas(pv);
+						pv.viewPanel = new ViewDatasP(pv);
 						pv.contentPane.add(pv.viewPanel);
 						
 						pv.dimensionar();

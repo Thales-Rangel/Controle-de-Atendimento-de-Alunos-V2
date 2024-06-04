@@ -5,58 +5,53 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class Professor extends User {
-	
+
 	private ArrayList<Disciplane> disciplinas = new ArrayList<>();
 
 	public Professor(String nome, String matricula, String senha) {
 		super(nome, matricula, senha);
-		
-		String insert = "select d.id, d.nome from ensina en "
-				+ "inner join disciplinas d "
-				+ "on d.id = en.id_disciplina "
-				+ "where en.matricula_professor= ?";
-		
+
+		String insert = "select d.* from ensina en join disciplinas d on d.id = en.id_disciplina "
+				+ "where en.matricula_professor= ? order by d.nome";
+
 		try {
 			con = DAO.conectar();
 			pst = con.prepareStatement(insert);
 			pst.setString(1, matricula);
 			rs = pst.executeQuery();
-			
+
 			while (rs.next()) {
 				disciplinas.add(new Disciplane(rs.getInt(1), rs.getString(2)));
 			}
-			
-			con.close();
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e);
-		}
-	}
-	
-	public Professor(String matricula) {
-		super(matricula);
-		
-		String insert = "select d.id, d.nome from ensina en "
-				+ "inner join disciplinas d "
-				+ "on d.id = en.id_disciplina "
-				+ "where en.matricula_professor= ?";
-		
-		try {
-			con = DAO.conectar();
-			pst = con.prepareStatement(insert);
-			pst.setString(1, matricula);
-			rs = pst.executeQuery();
-			
-			while (rs.next()) {
-				disciplinas.add(new Disciplane(rs.getInt(1), rs.getString(2)));
-			}
-			
+
 			con.close();
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e);
 		}
 	}
 
-	@Override
+	public Professor(String matricula) {
+		super(matricula);
+
+		String insert = "select d.* from ensina en join disciplinas d on d.id = en.id_disciplina "
+				+ "where en.matricula_professor= ? order by d.nome";
+
+		try {
+			con = DAO.conectar();
+			pst = con.prepareStatement(insert);
+			pst.setString(1, matricula);
+			rs = pst.executeQuery();
+
+			while (rs.next()) {
+				disciplinas.add(new Disciplane(rs.getInt(1), rs.getString(2)));
+			}
+
+			con.close();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e);
+		}
+	}
+
 	public void setNome(String nome) {
 		super.setNome(nome);
 
@@ -76,11 +71,10 @@ public class Professor extends User {
 
 			con.close();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e);
+			JOptionPane.showMessageDialog(null, "Não foi possivel atualizar o nome:\n" + e);
 		}
 	}
 
-	@Override
 	public void setSenha(String senha) {
 		super.setSenha(senha);
 
@@ -97,41 +91,38 @@ public class Professor extends User {
 			} else {
 				JOptionPane.showMessageDialog(null, "Não foi possível atualizar a senha!");
 			}
-			
+
 			con.close();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e);
+			JOptionPane.showMessageDialog(null, "Não foi possivel atualizar a senha:\n" + e);
 		}
 	}
-	
-	
+
 	public ArrayList<Disciplane> getDisciplinas() {
 		return disciplinas;
 	}
-	
+
 	public void atualizaDisciplinas() {
 		disciplinas = new ArrayList<Disciplane>();
-		
-		String insert = "select d.id, d.nome from ensina en "
-				+ "join disciplinas d "
-				+ "on d.id = en.id_disciplina "
-				+ "where en.matricula_professor= ? "
-				+ "order by d.nome";
-		
+
+		String insert = "select d.* from ensina en join disciplinas d on d.id = en.id_disciplina "
+				+ "where en.matricula_professor= ? order by d.nome";
+
 		try {
 			con = DAO.conectar();
 			pst = con.prepareStatement(insert);
 			pst.setString(1, this.matricula);
 			rs = pst.executeQuery();
-			
+
 			while (rs.next()) {
 				disciplinas.add(new Disciplane(rs.getInt(1), rs.getString(2)));
 			}
-			
+
 			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, e);
+			JOptionPane.showMessageDialog(null,
+					"Não foi possivel atualizar a lista de disciplinas do professor:\n" + e);
 		}
 	}
 }

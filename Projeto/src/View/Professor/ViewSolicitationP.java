@@ -25,7 +25,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-public class ViewSolicitation extends JPanel {
+public class ViewSolicitationP extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -34,7 +34,7 @@ public class ViewSolicitation extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public ViewSolicitation(Solicitation s, ProfessorView pv) {
+	public ViewSolicitationP(Solicitation s, ProfessorView pv) {
 		
 		setBounds(0, 0, 637, 593);
 		
@@ -63,7 +63,7 @@ public class ViewSolicitation extends JPanel {
 					s.setResposta(txtrResposta.getText().trim());
 					
 					pv.viewPanel.setVisible(false);
-					pv.viewPanel = new ViewSolicitation(s, pv);
+					pv.viewPanel = new ViewSolicitationP(s, pv);
 					pv.contentPane.add(pv.viewPanel);
 					pv.dimensionar();
 				}

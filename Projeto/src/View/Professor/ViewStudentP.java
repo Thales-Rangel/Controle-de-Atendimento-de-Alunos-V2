@@ -178,7 +178,7 @@ public class ViewStudentP extends JPanel {
 				Solicitation solicitacao = new Solicitation(rs.getInt(1), new Student(rs.getString(2)), new Professor(rs.getString(3)), new Disciplane(rs.getInt(4)), rs.getString(5), (rs.getString(7).equals("T")));
 				
 				pv.viewPanel.setVisible(false);
-				pv.viewPanel = new ViewSolicitation(solicitacao, pv);
+				pv.viewPanel = new ViewSolicitationP(solicitacao, pv);
 				pv.contentPane.add(pv.viewPanel);
 				pv.dimensionar();
 			}

@@ -24,7 +24,7 @@ import Models.DAO;
 import Models.Student;
 import Models.Turma;
 
-public class ViewTurmasP extends JPanel {
+public class ViewTurmaP extends JPanel {
 	
 	private Connection con;
 	private PreparedStatement pst;
@@ -40,7 +40,7 @@ public class ViewTurmasP extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public ViewTurmasP(Turma t, ProfessorView pv) {
+	public ViewTurmaP(Turma t, ProfessorView pv) {
 		this.t = t;
 		this.pv = pv;
 		

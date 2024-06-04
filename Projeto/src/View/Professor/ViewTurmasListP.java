@@ -27,7 +27,7 @@ import Models.Professor;
 import Models.Turma;
 import Utils.Validador;
 
-public class ViewTurmasList extends JPanel {
+public class ViewTurmasListP extends JPanel {
 
 	private Connection con;
 	private PreparedStatement pst;
@@ -43,7 +43,7 @@ public class ViewTurmasList extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public ViewTurmasList(Professor p, ProfessorView pv) {
+	public ViewTurmasListP(Professor p, ProfessorView pv) {
 		this.p = p;
 		this.pv = pv;
 		
@@ -64,7 +64,7 @@ public class ViewTurmasList extends JPanel {
 		;
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(ViewTurmasList.class.getResource("/img/Search_Icon.png")));
+		lblNewLabel.setIcon(new ImageIcon(ViewTurmasListP.class.getResource("/img/Search_Icon.png")));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -178,7 +178,7 @@ public class ViewTurmasList extends JPanel {
 	
 	private void select() {
 		pv.viewPanel.setVisible(false);
-		pv.viewPanel = new ViewTurmasP(new Turma((int) table.getValueAt(table.getSelectedRow(), 0), (String) table.getValueAt(table.getSelectedRow(), 1)), pv);
+		pv.viewPanel = new ViewTurmaP(new Turma((int) table.getValueAt(table.getSelectedRow(), 0), (String) table.getValueAt(table.getSelectedRow(), 1)), pv);
 		pv.contentPane.add(pv.viewPanel);
 		pv.dimensionar();
 	}

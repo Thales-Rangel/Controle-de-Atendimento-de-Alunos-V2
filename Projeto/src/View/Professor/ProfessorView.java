@@ -70,7 +70,7 @@ public class ProfessorView extends JFrame {
 		btnVerDados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				viewPanel.setVisible(false);
-				viewPanel = new ViewDatas(pv);
+				viewPanel = new ViewDatasP(pv);
 				contentPane.add(viewPanel);
 				dimensionar();
 			}
@@ -81,7 +81,7 @@ public class ProfessorView extends JFrame {
 		btnVerSolicitations.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				viewPanel.setVisible(false);
-				viewPanel = new ViewSolicitationsList(prof, pv);
+				viewPanel = new ViewSolicitationsListP(prof, pv);
 				contentPane.add(viewPanel);
 				dimensionar();
 			}
@@ -92,7 +92,7 @@ public class ProfessorView extends JFrame {
 		btnVerTurmas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				viewPanel.setVisible(false);
-				viewPanel = new ViewTurmasList(prof, pv);
+				viewPanel = new ViewTurmasListP(prof, pv);
 				contentPane.add(viewPanel);
 				dimensionar();
 			}
@@ -112,14 +112,14 @@ public class ProfessorView extends JFrame {
 		btnPaginaInicial.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				viewPanel.setVisible(false);
-				viewPanel = new PagInicial(prof);
+				viewPanel = new PagInicialP(prof);
 				contentPane.add(viewPanel);
 				dimensionar();
 			}
 		});
 		btnPaginaInicial.setFont(new Font("Arial", Font.PLAIN, 15));
 		
-		viewPanel = new PagInicial(prof);
+		viewPanel = new PagInicialP(prof);
 		dimensionar();
 		
 	}
