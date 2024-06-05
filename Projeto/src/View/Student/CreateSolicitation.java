@@ -26,9 +26,9 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
-import Models.DAO;
 import Models.Disciplane;
 import Models.Student;
+import Utils.DAO;
 
 public class CreateSolicitation extends JPanel {
 	

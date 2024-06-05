@@ -29,11 +29,11 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import Models.DAO;
 import Models.Disciplane;
 import Models.Professor;
 import Models.Solicitation;
 import Models.Student;
+import Utils.DAO;
 
 public class ViewSolicitationsListP extends JPanel {
 

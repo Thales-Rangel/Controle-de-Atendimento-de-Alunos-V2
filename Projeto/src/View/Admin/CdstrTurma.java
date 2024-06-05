@@ -26,8 +26,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import Models.DAO;
 import Models.Turma;
+import Utils.DAO;
 import Utils.Validador;
 
 public class CdstrTurma extends JDialog {

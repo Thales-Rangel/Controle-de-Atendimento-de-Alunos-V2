@@ -18,8 +18,9 @@ import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 
-import Models.DAO;
 import Models.Student;
+import Utils.DAO;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 

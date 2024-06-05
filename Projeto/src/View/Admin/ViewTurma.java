@@ -20,8 +20,8 @@ import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import Models.DAO;
 import Models.Turma;
+import Utils.DAO;
 import View.Login;
 import javax.swing.JButton;
 import javax.swing.GroupLayout;

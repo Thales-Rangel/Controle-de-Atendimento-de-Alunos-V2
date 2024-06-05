@@ -20,9 +20,9 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import Models.DAO;
 import Models.Disciplane;
 import Models.Professor;
+import Utils.DAO;
 
 public class ViewDisciplaneS extends JPanel {
 	

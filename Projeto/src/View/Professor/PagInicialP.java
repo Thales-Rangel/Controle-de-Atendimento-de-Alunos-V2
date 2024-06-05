@@ -15,8 +15,9 @@ import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import Models.DAO;
 import Models.Professor;
+import Utils.DAO;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 

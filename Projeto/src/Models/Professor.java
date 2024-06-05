@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import Utils.DAO;
+
 public class Professor extends User {
 
 	private ArrayList<Disciplane> disciplinas = new ArrayList<>();

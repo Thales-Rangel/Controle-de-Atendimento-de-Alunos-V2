@@ -12,8 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import Models.DAO;
 import Models.Professor;
+import Utils.DAO;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 

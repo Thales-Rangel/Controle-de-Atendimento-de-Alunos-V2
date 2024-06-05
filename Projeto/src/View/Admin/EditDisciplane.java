@@ -25,8 +25,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import Models.DAO;
 import Models.Disciplane;
+import Utils.DAO;
 import Utils.Validador;
 
 public class EditDisciplane extends JDialog {

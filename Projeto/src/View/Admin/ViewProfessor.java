@@ -22,8 +22,8 @@ import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import Models.DAO;
 import Models.Professor;
+import Utils.DAO;
 import View.Login;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;

@@ -22,9 +22,9 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import Models.DAO;
 import Models.Professor;
 import Models.Turma;
+import Utils.DAO;
 import Utils.Validador;
 
 public class ViewTurmasListP extends JPanel {

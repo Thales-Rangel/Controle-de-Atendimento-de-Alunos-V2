@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 
 import javax.swing.JOptionPane;
 
+import Utils.DAO;
+
 public class Solicitation {
 
 	private Connection con;

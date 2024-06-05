@@ -21,9 +21,9 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 
-import Models.DAO;
 import Models.Disciplane;
 import Models.Student;
+import Utils.DAO;
 
 public class ViewDisciplanesListS extends JPanel {
 	

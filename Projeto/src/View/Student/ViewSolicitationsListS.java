@@ -30,9 +30,10 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import Models.DAO;
 import Models.Solicitation;
 import Models.Student;
+import Utils.DAO;
+
 import java.awt.Color;
 
 public class ViewSolicitationsListS extends JPanel {

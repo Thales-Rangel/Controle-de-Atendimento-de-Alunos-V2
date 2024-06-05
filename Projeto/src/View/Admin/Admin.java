@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import Models.DAO;
+import Utils.DAO;
 import View.Login;
 import javax.swing.JScrollPane;
 import javax.swing.JList;

@@ -21,9 +21,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import Models.DAO;
 import Models.Professor;
 import Models.Student;
+import Utils.DAO;
 import Utils.Validador;
 import View.Admin.Admin;
 import View.Professor.ProfessorView;

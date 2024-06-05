@@ -29,8 +29,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 
-import Models.DAO;
 import Models.Student;
+import Utils.DAO;
 import Utils.Validador;
 import View.Login;
 import javax.swing.GroupLayout;

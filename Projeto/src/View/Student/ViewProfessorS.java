@@ -17,9 +17,9 @@ import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 
-import Models.DAO;
 import Models.Professor;
 import Models.Solicitation;
+import Utils.DAO;
 
 public class ViewProfessorS extends JPanel {
 	

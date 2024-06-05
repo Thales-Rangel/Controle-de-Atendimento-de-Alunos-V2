@@ -2,6 +2,8 @@ package Models;
 
 import javax.swing.JOptionPane;
 
+import Utils.DAO;
+
 public class Student extends User {
 
 	int id_turma;

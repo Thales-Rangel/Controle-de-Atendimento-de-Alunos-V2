@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 
 import javax.swing.JOptionPane;
 
+import Utils.DAO;
+
 public abstract class User {
 
 	protected Connection con;

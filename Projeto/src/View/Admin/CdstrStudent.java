@@ -28,8 +28,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import Models.DAO;
 import Models.Student;
+import Utils.DAO;
 import Utils.Validador;
 import java.awt.Cursor;
 
