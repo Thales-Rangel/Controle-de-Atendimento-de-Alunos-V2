@@ -46,12 +46,9 @@ public class CdstrTurma extends JDialog {
 
 	boolean[] selectedRows;
 
-	/**
-	 * Create the dialog.
-	 */
 	public CdstrTurma(Admin adm) {
 		this.adm = adm;
-		
+
 		setResizable(false);
 		setTitle("Cadastro de turmas");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(CdstrStudent.class.getResource("/img/IF Logo - Remove.png")));
@@ -93,9 +90,7 @@ public class CdstrTurma extends JDialog {
 
 		tableDisciplinas = new JTable();
 		tableDisciplinas.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
-				
 				if (selectedRows[tableDisciplinas.getSelectedRow()]) {
 					selectedRows[tableDisciplinas.getSelectedRow()] = false;
 				} else {
@@ -106,9 +101,6 @@ public class CdstrTurma extends JDialog {
 			}
 		});
 		tableDisciplinas.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "New column" }) {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false };
 
@@ -193,7 +185,7 @@ public class CdstrTurma extends JDialog {
 
 			con.close();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e);
+			JOptionPane.showMessageDialog(null, "Não foi possivel listar as disciplinas:\n" + e);
 		}
 	}
 
@@ -208,23 +200,22 @@ public class CdstrTurma extends JDialog {
 	}
 
 	private void cadastrar() {
-		String nome = "";
-		int idTurma = 0;
-		
+
 		if (!textFieldNome.getText().isBlank()) {
 
-			nome = textFieldNome.getText().trim();
+			String nome = textFieldNome.getText().trim();
+			int idTurma = 0;
 
 			String insert = "insert into turmas values " + "(default , ? )";
 
 			try {
 				con = DAO.conectar();
-				
+
 				pst = con.prepareStatement("select * from turmas where nome= ?");
 				pst.setString(1, nome);
 				rs = pst.executeQuery();
-				
-				if(!rs.next()) {
+
+				if (!rs.next()) {
 					pst = con.prepareStatement(insert);
 					pst.setString(1, nome);
 
@@ -233,53 +224,36 @@ public class CdstrTurma extends JDialog {
 					pst = con.prepareStatement("select id from turmas where nome= ?");
 					pst.setString(1, nome);
 					rs = pst.executeQuery();
-					if (rs.next()) {
+					if (rs.next())
 						idTurma = rs.getInt(1);
-					}
-					
-					if (tableDisciplinas.getSelectedRows().length > 0) {
 
-						for (int i = 0; i < tableDisciplinas.getSelectedRows().length; i++) {
-							String disciplina = (String) tableDisciplinas.getValueAt(tableDisciplinas.getSelectedRows()[i],
-									0);
+					for (int i = 0; i < tableDisciplinas.getSelectedRows().length; i++) {
+						String disciplina = (String) tableDisciplinas.getValueAt(tableDisciplinas.getSelectedRows()[i],
+								0);
 
-							pst = con.prepareStatement("select id from disciplinas where nome= ?");
-							pst.setString(1, disciplina);
-							rs = pst.executeQuery();
-							int idDisciplina = 0;
-							if (rs.next()) {
-								idDisciplina = rs.getInt(1);
-							}
+						pst = con.prepareStatement(
+								"insert into estuda values (default, (select id from disciplinas where nome= ?), ?)");
+						pst.setString(1, disciplina);
+						pst.setInt(2, idTurma);
 
-							pst = con.prepareStatement("insert into estuda values (default, ?, ?)");
-							pst.setInt(1, idDisciplina);
-							pst.setInt(2, idTurma);
-							
-							pst.executeUpdate();
-
-							selectedRows[tableDisciplinas.getSelectedRows()[i]] = false;
-						}
-						
-						selectDisciplinas();
+						pst.execute();
 					}
 
 					if (confirma == 1 && tableDisciplinas.getSelectedRows().length == 0) {
 						JOptionPane.showMessageDialog(null, "Turma cadastrada com sucesso!");
-					} else if (confirma == 1){
-						JOptionPane.showMessageDialog(null, "Turma cadastrada, mas não foi possível designar as turmas");
 					} else {
 						JOptionPane.showMessageDialog(null, "Não foi possível fazer o cadastro!");
 					}
 
 					Turma turma = new Turma(idTurma, nome);
-					
+
 					adm.listagens();
 					adm.status();
 					adm.getContentPane().setVisible(false);
 					adm.setContentPane(new ViewTurma(adm, turma));
 
 					dispose();
-					
+
 				} else {
 					JOptionPane.showMessageDialog(null, "Nome da turma já cadastrado!\nTente outro nome");
 				}

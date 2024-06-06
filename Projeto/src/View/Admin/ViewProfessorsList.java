@@ -57,12 +57,10 @@ public class ViewProfessorsList extends JPanel {
 	private JLabel lblFilters;
 	private JLabel lblSearchMatricula;
 	private JLabel lblFilterDisciplane;
-	/**
-	 * Create the panel.
-	 */
+
 	public ViewProfessorsList(Admin adm) {
 		this.adm = adm;
-		
+
 		setBounds(100, 100, 846, 621);
 
 		JMenuBar menuBar = new JMenuBar();
@@ -165,7 +163,9 @@ public class ViewProfessorsList extends JPanel {
 		JMenuItem mntmReturn = new JMenuItem("Ir para a página principal");
 		mntmReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				retorno(adm);
+				setVisible(false);
+				adm.contentPane.setVisible(true);
+				adm.setContentPane(adm.contentPane);
 			}
 		});
 		mntmReturn.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -174,7 +174,8 @@ public class ViewProfessorsList extends JPanel {
 		JMenuItem mntmExit = new JMenuItem("Sair (Página de Login)");
 		mntmExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				sair(adm);
+				adm.dispose();
+				new Login().setVisible(true);
 			}
 		});
 		mntmExit.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -189,9 +190,8 @@ public class ViewProfessorsList extends JPanel {
 
 		textFieldSearch = new JTextField();
 		textFieldSearch.addKeyListener(new KeyAdapter() {
-			@Override
 			public void keyReleased(KeyEvent e) {
-					buscar();
+				buscar();
 			}
 		});
 		textFieldSearch.setToolTipText("Pesquisar por nome do professor");
@@ -203,13 +203,10 @@ public class ViewProfessorsList extends JPanel {
 
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
 				selecionar();
 			}
 		});
-		table.setModel(new DefaultTableModel(new Object[][] { { "Teste 1", "Teste2" }, { "Teste6", "Teste5" }, },
-				new String[] { "Nome", "Matricula" }));
 		scrollPane.setViewportView(table);
 
 		panelFilters = new JPanel();
@@ -233,9 +230,8 @@ public class ViewProfessorsList extends JPanel {
 				}
 			}
 
-			@Override
 			public void keyReleased(KeyEvent e) {
-					buscar();
+				buscar();
 			}
 		});
 		textFieldSearchMatricula.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -248,20 +244,8 @@ public class ViewProfessorsList extends JPanel {
 
 		textFieldFilterDisciplane = new JTextField();
 		textFieldFilterDisciplane.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (scrollPaneFilterDisciplane.isVisible() && listTurmas.isVisible()) {
-					scrollPaneFilterDisciplane.setVisible(false);
-					listTurmas.setVisible(false);
-					textFieldFilterDisciplane.setText("");
-					btnFilterDisciplane
-							.setIcon(new ImageIcon(ViewStudentsList.class.getResource("/img/seta_de_itens_icon.png")));
-					
-					dimensionar();
-					buscar();
-				} else {
-					listarDisciplinas();
-				}
+				listarDisciplinas();
 			}
 		});
 
@@ -274,7 +258,6 @@ public class ViewProfessorsList extends JPanel {
 
 		listTurmas = new JList<String>();
 		listTurmas.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
 				textFieldFilterDisciplane.setText(listTurmas.getSelectedValue());
 
@@ -292,61 +275,38 @@ public class ViewProfessorsList extends JPanel {
 		btnFilterDisciplane = new JButton("");
 		btnFilterDisciplane.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (scrollPaneFilterDisciplane.isVisible() && listTurmas.isVisible()) {
-					scrollPaneFilterDisciplane.setVisible(false);
-					listTurmas.setVisible(false);
-					textFieldFilterDisciplane.setText("");
-					btnFilterDisciplane
-							.setIcon(new ImageIcon(ViewStudentsList.class.getResource("/img/seta_de_itens_icon.png")));
-					
-					dimensionar();
-					buscar();
-				} else {
-					listarDisciplinas();
-					textFieldFilterDisciplane.requestFocus();
-				}
+				listarDisciplinas();
 			}
 		});
 		btnFilterDisciplane.setIcon(new ImageIcon(ViewStudentsList.class.getResource("/img/seta_de_itens_icon.png")));
-		
+
 		dimensionar();
-		
+
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addComponent(menuBar, GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(10)
-					.addComponent(lblPagina, GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)
-					.addGap(10)
-					.addComponent(lblIcon)
-					.addGap(15)
-					.addComponent(textFieldSearch, GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
-					.addGap(39))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(10)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
-					.addGap(10)
-					.addComponent(panelFilters, GroupLayout.PREFERRED_SIZE, 270, GroupLayout.PREFERRED_SIZE)
-					.addGap(10))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(menuBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup().addGap(10)
+						.addComponent(lblPagina, GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE).addGap(10)
+						.addComponent(lblIcon).addGap(15)
+						.addComponent(textFieldSearch, GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE).addGap(39))
+				.addGroup(groupLayout.createSequentialGroup().addGap(10)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE).addGap(10)
+						.addComponent(panelFilters, GroupLayout.PREFERRED_SIZE, 270, GroupLayout.PREFERRED_SIZE)
+						.addGap(10)));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
+				.createSequentialGroup()
+				.addComponent(menuBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+				.addGap(18)
+				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblPagina, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblIcon)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(3)
-							.addComponent(textFieldSearch, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)))
-					.addGap(16)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
-						.addComponent(panelFilters, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addGap(10))
-		);
+						.addGroup(groupLayout.createSequentialGroup().addGap(3).addComponent(textFieldSearch,
+								GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)))
+				.addGap(16)
+				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE).addComponent(
+								panelFilters, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				.addGap(10)));
 		setLayout(groupLayout);
 
 		scrollPaneFilterDisciplane.setVisible(false);
@@ -356,8 +316,8 @@ public class ViewProfessorsList extends JPanel {
 	}
 
 	private void listagem() {
-
-		DefaultTableModel model = new DefaultTableModel(new Object[][] {}, new String[] { "Nome", "Matricula", "Disciplinas" }) {
+		DefaultTableModel model = new DefaultTableModel(new Object[][] {},
+				new String[] { "Nome", "Matricula", "Disciplinas" }) {
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false, false, false };
 
@@ -368,9 +328,7 @@ public class ViewProfessorsList extends JPanel {
 
 		String readLista = "select p.nome, p.matricula, group_concat(d.nome) from professores p "
 				+ "left join ensina en on en.matricula_professor = p.matricula "
-				+ "left join disciplinas d on d.id = en.id_disciplina "
-				+ "group by p.matricula "
-				+ "order by nome";
+				+ "left join disciplinas d on d.id = en.id_disciplina group by p.matricula " + "order by nome";
 
 		try {
 			con = DAO.conectar();
@@ -385,18 +343,32 @@ public class ViewProfessorsList extends JPanel {
 
 			con.close();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e);
+			JOptionPane.showMessageDialog(null, "Não foi possivel listar os professores:\n" + e);
 		}
 	}
 
 	private void listarDisciplinas() {
+		if (scrollPaneFilterDisciplane.isVisible() && listTurmas.isVisible()) {
+			scrollPaneFilterDisciplane.setVisible(false);
+			listTurmas.setVisible(false);
+			textFieldFilterDisciplane.setText("");
+			btnFilterDisciplane
+					.setIcon(new ImageIcon(ViewStudentsList.class.getResource("/img/seta_de_itens_icon.png")));
+
+			dimensionar();
+			buscar();
+
+			return;
+		}
+
 		DefaultListModel<String> model = new DefaultListModel<String>();
 
-		String readTurmas = "select d.nome from ensina as e inner join disciplinas as d inner join professores as p where p.matricula = e.matricula_professor and d.id = e.id_disciplina group by d.nome order by d.nome";
+		String readDisciplinas = "select distinct d.nome from ensina en "
+				+ "join disciplinas d on d.id = en.id_disciplina order by d.nome";
 
 		try {
 			con = DAO.conectar();
-			pst = con.prepareStatement(readTurmas);
+			pst = con.prepareStatement(readDisciplinas);
 			rs = pst.executeQuery();
 
 			while (rs.next()) {
@@ -408,10 +380,10 @@ public class ViewProfessorsList extends JPanel {
 			scrollPaneFilterDisciplane.setVisible(true);
 			btnFilterDisciplane.setIcon(
 					new ImageIcon(ViewStudentsList.class.getResource("/img/seta_de_itens_para_cima_icon.png")));
-			
+
 			dimensionar();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e);
+			JOptionPane.showMessageDialog(null, "Não foi possivel listar as disciplinas:\n" + e);
 		}
 	}
 
@@ -430,16 +402,17 @@ public class ViewProfessorsList extends JPanel {
 				insert += "and p.matricula like '" + textFieldSearchMatricula.getText() + "%' ";
 			}
 		}
-		
+
 		insert += "group by p.matricula ";
-		
+
 		if (!textFieldFilterDisciplane.getText().isEmpty()) {
-			insert += "having group_concat(distinct d.nome) like '%"+ textFieldFilterDisciplane.getText() +"%' ";
+			insert += "having group_concat(distinct d.nome) like '%" + textFieldFilterDisciplane.getText() + "%' ";
 		}
 
 		insert += "order by p.nome";
 
-		DefaultTableModel model = new DefaultTableModel(new Object[][] {}, new String[] { "Nome", "Matricula", "Disciplinas" }) {
+		DefaultTableModel model = new DefaultTableModel(new Object[][] {},
+				new String[] { "Nome", "Matricula", "Disciplinas" }) {
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false, false, false };
 
@@ -461,7 +434,7 @@ public class ViewProfessorsList extends JPanel {
 
 			con.close();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e);
+			JOptionPane.showMessageDialog(null, "Não foi possivel buscar:\n" + e);
 		}
 	}
 
@@ -473,62 +446,48 @@ public class ViewProfessorsList extends JPanel {
 		adm.setContentPane(new ViewProfessor(adm, new Professor(matriculaSelect)));
 	}
 
-	private void retorno(Admin adm) {
-		setVisible(false);
-		adm.contentPane.setVisible(true);
-		adm.setContentPane(adm.contentPane);
-	}
-
-	private void sair(Admin adm) {
-		adm.dispose();
-		new Login().setVisible(true);
-	}
-	
 	private void dimensionar() {
 		GroupLayout gl_panelFilters = new GroupLayout(panelFilters);
-		gl_panelFilters.setHorizontalGroup(
-			gl_panelFilters.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelFilters.createSequentialGroup()
-					.addGap(8)
-					.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_panelFilters.createSequentialGroup()
-							.addComponent(textFieldSearchMatricula)
-							.addContainerGap())
-						.addComponent(lblFilters, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblSearchMatricula, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE)))
-				.addGroup(gl_panelFilters.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_panelFilters.createSequentialGroup()
-							.addGap(225)
-							.addComponent(btnFilterDisciplane, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+		gl_panelFilters.setHorizontalGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelFilters.createSequentialGroup().addGap(8)
+						.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING, false)
+								.addGroup(gl_panelFilters.createSequentialGroup().addComponent(textFieldSearchMatricula)
+										.addContainerGap())
+								.addComponent(lblFilters, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblSearchMatricula, GroupLayout.PREFERRED_SIZE, 157,
+										GroupLayout.PREFERRED_SIZE)))
+				.addGroup(gl_panelFilters.createSequentialGroup().addContainerGap().addGroup(gl_panelFilters
+						.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(gl_panelFilters.createSequentialGroup().addGap(225).addComponent(btnFilterDisciplane,
+								GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
-							.addComponent(scrollPaneFilterDisciplane, GroupLayout.PREFERRED_SIZE, 245, GroupLayout.PREFERRED_SIZE)
-							.addComponent(textFieldFilterDisciplane, GroupLayout.PREFERRED_SIZE, 225, GroupLayout.PREFERRED_SIZE)
-							.addComponent(lblFilterDisciplane, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE))))
-		);
-		gl_panelFilters.setVerticalGroup(
-			gl_panelFilters.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelFilters.createSequentialGroup()
-					.addGap(8)
-					.addComponent(lblFilters, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-					.addGap(39)
-					.addComponent(lblSearchMatricula, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textFieldSearchMatricula, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-					.addGap(36)
-					.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
+								.addComponent(scrollPaneFilterDisciplane, GroupLayout.PREFERRED_SIZE, 245,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(textFieldFilterDisciplane, GroupLayout.PREFERRED_SIZE, 225,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblFilterDisciplane, GroupLayout.PREFERRED_SIZE, 142,
+										GroupLayout.PREFERRED_SIZE)))));
+		gl_panelFilters.setVerticalGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING).addGroup(gl_panelFilters
+				.createSequentialGroup().addGap(8)
+				.addComponent(lblFilters, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE).addGap(39)
+				.addComponent(lblSearchMatricula, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+				.addPreferredGap(ComponentPlacement.RELATED)
+				.addComponent(textFieldSearchMatricula, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+				.addGap(36)
+				.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panelFilters.createSequentialGroup()
-							.addComponent(lblFilterDisciplane, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-							.addGap(10)
-							.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
-								.addComponent(textFieldFilterDisciplane, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnFilterDisciplane, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(gl_panelFilters.createSequentialGroup()
-							.addGap(61)
-							.addComponent(scrollPaneFilterDisciplane, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(142, Short.MAX_VALUE))
-		);
+								.addComponent(
+										lblFilterDisciplane, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+								.addGap(10)
+								.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
+										.addComponent(textFieldFilterDisciplane, GroupLayout.PREFERRED_SIZE, 26,
+												GroupLayout.PREFERRED_SIZE)
+										.addComponent(btnFilterDisciplane, GroupLayout.PREFERRED_SIZE, 26,
+												GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_panelFilters.createSequentialGroup().addGap(61).addComponent(
+								scrollPaneFilterDisciplane, GroupLayout.PREFERRED_SIZE, 149,
+								GroupLayout.PREFERRED_SIZE)))
+				.addContainerGap(142, Short.MAX_VALUE)));
 		panelFilters.setLayout(gl_panelFilters);
 	}
 }

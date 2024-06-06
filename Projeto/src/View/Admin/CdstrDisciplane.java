@@ -6,8 +6,6 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
@@ -49,9 +47,6 @@ public class CdstrDisciplane extends JDialog {
 	boolean[] selectedRowsT;
 	private JTable tableTurmas;
 
-	/**
-	 * Create the dialog.
-	 */
 	public CdstrDisciplane(Admin adm) {
 		this.adm = adm;
 		
@@ -76,11 +71,6 @@ public class CdstrDisciplane extends JDialog {
 		contentPanel.add(lblNome);
 
 		textFieldNome = new JTextField();
-		textFieldNome.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-			}
-		});
 		textFieldNome.setToolTipText("Cadastre o nome da disciplina");
 		lblNome.setLabelFor(textFieldNome);
 		textFieldNome.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -101,9 +91,7 @@ public class CdstrDisciplane extends JDialog {
 
 		tableProfessores = new JTable();
 		tableProfessores.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
-
 				if (selectedRowsP[tableProfessores.getSelectedRow()]) {
 					selectedRowsP[tableProfessores.getSelectedRow()] = false;
 				} else {
@@ -111,17 +99,6 @@ public class CdstrDisciplane extends JDialog {
 				}
 
 				select();
-			}
-		});
-		tableProfessores.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "New column" }) {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-			boolean[] columnEditables = new boolean[] { false };
-
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
 			}
 		});
 		tableProfessores.setRowSelectionAllowed(true);
@@ -139,9 +116,7 @@ public class CdstrDisciplane extends JDialog {
 
 		tableTurmas = new JTable();
 		tableTurmas.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
-
 				if (selectedRowsT[tableTurmas.getSelectedRow()]) {
 					selectedRowsT[tableTurmas.getSelectedRow()] = false;
 				} else {
@@ -273,12 +248,11 @@ public class CdstrDisciplane extends JDialog {
 	}
 
 	private void cadastrar() {
-		String nome = "";
-		int idDisciplina = 0;
 
 		if (!textFieldNome.getText().isBlank()) {
 
-			nome = textFieldNome.getText().trim();
+			String nome = textFieldNome.getText().trim();
+			int idDisciplina = 0;
 
 			String insert = "insert into disciplinas values (default , ? )";
 
@@ -303,39 +277,22 @@ public class CdstrDisciplane extends JDialog {
 					}
 					
 					try {
-						if (tableProfessores.getSelectedRows().length > 0) {
+						for (int i = 0; i < tableProfessores.getSelectedRows().length; i++) {
+							String matriculaProfessor = (String) tableProfessores.getValueAt(tableProfessores.getSelectedRows()[i], 1);
 
-							for (int i = 0; i < tableProfessores.getSelectedRows().length; i++) {
-								String matriculaProfessor = (String) tableProfessores
-										.getValueAt(tableProfessores.getSelectedRows()[i], 1);
-
-								pst = con.prepareStatement("insert into ensina values (default, ?, ?)");
-								pst.setString(1, matriculaProfessor);
-								pst.setInt(2, idDisciplina);
-
-								pst.executeUpdate();
-							}
+							pst = con.prepareStatement("insert into ensina values (default, ?, ?)");
+							pst.setString(1, matriculaProfessor);
+							pst.setInt(2, idDisciplina);
+							pst.execute();
 						}
 
-						if (tableTurmas.getSelectedRows().length > 0) {
+						for (int i = 0; i < tableTurmas.getSelectedRows().length; i++) {
+							String turma = (String) tableTurmas.getValueAt(tableTurmas.getSelectedRows()[i], 0);
 
-							for (int i = 0; i < tableTurmas.getSelectedRows().length; i++) {
-								String turma = (String) tableTurmas.getValueAt(tableTurmas.getSelectedRows()[i], 0);
-
-								pst = con.prepareStatement("select id from turmas where nome= ?");
-								pst.setString(1, turma);
-								rs = pst.executeQuery();
-								int idTurma = 0;
-								if (rs.next()) {
-									idTurma = rs.getInt(1);
-								}
-
-								pst = con.prepareStatement("insert into estuda values (default, ?, ?)");
-								pst.setInt(1, idDisciplina);
-								pst.setInt(2, idTurma);
-
-								pst.executeUpdate();
-							}
+							pst = con.prepareStatement("insert into estuda values (default, ?, (select id from turmas where nome= ?))");
+							pst.setInt(1, idDisciplina);
+							pst.setString(2, turma);
+							pst.execute();
 						}
 
 					} catch (Exception e) {
@@ -349,6 +306,7 @@ public class CdstrDisciplane extends JDialog {
 					} else {
 						JOptionPane.showMessageDialog(null, "Não foi possível fazer o cadastro!");
 					}
+					con.close();
 
 					adm.listagens();
 					adm.status();
@@ -356,8 +314,6 @@ public class CdstrDisciplane extends JDialog {
 					adm.setContentPane(new ViewDisciplane(adm, new Disciplane(idDisciplina, nome)));
 
 					dispose();
-
-					con.close();
 				} else {
 					JOptionPane.showMessageDialog(null, "Nome da disciplina já cadastrado!\nTente outro nome");
 				}

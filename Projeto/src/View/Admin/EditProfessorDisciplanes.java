@@ -29,14 +29,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class EditProfessorDisciplanes extends JDialog {
-	
+
 	private Connection con;
 	private PreparedStatement pst;
 	private ResultSet rs;
-	
+
 	private Professor p;
 	private Admin adm;
-	
+
 	private boolean[] selecteds;
 
 	private static final long serialVersionUID = 1L;
@@ -46,11 +46,12 @@ public class EditProfessorDisciplanes extends JDialog {
 	public EditProfessorDisciplanes(Professor p, Admin adm) {
 		this.p = p;
 		this.adm = adm;
-		
-		setIconImage(Toolkit.getDefaultToolkit().getImage(EditProfessorDisciplanes.class.getResource("/img/IF Logo - Remove.png")));
+
+		setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(EditProfessorDisciplanes.class.getResource("/img/IF Logo - Remove.png")));
 		setTitle("Editar disciplinas do professor");
 		setResizable(false);
-		
+
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -76,7 +77,7 @@ public class EditProfessorDisciplanes extends JDialog {
 						} else {
 							selecteds[table.getSelectedRow()] = true;
 						}
-						
+
 						select();
 					}
 				});
@@ -90,9 +91,9 @@ public class EditProfessorDisciplanes extends JDialog {
 			Ilustration.setBounds(270, 35, 156, 187);
 			contentPanel.add(Ilustration);
 		}
-		
+
 		listar();
-		
+
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -120,7 +121,7 @@ public class EditProfessorDisciplanes extends JDialog {
 			}
 		}
 	}
-	
+
 	private void listar() {
 		DefaultTableModel model = new DefaultTableModel(new Object[][] {}, new String[] { "" }) {
 			private static final long serialVersionUID = 1L;
@@ -130,12 +131,12 @@ public class EditProfessorDisciplanes extends JDialog {
 				return columnEditables[column];
 			}
 		};
-		
+
 		String read = "select nome from disciplinas";
-		
-		String readEnsina = "select * from ensina en where en.matricula_professor = '"+ p.getMatricula() +"' "
-				+ "and en.id_disciplina= (select id from disciplinas where nome= ?)";
-		
+
+		String readEnsina = "select * from ensina where matricula_professor = '" + p.getMatricula() + "' "
+				+ "and id_disciplina= (select id from disciplinas where nome= ?)";
+
 		try {
 			con = DAO.conectar();
 			pst = con.prepareStatement("select count(*) from disciplinas");
@@ -143,33 +144,33 @@ public class EditProfessorDisciplanes extends JDialog {
 			if (rs.next()) {
 				selecteds = new boolean[rs.getInt(1)];
 			}
-			
+
 			pst = con.prepareStatement(read);
 			rs = pst.executeQuery();
-			
-			for(int i = 0; rs.next(); i++) {
+
+			for (int i = 0; rs.next(); i++) {
 				model.addRow(new Object[] { rs.getString(1) });
-				
+
 				pst = con.prepareStatement(readEnsina);
 				pst.setString(1, rs.getString(1));
 				ResultSet verifica = pst.executeQuery();
-				if(verifica.next()) {
+				if (verifica.next()) {
 					selecteds[i] = true;
 				} else {
 					selecteds[i] = false;
 				}
 			}
-			
+
 			table.setModel(model);
-			
+
 			select();
-			
+
 			con.close();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Não foi possivel listar as disciplinas:\n"+e);
+			JOptionPane.showMessageDialog(null, "Não foi possivel listar as disciplinas:\n" + e);
 		}
 	}
-	
+
 	private void select() {
 		for (int i = 0; i < selecteds.length; i++) {
 			if (selecteds[i]) {
@@ -179,32 +180,32 @@ public class EditProfessorDisciplanes extends JDialog {
 			}
 		}
 	}
-	
+
 	private void editar() {
 		try {
-			String deleteEnsina = "delete from ensina where matricula_professor= '"+ p.getMatricula()+ "'";
-			
-			String insert = "insert into ensina values (default,'"+p.getMatricula()+"', (select id from disciplinas where nome= ?))";
-			
+			String deleteEnsina = "delete from ensina where matricula_professor= '" + p.getMatricula() + "'";
+
+			String insert = "insert into ensina values (default,'" + p.getMatricula()
+					+ "', (select id from disciplinas where nome= ?))";
+
 			con = DAO.conectar();
 			pst = con.prepareStatement(deleteEnsina);
 			pst.execute();
-			
-			for(int i = 0; i < table.getSelectedRows().length; i++) {
+
+			for (int i = 0; i < table.getSelectedRows().length; i++) {
 				pst = con.prepareStatement(insert);
 				pst.setString(1, (String) table.getValueAt(table.getSelectedRows()[i], 0));
-				
 				pst.execute();
 			}
 			con.close();
-			
+
 			p.atualizaDisciplinas();
-			
+
 			adm.getContentPane().setVisible(false);
 			adm.setContentPane(new ViewProfessor(adm, p));
 			dispose();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(adm, "Não foi possivel editar as disciplinas do professor:\n"+e);
+			JOptionPane.showMessageDialog(adm, "Não foi possivel editar as disciplinas do professor:\n" + e);
 		}
 	}
 

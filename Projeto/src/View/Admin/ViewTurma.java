@@ -42,9 +42,6 @@ public class ViewTurma extends JPanel {
 	private JTable tableAlunos;
 	public JLabel lblNome;
 
-	/**
-	 * Create the panel.
-	 */
 	public ViewTurma(Admin adm, Turma t) {
 		this.adm = adm;
 		this.t = t;
@@ -187,17 +184,6 @@ public class ViewTurma extends JPanel {
 
 		tableProfessores = new JTable();
 		tableProfessores.setRowSelectionAllowed(false);
-		tableProfessores.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Professores" }) {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-			boolean[] columnEditables = new boolean[] { false };
-
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
 		tableProfessores.setFont(new Font("Arial", Font.PLAIN, 15));
 		scrollPaneProfessores.setViewportView(tableProfessores);
 
@@ -205,34 +191,12 @@ public class ViewTurma extends JPanel {
 
 		tableDisciplinas = new JTable();
 		tableDisciplinas.setRowSelectionAllowed(false);
-		tableDisciplinas.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Disciplinas" }) {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-			boolean[] columnEditables = new boolean[] { false };
-
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
 		tableDisciplinas.setFont(new Font("Arial", Font.PLAIN, 15));
 		scrollPaneDisciplinas.setViewportView(tableDisciplinas);
 
 		JScrollPane scrollPaneAlunos = new JScrollPane();
 
 		tableAlunos = new JTable();
-		tableAlunos.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Aluno", "Matricula" }) {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-			boolean[] columnEditables = new boolean[] { false, false };
-
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
 		tableAlunos.setRowSelectionAllowed(false);
 		tableAlunos.setFont(new Font("Arial", Font.PLAIN, 15));
 		scrollPaneAlunos.setViewportView(tableAlunos);
@@ -246,15 +210,16 @@ public class ViewTurma extends JPanel {
 		btnApagarTurma.setForeground(Color.WHITE);
 		btnApagarTurma.setFont(new Font("Arial", Font.PLAIN, 20));
 		btnApagarTurma.setBackground(Color.RED);
-		
+
 		JButton btnEdit = new JButton("Editar Turma");
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new EditTurma(adm, t).setVisible(true);;
+				new EditTurma(adm, t).setVisible(true);
+				;
 			}
 		});
 		btnEdit.setFont(new Font("Arial", Font.PLAIN, 20));
-		
+
 		JButton btnReturn = new JButton("Voltar");
 		btnReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -264,51 +229,44 @@ public class ViewTurma extends JPanel {
 		});
 		btnReturn.setFont(new Font("Arial", Font.PLAIN, 20));
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addComponent(menuBar, GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(10)
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 826, Short.MAX_VALUE)
-					.addGap(10))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(10)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup().addGap(10)
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 826, Short.MAX_VALUE).addGap(10))
+				.addGroup(groupLayout.createSequentialGroup().addGap(10).addGroup(groupLayout
+						.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addComponent(scrollPaneProfessores, GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
-							.addGap(10)
-							.addComponent(scrollPaneDisciplinas, GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE))
-						.addComponent(scrollPaneAlunos, GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE))
-					.addGap(10)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnApagarTurma, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnEdit, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE))
-					.addGap(10))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(menuBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(10)
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-					.addGap(10)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(scrollPaneProfessores, GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
+								.addGap(10)
+								.addComponent(scrollPaneDisciplinas, GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE))
+						.addComponent(scrollPaneAlunos, GroupLayout.DEFAULT_SIZE, 548, Short.MAX_VALUE)).addGap(10)
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnApagarTurma, GroupLayout.PREFERRED_SIZE, 268,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnEdit, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 268, GroupLayout.PREFERRED_SIZE))
+						.addGap(10)));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
+				.createSequentialGroup()
+				.addComponent(menuBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+				.addGap(10).addComponent(panel, GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE).addGap(10)
+				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(scrollPaneProfessores, GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
-								.addComponent(scrollPaneDisciplinas, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE))
-							.addGap(10)
-							.addComponent(scrollPaneAlunos, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(176)
-							.addComponent(btnApagarTurma, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-							.addGap(10)
-							.addComponent(btnEdit, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-							.addGap(10)
-							.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)))
-					.addGap(10))
-		);
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+										.addComponent(scrollPaneProfessores, GroupLayout.DEFAULT_SIZE, 239,
+												Short.MAX_VALUE)
+										.addComponent(scrollPaneDisciplinas, Alignment.TRAILING,
+												GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE))
+								.addGap(10)
+								.addComponent(scrollPaneAlunos, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE))
+						.addGroup(groupLayout.createSequentialGroup().addGap(176)
+								.addComponent(btnApagarTurma, GroupLayout.PREFERRED_SIZE, 39,
+										GroupLayout.PREFERRED_SIZE)
+								.addGap(10)
+								.addComponent(btnEdit, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+								.addGap(10)
+								.addComponent(btnReturn, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)))
+				.addGap(10)));
 		setLayout(groupLayout);
 
 		listagem();
@@ -317,9 +275,6 @@ public class ViewTurma extends JPanel {
 
 	public void listagem() {
 		DefaultTableModel modeloProfessores = new DefaultTableModel(new Object[][] {}, new String[] { "Professores" }) {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false };
 
@@ -328,9 +283,6 @@ public class ViewTurma extends JPanel {
 			}
 		};
 		DefaultTableModel modeloDisciplinas = new DefaultTableModel(new Object[][] {}, new String[] { "Disciplinas" }) {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false };
 
@@ -347,9 +299,6 @@ public class ViewTurma extends JPanel {
 
 		DefaultTableModel modeloAlunos = new DefaultTableModel(new Object[][] {},
 				new String[] { "Alunos", "Matriculas" }) {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false, false };
 
@@ -358,12 +307,12 @@ public class ViewTurma extends JPanel {
 			}
 		};
 
-		String readProfessores = "select p.nome from estuda es " + "inner join ensina en "
-				+ "on es.id_disciplina = en.id_disciplina " + "inner join professores p "
-				+ "on p.matricula = en.matricula_professor " + "where es.id_turma= ? " + "group by p.matricula "
+		String readProfessores = "select p.nome from estuda es join ensina en "
+				+ "on es.id_disciplina = en.id_disciplina join professores p "
+				+ "on p.matricula = en.matricula_professor where es.id_turma= ? group by p.matricula "
 				+ "order by p.nome";
 
-		String readAlunos = "select nome, matricula from alunos " + "where id_turma= ? " + "order by nome";
+		String readAlunos = "select nome, matricula from alunos where id_turma= ? order by nome";
 
 		try {
 			con = DAO.conectar();
@@ -393,117 +342,61 @@ public class ViewTurma extends JPanel {
 	}
 
 	private void deletar() {
-		String readAlunos = "select count(*) from alunos " + "where id_turma= ?";
-
 		try {
+			int confirmaDel;
+
 			con = DAO.conectar();
-			pst = con.prepareStatement(readAlunos);
+
+			pst = con.prepareStatement("select count(*) from alunos where id_turma= ?");
 			pst.setInt(1, t.getId());
 			rs = pst.executeQuery();
-
+			int totalStudents = 0;
+			
 			if (rs.next() && rs.getInt(1) != 0) {
-				int confirma = JOptionPane.showConfirmDialog(null, t.getNome() + " tem " + rs.getInt(1)
+				confirmaDel = JOptionPane.showConfirmDialog(null, t.getNome() + " tem " + rs.getInt(1)
 						+ " alunos cadastrados.\nDeseja excluir a turma e todos os alunos cadastrados juntos?");
 
-				if (confirma == JOptionPane.YES_OPTION) {
-
-					pst = con.prepareStatement("select count(*) from alunos where id_turma= ?");
-					pst.setInt(1, t.getId());
-					rs = pst.executeQuery();
-					int exTotal = 0;
-					if (rs.next()) {
-						exTotal = rs.getInt(1);
-					}
-
-					// Não consegui fazer o comando "delete from alunos where id_turma= ?" funcionar nesse caso
-					
-					String deleteStudents = "select matricula from alunos where id_turma= ?";
-
-					pst = con.prepareStatement(deleteStudents);
-					pst.setInt(1, t.getId());
-					rs = pst.executeQuery();
-
-					int confirmaDelAlunos = 0;
-					while (rs.next()) {
-						pst = con.prepareStatement("delete from alunos where matricula= ?");
-						pst.setString(1, rs.getString(1));
-						confirmaDelAlunos += pst.executeUpdate();
-					}
-
-					if (confirmaDelAlunos == exTotal) {
-
-						pst = con.prepareStatement("select count(*) from estuda where id_turma= ?");
-						pst.setInt(1, t.getId());
-						rs = pst.executeQuery();
-						int totaldisciplinas = 0;
-						if (rs.next()) {
-							totaldisciplinas = rs.getInt(1);
-						}
-
-						pst = con.prepareStatement("select id from estuda where id_turma= ?");
-						pst.setInt(1, t.getId());
-						rs = pst.executeQuery();
-
-						int confirmaDelEstuda = 0;
-						while (rs.next()) {
-							pst = con.prepareStatement("delete from estuda where id= ?");
-							pst.setInt(1, rs.getInt(1));
-							confirmaDelEstuda += pst.executeUpdate();
-						}
-
-						if (confirmaDelEstuda == totaldisciplinas) {
-							pst = con.prepareStatement("delete from turmas where id= ?");
-							pst.setInt(1, t.getId());
-
-							int confirmaDelTurma = pst.executeUpdate();
-							if (confirmaDelTurma == 1) {
-								JOptionPane.showMessageDialog(null, "Turma e alunos excluidos com sucesso!");
-
-								adm.listagens();
-								adm.status();
-								setVisible(false);
-								adm.setContentPane(new ViewTurmasList(adm));
-							} else {
-								JOptionPane.showMessageDialog(null, "Não foi poossivel excluir a turma!");
-							}
-						} else {
-							JOptionPane.showMessageDialog(null,"Não foi possivel excluir as conexões da turma com as disciplinas cursadas!");
-						}
-					} else {
-						JOptionPane.showMessageDialog(null, "Não foi possivel excluir os alunos da turma!");
-					}
-				}
+				totalStudents = rs.getInt(1);
 			} else {
-				int confirmaDel = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir essa turma?");
-				
-				if (confirmaDel == JOptionPane.YES_OPTION) {
-					
-					pst = con.prepareStatement("select id from estuda where id_turma= ?");
-					pst.setInt(1, t.getId());
-					rs = pst.executeQuery();
-					while (rs.next()) {
-						pst = con.prepareStatement("delete from estuda where id= ?");
-						pst.setInt(1, rs.getInt(1));
-						pst.execute();
-					}
-					
-					String delete = "delete from turmas where id= ?";
+				confirmaDel = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir essa turma?");
+			}
 
-					pst = con.prepareStatement(delete);
-					pst.setInt(1, t.getId());
+			if (confirmaDel == JOptionPane.YES_OPTION) {
+				pst = con.prepareStatement("select matricula from alunos where id_turma= ?");
+				pst.setInt(1, t.getId());
+				rs = pst.executeQuery();
 
-					int confirma = pst.executeUpdate();
-					if (confirma == 1) {
-						JOptionPane.showMessageDialog(null, "Turma excluida com sucesso!");
-						
-						adm.listagens();
-						adm.status();
-						setVisible(false);
-						adm.setContentPane(new ViewTurmasList(adm));
+				while (rs.next()) {
+					pst = con.prepareStatement("delete from solicitacoes where matricula_a= ?");
+					pst.setString(1, rs.getString(1));
+					pst.execute();
+
+					pst = con.prepareStatement("delete from alunos where matricula= ?");
+					pst.setString(1, rs.getString(1));
+					pst.execute();
+				}
+
+				pst = con.prepareStatement("delete from estuda where id_turma= ?");
+				pst.setInt(1, t.getId());
+				pst.execute();
+
+				pst = con.prepareStatement("delete from turmas where id= ?");
+				pst.setInt(1, t.getId());
+
+				int confirmaDelTurma = pst.executeUpdate();
+				if (confirmaDelTurma == 1) {
+					if (totalStudents != 0) {
+						JOptionPane.showMessageDialog(null, "Turma e alunos excluidos com sucesso!");
 					} else {
-						JOptionPane.showMessageDialog(null, "Não foi possivel excluir a turma!");
+						JOptionPane.showMessageDialog(null, "Turma excluida com sucesso!");
 					}
 
+					adm.listagens();
+					adm.status();
+					setVisible(false);
+					adm.setContentPane(new ViewTurmasList(adm));
+				} else {
+					JOptionPane.showMessageDialog(null, "Não foi poossivel excluir a turma!");
 				}
 			}
 

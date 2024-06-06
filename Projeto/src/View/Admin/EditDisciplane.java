@@ -95,24 +95,15 @@ public class EditDisciplane extends JDialog {
 		tableProfessores = new JTable();
 		tableProfessores.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-
 				if (selectedRowsP[tableProfessores.getSelectedRow()]) {
 					selectedRowsP[tableProfessores.getSelectedRow()] = false;
 				} else {
 					selectedRowsP[tableProfessores.getSelectedRow()] = true;
 				}
-
 				select();
 			}
 		});
-		tableProfessores.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "New column" }) {
-			private static final long serialVersionUID = 1L;
-			boolean[] columnEditables = new boolean[] { false };
 
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
 		tableProfessores.setRowSelectionAllowed(true);
 		tableProfessores.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		scrollPane.setViewportView(tableProfessores);
@@ -129,13 +120,11 @@ public class EditDisciplane extends JDialog {
 		tableTurmas = new JTable();
 		tableTurmas.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-
 				if (selectedRowsT[tableTurmas.getSelectedRow()]) {
 					selectedRowsT[tableTurmas.getSelectedRow()] = false;
 				} else {
 					selectedRowsT[tableTurmas.getSelectedRow()] = true;
 				}
-
 				select();
 			}
 		});
@@ -200,17 +189,15 @@ public class EditDisciplane extends JDialog {
 
 		String readEnsina = "select * from ensina where id_disciplina = " + d.getId() + " and matricula_professor= ?";
 
-		String readEstuda = "select * from estuda es join turmas t on t.id = es.id_turma "
-				+ "where es.id_disciplina = " + d.getId() + " and t.nome= ?";
+		String readEstuda = "select * from estuda where id_disciplina = " + d.getId() + " and id_turma= ?";
 		try {
 			con = DAO.conectar();
 
 			pst = con.prepareStatement("select count(*) from professores");
 			rs = pst.executeQuery();
 
-			if (rs.next()) {
+			if (rs.next())
 				selectedRowsP = new boolean[rs.getInt(1)];
-			}
 
 			pst = con.prepareStatement(readProfs);
 			rs = pst.executeQuery();
@@ -237,14 +224,14 @@ public class EditDisciplane extends JDialog {
 			if (rs.next())
 				selectedRowsT = new boolean[rs.getInt(1)];
 
-			pst = con.prepareStatement("select nome from turmas order by nome");
+			pst = con.prepareStatement("select * from turmas order by nome");
 			rs = pst.executeQuery();
 
 			for (int i = 0; rs.next(); i++) {
-				model2.addRow(new Object[] { rs.getString(1) });
+				model2.addRow(new Object[] { rs.getString(2) });
 
 				pst = con.prepareStatement(readEstuda);
-				pst.setString(1, rs.getString(1));
+				pst.setInt(1, rs.getInt(1));
 				ResultSet verifica = pst.executeQuery();
 
 				if (verifica.next()) {
@@ -260,7 +247,7 @@ public class EditDisciplane extends JDialog {
 
 			con.close();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e);
+			JOptionPane.showMessageDialog(null, "Não foi possivel listar:\n" + e);
 		}
 	}
 
@@ -283,18 +270,17 @@ public class EditDisciplane extends JDialog {
 	}
 
 	private void atualizar() {
-
 		try {
 			con = DAO.conectar();
-			
+
 			pst = con.prepareStatement("delete from ensina where id_disciplina= ?");
 			pst.setInt(1, d.getId());
 			pst.execute();
-			
+
 			pst = con.prepareStatement("delete from estuda where id_disciplina= ?");
 			pst.setInt(1, d.getId());
 			pst.execute();
-			
+
 			if (!textFieldNome.getText().isBlank() && !textFieldNome.getText().equals(d.getNome())) {
 				String nome = textFieldNome.getText().trim();
 
@@ -309,39 +295,34 @@ public class EditDisciplane extends JDialog {
 				}
 			}
 
-			if (tableProfessores.getSelectedRows().length > 0) {
-				for (int i = 0; i < tableProfessores.getSelectedRows().length; i++) {
-					String matriculaProfessor = (String) tableProfessores
-							.getValueAt(tableProfessores.getSelectedRows()[i], 1);
+			for (int i = 0; i < tableProfessores.getSelectedRows().length; i++) {
+				String matriculaProfessor = (String) tableProfessores.getValueAt(tableProfessores.getSelectedRows()[i],
+						1);
 
-					pst = con.prepareStatement("insert into ensina values (default, ?, ?)");
-					pst.setString(1, matriculaProfessor);
-					pst.setInt(2, d.getId());
-
-					pst.executeUpdate();
-				}
+				pst = con.prepareStatement("insert into ensina values (default, ?, ?)");
+				pst.setString(1, matriculaProfessor);
+				pst.setInt(2, d.getId());
+				pst.execute();
 			}
 
-			if (tableTurmas.getSelectedRows().length > 0) {
-				for (int i = 0; i < tableTurmas.getSelectedRows().length; i++) {
-					String turma = (String) tableTurmas.getValueAt(tableTurmas.getSelectedRows()[i], 0);
+			for (int i = 0; i < tableTurmas.getSelectedRows().length; i++) {
+				String turma = (String) tableTurmas.getValueAt(tableTurmas.getSelectedRows()[i], 0);
 
-					pst = con.prepareStatement("insert into estuda values (default, ?, (select id from turmas where nome= ?))");
-					pst.setInt(1, d.getId());
-					pst.setString(2, turma);
-
-					pst.executeUpdate();
-				}
+				pst = con.prepareStatement(
+						"insert into estuda values (default, ?, (select id from turmas where nome= ?))");
+				pst.setInt(1, d.getId());
+				pst.setString(2, turma);
+				pst.execute();
 			}
 			con.close();
-			
+
 			adm.listagens();
 			adm.getContentPane().setVisible(false);
 			adm.setContentPane(new ViewDisciplane(adm, d));
 
 			dispose();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Não foi possível fazer o cadastro:\n" + e);
+			JOptionPane.showMessageDialog(null, "Não foi possível atualizar a disciplina:\n" + e);
 		}
 	}
 

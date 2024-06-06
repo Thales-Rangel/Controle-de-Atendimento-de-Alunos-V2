@@ -40,9 +40,6 @@ public class Login extends JFrame {
 	private JTextField textMatricula;
 	private JPasswordField passwordField;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -56,9 +53,6 @@ public class Login extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public Login() {
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/img/IF Logo - Remove.png")));
@@ -80,7 +74,6 @@ public class Login extends JFrame {
 
 		textMatricula = new JTextField();
 		textMatricula.addKeyListener(new KeyAdapter() {
-			@Override
 			public void keyTyped(KeyEvent e) {
 				String caracteres = "0123456789";
 
@@ -89,7 +82,6 @@ public class Login extends JFrame {
 				}
 			}
 
-			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					passwordField.requestFocus();
@@ -132,7 +124,7 @@ public class Login extends JFrame {
 		JButton btnNewButton = new JButton("Entrar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				entrar();		
+				entrar();
 			}
 		});
 		btnNewButton.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -148,36 +140,38 @@ public class Login extends JFrame {
 	@SuppressWarnings("deprecation")
 	private void entrar() {
 		if (!(textMatricula.getText().isBlank() || passwordField.getText().isBlank())) {
-			
+
 			String matricula = textMatricula.getText();
 			String senha = passwordField.getText();
 
 			if (!(matricula.equals("0001") && senha.equals("admin"))) {
 				try {
 					con = DAO.conectar();
-					pst = con.prepareStatement("select * from professores where matricula= '"+ matricula +"' ");
+					pst = con.prepareStatement("select * from professores where matricula= '" + matricula + "' ");
 
 					rs = pst.executeQuery();
 					if (rs.next()) {
 						if (rs.getString(3).equals(senha)) {
 							JOptionPane.showMessageDialog(null, rs.getString(1));
 							dispose();
-						
+
 							Professor p = new Professor(rs.getString(1), rs.getString(2), rs.getString(3));
-						
+
 							new ProfessorView(p).setVisible(true);
 						} else {
 							JOptionPane.showMessageDialog(null, "Senha incorreta!");
 						}
 					} else {
-						pst = con.prepareStatement("select * from alunos where matricula= '"+ matricula +"'");
+						pst = con.prepareStatement("select * from alunos where matricula= '" + matricula + "'");
 
 						rs = pst.executeQuery();
 						if (rs.next()) {
 							if (rs.getString(3).equals(senha)) {
 								JOptionPane.showMessageDialog(null, rs.getString(1));
 								dispose();
-								new StudentView(new Student(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4))).setVisible(true);
+								new StudentView(
+										new Student(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4)))
+										.setVisible(true);
 							} else {
 								JOptionPane.showMessageDialog(null, "Senha incorreta!");
 							}
@@ -188,7 +182,7 @@ public class Login extends JFrame {
 
 					con.close();
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Não foi possivel fazer o login:\n"+e);
+					JOptionPane.showMessageDialog(null, "Não foi possivel fazer o login:\n" + e);
 				}
 			} else {
 				JOptionPane.showMessageDialog(null, "Admin");

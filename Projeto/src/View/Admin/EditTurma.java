@@ -93,22 +93,12 @@ public class EditTurma extends JDialog {
 		tableDisciplinas = new JTable();
 		tableDisciplinas.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-
 				if (selectedRows[tableDisciplinas.getSelectedRow()]) {
 					selectedRows[tableDisciplinas.getSelectedRow()] = false;
 				} else {
 					selectedRows[tableDisciplinas.getSelectedRow()] = true;
 				}
-
 				selectDisciplinas();
-			}
-		});
-		tableDisciplinas.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "New column" }) {
-			private static final long serialVersionUID = 1L;
-			boolean[] columnEditables = new boolean[] { false };
-
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
 			}
 		});
 		tableDisciplinas.setRowSelectionAllowed(true);
@@ -164,7 +154,7 @@ public class EditTurma extends JDialog {
 		};
 
 		String readDisciplinas = "select * from disciplinas order by nome";
-		
+
 		String readEstuda = "select id_disciplina from estuda where id_turma= " + t.getId() + " and id_disciplina= ?";
 
 		try {
@@ -214,12 +204,11 @@ public class EditTurma extends JDialog {
 	}
 
 	private void atualizar() {
-		
 		try {
 			con = DAO.conectar();
 			pst = con.prepareStatement("delete from estuda where id_turma= " + t.getId());
 			pst.execute();
-			
+
 			if (!textFieldNome.getText().isBlank() && !textFieldNome.getText().equals(t.getNome())) {
 				String novoNome = textFieldNome.getText().trim();
 
@@ -234,19 +223,15 @@ public class EditTurma extends JDialog {
 				}
 			}
 
-			if (tableDisciplinas.getSelectedRows().length > 0) {
-				
-				for (int i = 0; i < tableDisciplinas.getSelectedRows().length; i++) {
-					String disciplina = (String) tableDisciplinas.getValueAt(tableDisciplinas.getSelectedRows()[i], 0);
+			for (int i = 0; i < tableDisciplinas.getSelectedRows().length; i++) {
+				String disciplina = (String) tableDisciplinas.getValueAt(tableDisciplinas.getSelectedRows()[i], 0);
 
-					pst = con.prepareStatement("insert into estuda values (default, (select id from disciplinas where nome= ?), ?)");
-					pst.setString(1, disciplina);
-					pst.setInt(2, t.getId());
+				pst = con.prepareStatement(
+						"insert into estuda values (default, (select id from disciplinas where nome= ?), ?)");
+				pst.setString(1, disciplina);
+				pst.setInt(2, t.getId());
 
-					pst.execute();
-
-					selectedRows[tableDisciplinas.getSelectedRows()[i]] = false;
-				}
+				pst.execute();
 			}
 			con.close();
 
@@ -254,7 +239,7 @@ public class EditTurma extends JDialog {
 			adm.getContentPane().setVisible(false);
 			adm.setContentPane(new ViewTurma(adm, t));
 			adm.listagens();
-			
+
 			dispose();
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -42,9 +42,6 @@ public class ViewProfessor extends JPanel {
 	private JTable tableDisciplinas;
 	private JTable tableTurmas;
 
-	/**
-	 * Create the panel.
-	 */
 	public ViewProfessor(Admin adm, Professor p) {
 		this.p = p;
 		this.adm = adm;
@@ -191,14 +188,6 @@ public class ViewProfessor extends JPanel {
 
 		tableDisciplinas = new JTable();
 		tableDisciplinas.setRowSelectionAllowed(false);
-		tableDisciplinas.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Disciplinas" }) {
-			private static final long serialVersionUID = 1L;
-			boolean[] columnEditables = new boolean[] { false };
-
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
 		tableDisciplinas.setFont(new Font("Arial", Font.PLAIN, 15));
 		scrollPaneDisciplinas.setViewportView(tableDisciplinas);
 
@@ -206,14 +195,6 @@ public class ViewProfessor extends JPanel {
 
 		tableTurmas = new JTable();
 		tableTurmas.setRowSelectionAllowed(false);
-		tableTurmas.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Turmas" }) {
-			private static final long serialVersionUID = 1L;
-			boolean[] columnEditables = new boolean[] { false };
-
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
 		tableTurmas.setFont(new Font("Arial", Font.PLAIN, 15));
 		scrollPaneTurmas.setViewportView(tableTurmas);
 
@@ -242,7 +223,7 @@ public class ViewProfessor extends JPanel {
 		btnReturn.setForeground(Color.BLACK);
 		btnReturn.setFont(new Font("Arial", Font.PLAIN, 20));
 		btnReturn.setBackground(UIManager.getColor("Button.background"));
-		
+
 		JButton btnEditDisciplanes = new JButton("Editar turmas");
 		btnEditDisciplanes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -251,48 +232,37 @@ public class ViewProfessor extends JPanel {
 		});
 		btnEditDisciplanes.setFont(new Font("Arial", Font.PLAIN, 20));
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addComponent(menuBar, GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(10)
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 826, Short.MAX_VALUE)
-					.addGap(10))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(scrollPaneDisciplinas, GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
-					.addGap(10)
-					.addComponent(scrollPaneTurmas, GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(btnReturn, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-								.addComponent(btnEditDisciplanes, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(10)
-							.addComponent(btnDelete, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)))
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(menuBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(10)
-					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-					.addGap(10)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+		groupLayout
+				.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(menuBar, GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)
+						.addGroup(groupLayout.createSequentialGroup().addGap(10)
+								.addComponent(panel, GroupLayout.DEFAULT_SIZE, 826, Short.MAX_VALUE).addGap(10))
+						.addGroup(groupLayout.createSequentialGroup().addContainerGap()
+								.addComponent(scrollPaneDisciplinas, GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+								.addGap(10)
+								.addComponent(scrollPaneTurmas, GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
+										.createSequentialGroup().addPreferredGap(ComponentPlacement.RELATED)
+										.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+												.addComponent(btnReturn, Alignment.LEADING, GroupLayout.DEFAULT_SIZE,
+														232, Short.MAX_VALUE)
+												.addComponent(btnEditDisciplanes, Alignment.LEADING,
+														GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
+														Short.MAX_VALUE)))
+										.addGroup(groupLayout.createSequentialGroup().addGap(10).addComponent(btnDelete,
+												GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)))
+								.addContainerGap()));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
+				.createSequentialGroup()
+				.addComponent(menuBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+				.addGap(10).addComponent(panel, GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE).addGap(10)
+				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(scrollPaneTurmas, GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(170)
-							.addComponent(btnDelete)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnEditDisciplanes)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnReturn))
+						.addGroup(groupLayout.createSequentialGroup().addGap(170).addComponent(btnDelete)
+								.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnEditDisciplanes)
+								.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnReturn))
 						.addComponent(scrollPaneDisciplinas, GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE))
-					.addGap(10))
-		);
+				.addGap(10)));
 		setLayout(groupLayout);
 
 		listar();
@@ -318,15 +288,15 @@ public class ViewProfessor extends JPanel {
 		DefaultTableModel modeloTurmas = new DefaultTableModel(new Object[][] {}, new String[] { "Turmas" }) {
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] { false };
-			
+
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
 		};
 
-		String readT = "select t.nome from ensina en " + "inner join estuda es "
-				+ "on es.id_disciplina = en.id_disciplina " + "inner join turmas t " + "on t.id = es.id_turma "
-				+ "where en.matricula_professor= ? " + "group by t.id " + "order by t.nome";
+		String readT = "select t.nome from ensina en join estuda es "
+				+ "on es.id_disciplina = en.id_disciplina join turmas t on t.id = es.id_turma "
+				+ "where en.matricula_professor= ? group by t.id order by t.nome";
 
 		try {
 			con = DAO.conectar();
@@ -343,40 +313,40 @@ public class ViewProfessor extends JPanel {
 			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, e);
+			JOptionPane.showMessageDialog(null, "Não foi possivel listar as turmas:\n" + e);
 		}
 	}
-	
+
 	private void deletar() {
 		String deleteEnsina = "delete from ensina where matricula_professor= ?";
-		
+
 		String deleteSolicitacoes = "delete from solicitacoes where matricula_p= ?";
-		
+
 		String insert = "delete from professores where matricula= ?";
 
 		try {
 			con = DAO.conectar();
-			
+
 			pst = con.prepareStatement(deleteEnsina);
 			pst.setString(1, p.getMatricula());
 			pst.execute();
-			
+
 			pst = con.prepareStatement(deleteSolicitacoes);
 			pst.setString(1, p.getMatricula());
 			pst.execute();
-			
+
 			pst = con.prepareStatement(insert);
 			pst.setString(1, p.getMatricula());
 			int confirmaExclusao = pst.executeUpdate();
 
 			if (confirmaExclusao == 1) {
 				JOptionPane.showMessageDialog(null, p.getNome() + " ecluido com êxito!!");
-				
+
 				adm.listagens();
 				setVisible(false);
 				adm.setContentPane(new ViewProfessorsList(adm));
 			} else {
-				JOptionPane.showMessageDialog(null, "Não foi possivel excluir "+ p.getNome());
+				JOptionPane.showMessageDialog(null, "Não foi possivel excluir " + p.getNome());
 			}
 
 			con.close();

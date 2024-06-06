@@ -53,9 +53,6 @@ public class Admin extends JFrame {
 	private JList<String> listDisciplinas;
 	private JLabel lblStatusDB;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -69,9 +66,6 @@ public class Admin extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public Admin() {
 		Admin adm = this;
 		
@@ -141,7 +135,7 @@ public class Admin extends JFrame {
 		mnTurmas.setFont(new Font("Arial", Font.PLAIN, 13));
 		menuBar.add(mnTurmas);
 
-		JMenuItem mntmViewAllTurmas = new JMenuItem("Ver Turmas Cadastradas\r\n");
+		JMenuItem mntmViewAllTurmas = new JMenuItem("Ver Turmas Cadastradas");
 		mntmViewAllTurmas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				contentPane.setVisible(false);
@@ -186,7 +180,6 @@ public class Admin extends JFrame {
 
 		JMenu mnExit = new JMenu("Sair");
 		mnExit.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
 				sair();
 			}
@@ -243,7 +236,6 @@ public class Admin extends JFrame {
 		
 		listStudents = new JList<String>();
 		listStudents.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
 				contentPane.setVisible(false);
 				setContentPane(new ViewStudentsList(adm));
@@ -257,7 +249,6 @@ public class Admin extends JFrame {
 		
 		listProfessores = new JList<String>();
 		listProfessores.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
 				contentPane.setVisible(false);
 				setContentPane(new ViewProfessorsList(adm));
@@ -271,7 +262,6 @@ public class Admin extends JFrame {
 		
 		listTurmas = new JList<String>();
 		listTurmas.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
 				contentPane.setVisible(false);
 				setContentPane(new ViewTurmasList(adm));
@@ -285,7 +275,6 @@ public class Admin extends JFrame {
 		
 		listDisciplinas = new JList<String>();
 		listDisciplinas.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
 				contentPane.setVisible(false);
 				setContentPane(new ViewDisciplanesList(adm));
@@ -297,7 +286,6 @@ public class Admin extends JFrame {
 		
 		JLabel lblListStudents = new JLabel("Alunos");
 		lblListStudents.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
 				contentPane.setVisible(false);
 				setContentPane(new ViewStudentsList(adm));
@@ -310,7 +298,6 @@ public class Admin extends JFrame {
 		
 		JLabel lblListProfessores = new JLabel("Professores");
 		lblListProfessores.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
 				contentPane.setVisible(false);
 				setContentPane(new ViewProfessorsList(adm));
@@ -323,7 +310,6 @@ public class Admin extends JFrame {
 		
 		JLabel lblListTurmas = new JLabel("Turmas");
 		lblListTurmas.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
 				contentPane.setVisible(false);
 				setContentPane(new ViewTurmasList(adm));
@@ -336,7 +322,6 @@ public class Admin extends JFrame {
 		
 		JLabel lblListDisciplinas = new JLabel("Disciplinas");
 		lblListDisciplinas.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
 				contentPane.setVisible(false);
 				setContentPane(new ViewDisciplanesList(adm));

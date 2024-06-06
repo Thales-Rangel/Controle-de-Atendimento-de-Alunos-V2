@@ -50,16 +50,13 @@ public class ViewTurmasList extends JPanel {
 	private JList<String> listDisciplanes;
 	private JScrollPane scrollPaneFilterDisciplane;
 	private JButton btnFilterDisciplane;
-	
+
 	private Admin adm;
 	private JLabel lblFilters;
 	private JLabel lblSearchID;
 	private JLabel lblFilterDisciplane;
 	private JPanel panelFilters;
 
-	/**
-	 * Create the panel.
-	 */
 	public ViewTurmasList(Admin adm) {
 		this.adm = adm;
 		setBounds(100, 100, 846, 621);
@@ -164,7 +161,8 @@ public class ViewTurmasList extends JPanel {
 		JMenuItem mntmReturn = new JMenuItem("Ir para a página principal");
 		mntmReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				retorno(adm);
+				adm.contentPane.setVisible(true);
+				adm.setContentPane(adm.contentPane);
 			}
 		});
 		mntmReturn.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -173,7 +171,8 @@ public class ViewTurmasList extends JPanel {
 		JMenuItem mntmExit = new JMenuItem("Sair (Página de Login)");
 		mntmExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				sair(adm);
+				adm.dispose();
+				new Login().setVisible(true);
 			}
 		});
 		mntmExit.setFont(new Font("Arial", Font.PLAIN, 13));
@@ -188,7 +187,6 @@ public class ViewTurmasList extends JPanel {
 
 		textFieldSearch = new JTextField();
 		textFieldSearch.addKeyListener(new KeyAdapter() {
-			@Override
 			public void keyReleased(KeyEvent e) {
 				buscar();
 			}
@@ -202,22 +200,10 @@ public class ViewTurmasList extends JPanel {
 
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
 				selecionar();
 			}
 		});
-		table.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "ID", "Turma", "Qnt. de Alunos" }) {
-			private static final long serialVersionUID = 1L;
-			boolean[] columnEditables = new boolean[] { false, false, false };
-
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
-		table.getColumnModel().getColumn(0).setPreferredWidth(20);
-		table.getColumnModel().getColumn(2).setPreferredWidth(150);
-		table.getColumnModel().getColumn(1).setPreferredWidth(150);
 		scrollPane.setViewportView(table);
 
 		panelFilters = new JPanel();
@@ -241,7 +227,6 @@ public class ViewTurmasList extends JPanel {
 				}
 			}
 
-			@Override
 			public void keyReleased(KeyEvent e) {
 				buscar();
 			}
@@ -256,20 +241,8 @@ public class ViewTurmasList extends JPanel {
 
 		textFieldFilterDisciplane = new JTextField();
 		textFieldFilterDisciplane.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (scrollPaneFilterDisciplane.isVisible() && listDisciplanes.isVisible()) {
-					scrollPaneFilterDisciplane.setVisible(false);
-					listDisciplanes.setVisible(false);
-					textFieldFilterDisciplane.setText("");
-					btnFilterDisciplane
-							.setIcon(new ImageIcon(ViewStudentsList.class.getResource("/img/seta_de_itens_icon.png")));
-					
-					dimensionar();
-					buscar();
-				} else {
-					listarDisciplinas();
-				}
+				listarDisciplinas();
 			}
 		});
 
@@ -282,7 +255,6 @@ public class ViewTurmasList extends JPanel {
 
 		listDisciplanes = new JList<String>();
 		listDisciplanes.addMouseListener(new MouseAdapter() {
-			@Override
 			public void mouseClicked(MouseEvent e) {
 				textFieldFilterDisciplane.setText(listDisciplanes.getSelectedValue());
 
@@ -300,61 +272,38 @@ public class ViewTurmasList extends JPanel {
 		btnFilterDisciplane = new JButton("");
 		btnFilterDisciplane.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (scrollPaneFilterDisciplane.isVisible() && listDisciplanes.isVisible()) {
-					scrollPaneFilterDisciplane.setVisible(false);
-					listDisciplanes.setVisible(false);
-					textFieldFilterDisciplane.setText("");
-					btnFilterDisciplane
-							.setIcon(new ImageIcon(ViewStudentsList.class.getResource("/img/seta_de_itens_icon.png")));
-					
-					dimensionar();
-					buscar();
-				} else {
-					listarDisciplinas();
-					textFieldFilterDisciplane.requestFocus();
-				}
+				listarDisciplinas();
 			}
 		});
 		btnFilterDisciplane.setIcon(new ImageIcon(ViewStudentsList.class.getResource("/img/seta_de_itens_icon.png")));
-		
+
 		dimensionar();
-		
+
 		GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addComponent(menuBar, GroupLayout.DEFAULT_SIZE, 846, Short.MAX_VALUE)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(10)
-					.addComponent(lblPagina, GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)
-					.addGap(10)
-					.addComponent(lblIcon)
-					.addGap(15)
-					.addComponent(textFieldSearch, GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
-					.addGap(39))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(10)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE)
-					.addGap(10)
-					.addComponent(panelFilters, GroupLayout.PREFERRED_SIZE, 270, GroupLayout.PREFERRED_SIZE)
-					.addGap(10))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(menuBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup().addGap(10)
+						.addComponent(lblPagina, GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE).addGap(10)
+						.addComponent(lblIcon).addGap(15)
+						.addComponent(textFieldSearch, GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE).addGap(39))
+				.addGroup(groupLayout.createSequentialGroup().addGap(10)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 546, Short.MAX_VALUE).addGap(10)
+						.addComponent(panelFilters, GroupLayout.PREFERRED_SIZE, 270, GroupLayout.PREFERRED_SIZE)
+						.addGap(10)));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
+				.createSequentialGroup()
+				.addComponent(menuBar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+				.addGap(18)
+				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblPagina, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblIcon)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(3)
-							.addComponent(textFieldSearch, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)))
-					.addGap(16)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup().addGap(3).addComponent(textFieldSearch,
+								GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)))
+				.addGap(16)
+				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
 						.addComponent(panelFilters, GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE))
-					.addGap(10))
-		);
+				.addGap(10)));
 		setLayout(groupLayout);
 
 		scrollPaneFilterDisciplane.setVisible(false);
@@ -364,7 +313,6 @@ public class ViewTurmasList extends JPanel {
 	}
 
 	private void listagem() {
-
 		DefaultTableModel model = new DefaultTableModel(new Object[][] {},
 				new String[] { "ID", "Turma", "Qnt. de Alunos" }) {
 			private static final long serialVersionUID = 1L;
@@ -375,7 +323,7 @@ public class ViewTurmasList extends JPanel {
 			}
 		};
 
-		String readLista = "select t.id, t.nome, count(a.nome) from turmas as t left outer join alunos as a on a.id_turma = t.id group by t.id, t.nome order by t.nome";
+		String readLista = "select t.id, t.nome, count(a.matricula) from turmas t left join alunos a on a.id_turma = t.id group by t.id order by t.nome";
 
 		try {
 			con = DAO.conectar();
@@ -394,14 +342,27 @@ public class ViewTurmasList extends JPanel {
 
 			con.close();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e);
+			JOptionPane.showMessageDialog(null, "Não foi possivel listar as disciplinas:\n" + e);
 		}
 	}
 
 	private void listarDisciplinas() {
+		if (scrollPaneFilterDisciplane.isVisible() && listDisciplanes.isVisible()) {
+			scrollPaneFilterDisciplane.setVisible(false);
+			listDisciplanes.setVisible(false);
+			textFieldFilterDisciplane.setText("");
+			btnFilterDisciplane
+					.setIcon(new ImageIcon(ViewStudentsList.class.getResource("/img/seta_de_itens_icon.png")));
+
+			dimensionar();
+			buscar();
+
+			return;
+		}
+
 		DefaultListModel<String> model = new DefaultListModel<String>();
 
-		String readTurmas = "select d.nome from estuda as e inner join disciplinas as d inner join turmas as t where e.id_turma = t.id and d.id = e.id_disciplina group by d.nome order by d.nome";
+		String readTurmas = "select distinct d.nome from estuda e join disciplinas d on d.id = e.id_disciplina order by d.nome";
 
 		try {
 			con = DAO.conectar();
@@ -417,20 +378,19 @@ public class ViewTurmasList extends JPanel {
 			scrollPaneFilterDisciplane.setVisible(true);
 			btnFilterDisciplane.setIcon(
 					new ImageIcon(ViewStudentsList.class.getResource("/img/seta_de_itens_para_cima_icon.png")));
-			
+
 			dimensionar();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e);
+			JOptionPane.showMessageDialog(null, "Não foi possivel listar as disciplinas:\n" + e);
 		}
 	}
 
 	private void buscar() {
 		String insert = "select t.id, t.nome, count(a.matricula) from turmas t "
 				+ "left join alunos a on a.id_turma = t.id ";
+
 		if (!textFieldFilterDisciplane.getText().isEmpty()) {
-			insert += "join estuda es "
-					+ "on es.id_turma = t.id "
-					+ "join disciplinas d on d.id = es.id_disciplina "
+			insert += "join estuda es " + "on es.id_turma = t.id " + "join disciplinas d on d.id = es.id_disciplina "
 					+ "where d.nome = '" + textFieldFilterDisciplane.getText() + "' ";
 		}
 
@@ -438,7 +398,7 @@ public class ViewTurmasList extends JPanel {
 			if (textFieldFilterDisciplane.getText().isBlank()) {
 				insert += "where t.nome like '" + textFieldSearch.getText() + "%' ";
 			} else {
-				insert += "and t.nome like '" + textFieldSearch.getText() +"%' ";
+				insert += "and t.nome like '" + textFieldSearch.getText() + "%' ";
 			}
 		}
 		if (!textFieldSearchID.getText().isEmpty()) {
@@ -478,64 +438,47 @@ public class ViewTurmasList extends JPanel {
 
 			con.close();
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, e);
+			JOptionPane.showMessageDialog(null, "Não foi possivel buscar:\n" + e);
 		}
 	}
 
 	private void selecionar() {
-
 		int idSelect = Integer.parseInt((String) table.getValueAt(table.getSelectedRow(), 0));
 		String nomeSelect = (String) table.getValueAt(table.getSelectedRow(), 1);
-		
+
 		setVisible(false);
 		adm.setContentPane(new ViewTurma(adm, new Turma(idSelect, nomeSelect)));
 	}
 
-	private void retorno(Admin adm) {
-		adm.contentPane.setVisible(true);
-		adm.setContentPane(adm.contentPane);
-	}
-
-	private void sair(Admin adm) {
-		adm.dispose();
-		new Login().setVisible(true);
-	}
-	
 	private void dimensionar() {
 		GroupLayout gl_panelFilters = new GroupLayout(panelFilters);
-		gl_panelFilters.setHorizontalGroup(
-			gl_panelFilters.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelFilters.createSequentialGroup()
-					.addGap(8)
-					.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
+		gl_panelFilters.setHorizontalGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelFilters.createSequentialGroup().addGap(8).addGroup(gl_panelFilters
+						.createParallelGroup(Alignment.LEADING)
 						.addComponent(lblFilters, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblSearchID, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE)
 						.addComponent(textFieldSearchID, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblFilterDisciplane, GroupLayout.PREFERRED_SIZE, 157, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panelFilters.createSequentialGroup()
-							.addGap(230)
-							.addComponent(btnFilterDisciplane, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
-						.addComponent(textFieldFilterDisciplane, GroupLayout.PREFERRED_SIZE, 230, GroupLayout.PREFERRED_SIZE)
-						.addComponent(scrollPaneFilterDisciplane, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)))
-		);
-		gl_panelFilters.setVerticalGroup(
-			gl_panelFilters.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panelFilters.createSequentialGroup()
-					.addGap(8)
-					.addComponent(lblFilters, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-					.addGap(39)
-					.addComponent(lblSearchID, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-					.addComponent(textFieldSearchID, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-					.addGap(42)
-					.addComponent(lblFilterDisciplane, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-					.addGap(10)
-					.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelFilters.createSequentialGroup().addGap(230).addComponent(btnFilterDisciplane,
+								GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE))
+						.addComponent(textFieldFilterDisciplane, GroupLayout.PREFERRED_SIZE, 230,
+								GroupLayout.PREFERRED_SIZE)
+						.addComponent(scrollPaneFilterDisciplane, GroupLayout.PREFERRED_SIZE, 250,
+								GroupLayout.PREFERRED_SIZE))));
+		gl_panelFilters.setVerticalGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING).addGroup(gl_panelFilters
+				.createSequentialGroup().addGap(8)
+				.addComponent(lblFilters, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE).addGap(39)
+				.addComponent(lblSearchID, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+				.addComponent(textFieldSearchID, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE).addGap(42)
+				.addComponent(lblFilterDisciplane, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+				.addGap(10)
+				.addGroup(gl_panelFilters.createParallelGroup(Alignment.LEADING)
 						.addComponent(btnFilterDisciplane, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-						.addComponent(textFieldFilterDisciplane, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panelFilters.createSequentialGroup()
-							.addGap(25)
-							.addComponent(scrollPaneFilterDisciplane, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE))))
-		);
+						.addComponent(textFieldFilterDisciplane, GroupLayout.PREFERRED_SIZE, 26,
+								GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panelFilters.createSequentialGroup().addGap(25).addComponent(
+								scrollPaneFilterDisciplane, GroupLayout.PREFERRED_SIZE, 149,
+								GroupLayout.PREFERRED_SIZE)))));
 		panelFilters.setLayout(gl_panelFilters);
 	}
 
