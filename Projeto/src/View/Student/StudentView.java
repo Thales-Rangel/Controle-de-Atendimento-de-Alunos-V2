@@ -55,8 +55,8 @@ public class StudentView extends JFrame {
 		this.s = s;
 		StudentView sv = this;
 		
-		setTitle("Página do aluno");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentView.class.getResource("/img/IF Logo - Remove.png")));
+		setTitle("Controle de atendimento de alunos - página do aluno");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(StudentView.class.getResource("/img/Project_Icon.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 860, 650);
 		contentPane = new JPanel();
@@ -67,7 +67,7 @@ public class StudentView extends JFrame {
 		setContentPane(contentPane);
 		
 		panel = new JPanel();
-		panel.setBackground(new Color(26, 150, 3));
+		panel.setBackground(new Color(52, 137, 252));
 		
 		lblNome = new JLabel(s.getNome());
 		lblNome.setHorizontalAlignment(SwingConstants.CENTER);
@@ -99,7 +99,7 @@ public class StudentView extends JFrame {
 		
 		lblIFLogo = new JLabel("");
 		lblIFLogo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIFLogo.setIcon(new ImageIcon(StudentView.class.getResource("/img/IF Logo Branca - Remove.png")));
+		lblIFLogo.setIcon(new ImageIcon(StudentView.class.getResource("/img/Project_Icon_Remove.png")));
 		
 		btnSair = new JButton("Sair");
 		btnSair.addActionListener(new ActionListener() {

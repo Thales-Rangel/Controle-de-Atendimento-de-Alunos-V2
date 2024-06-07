@@ -46,6 +46,8 @@ public class Login extends JFrame {
 				try {
 					Login frame = new Login();
 					frame.setVisible(true);
+
+					new Sobre().setVisible(true);
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, e);
 				}
@@ -55,8 +57,8 @@ public class Login extends JFrame {
 
 	public Login() {
 		setResizable(false);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/img/IF Logo - Remove.png")));
-		setTitle("Login");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/img/Project_Icon.png")));
+		setTitle("Controle de atendimento de alunos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -152,7 +154,6 @@ public class Login extends JFrame {
 					rs = pst.executeQuery();
 					if (rs.next()) {
 						if (rs.getString(3).equals(senha)) {
-							JOptionPane.showMessageDialog(null, rs.getString(1));
 							dispose();
 
 							Professor p = new Professor(rs.getString(1), rs.getString(2), rs.getString(3));
@@ -167,7 +168,6 @@ public class Login extends JFrame {
 						rs = pst.executeQuery();
 						if (rs.next()) {
 							if (rs.getString(3).equals(senha)) {
-								JOptionPane.showMessageDialog(null, rs.getString(1));
 								dispose();
 								new StudentView(
 										new Student(rs.getString(1), rs.getString(2), rs.getString(3), rs.getInt(4)))
@@ -182,10 +182,10 @@ public class Login extends JFrame {
 
 					con.close();
 				} catch (Exception e) {
+					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, "Não foi possivel fazer o login:\n" + e);
 				}
 			} else {
-				JOptionPane.showMessageDialog(null, "Admin");
 				dispose();
 				new Admin().setVisible(true);
 			}

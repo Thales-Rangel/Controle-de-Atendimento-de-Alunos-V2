@@ -40,8 +40,8 @@ public class ProfessorView extends JFrame {
 	public ProfessorView(Professor prof) {
 		this.prof = prof;
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Admin.class.getResource("/img/IF Logo - Remove.png")));
-		setTitle("Página do Professor");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Admin.class.getResource("/img/Project_Icon.png")));
+		setTitle("Controle de atendimento de alunos - página do professor");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 860, 650);
 		contentPane = new JPanel();
@@ -52,10 +52,10 @@ public class ProfessorView extends JFrame {
 		setContentPane(contentPane);
 
 		panel = new JPanel();
-		panel.setBackground(new Color(26, 150, 3));
+		panel.setBackground(new Color(52, 137, 252));
 
 		lblIFLogo = new JLabel("");
-		lblIFLogo.setIcon(new ImageIcon(ProfessorView.class.getResource("/img/IF Logo Branca - Remove.png")));
+		lblIFLogo.setIcon(new ImageIcon(ProfessorView.class.getResource("/img/Project_Icon_Remove.png")));
 
 		lblNome = new JLabel(prof.getNome());
 		lblNome.setHorizontalAlignment(SwingConstants.CENTER);

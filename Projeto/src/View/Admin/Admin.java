@@ -35,6 +35,7 @@ import java.awt.Cursor;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class Admin extends JFrame {
 
@@ -69,8 +70,8 @@ public class Admin extends JFrame {
 	public Admin() {
 		Admin adm = this;
 		
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Admin.class.getResource("/img/IF Logo - Remove.png")));
-		setTitle("Página de Admin");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Admin.class.getResource("/img/Project_Icon.png")));
+		setTitle("Controle de atendimento de alunos - página de admin");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 860, 630);
 		contentPane = new JPanel();
@@ -193,19 +194,13 @@ public class Admin extends JFrame {
 
 		JLabel ifLogo = new JLabel("");
 		ifLogo.setHorizontalAlignment(SwingConstants.CENTER);
-		ifLogo.setIcon(new ImageIcon(Admin.class.getResource("/img/IF Logo - Remove.png")));
+		ifLogo.setIcon(new ImageIcon(Admin.class.getResource("/img/Project_Icon.png")));
 
-		JLabel lblIFTitle = new JLabel("Instituto Federal de Educação, Ciência e Tecnologia do Rio Grande do Norte");
-		lblIFTitle.setFont(new Font("Times New Roman", Font.BOLD, 20));
-
-		JLabel lblIFSubtitle = new JLabel("Campus Avançado Lajes");
-		lblIFSubtitle.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		JLabel lblIFTitle = new JLabel("Projeto de estudo de banco de dados MySQL");
+		lblIFTitle.setFont(new Font("Times New Roman", Font.BOLD, 26));
 
 		JLabel lblPagAdmin = new JLabel("Página do Admin - Controle de Atendimento de Alunos");
-		lblPagAdmin.setFont(new Font("Times New Roman", Font.BOLD, 22));
-
-		JLabel lblDados_do_Projeto = new JLabel("Autor: Thales Rangel;  Matéria: PABD;  Professor: Danilo");
-		lblDados_do_Projeto.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+		lblPagAdmin.setFont(new Font("Times New Roman", Font.BOLD, 28));
 
 		JPanel panelDBInformation = new JPanel();
 		panelDBInformation.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -489,29 +484,23 @@ public class Admin extends JFrame {
 				.addGroup(gl_panelCabeçalho.createSequentialGroup()
 					.addGap(8)
 					.addGroup(gl_panelCabeçalho.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblIFSubtitle, GroupLayout.DEFAULT_SIZE, 673, Short.MAX_VALUE)
-						.addComponent(lblIFTitle, GroupLayout.DEFAULT_SIZE, 673, Short.MAX_VALUE)
-						.addComponent(lblPagAdmin, GroupLayout.DEFAULT_SIZE, 673, Short.MAX_VALUE)
-						.addComponent(lblDados_do_Projeto, GroupLayout.DEFAULT_SIZE, 673, Short.MAX_VALUE))
-					.addGap(10)
+						.addGroup(gl_panelCabeçalho.createSequentialGroup()
+							.addComponent(lblIFTitle, GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
+							.addGap(10))
+						.addGroup(gl_panelCabeçalho.createSequentialGroup()
+							.addComponent(lblPagAdmin, GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)))
 					.addComponent(ifLogo, GroupLayout.PREFERRED_SIZE, 133, GroupLayout.PREFERRED_SIZE))
 		);
 		gl_panelCabeçalho.setVerticalGroup(
 			gl_panelCabeçalho.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panelCabeçalho.createSequentialGroup()
 					.addGap(10)
-					.addGroup(gl_panelCabeçalho.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panelCabeçalho.createSequentialGroup()
-							.addGap(23)
-							.addComponent(lblIFSubtitle))
-						.addComponent(lblIFTitle))
-					.addGap(10)
-					.addGroup(gl_panelCabeçalho.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblPagAdmin, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_panelCabeçalho.createSequentialGroup()
-							.addGap(23)
-							.addComponent(lblDados_do_Projeto))))
-				.addComponent(ifLogo)
+					.addComponent(lblIFTitle)
+					.addGap(20)
+					.addComponent(lblPagAdmin)
+					.addGap(42))
+				.addComponent(ifLogo, GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
 		);
 		panelCabeçalho.setLayout(gl_panelCabeçalho);
 		contentPane.setLayout(gl_contentPane);

@@ -35,17 +35,17 @@ create database if not exists Project_PABD;
 
 use project_pabd;
 
+create table if not exists turmas(
+	id int auto_increment primary key,
+    nome varchar(20) unique
+)DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 create table if not exists alunos(
 	nome varchar(30),
     matricula varchar(20) primary key,
     senha varchar(100),
     id_turma int,
     foreign key (id_turma) references turmas(id)
-)DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-create table if not exists turmas(
-	id int auto_increment primary key,
-    nome varchar(20) unique
 )DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 create table if not exists disciplinas(

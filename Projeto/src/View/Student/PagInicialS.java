@@ -141,7 +141,7 @@ public class PagInicialS extends JPanel {
 		
 		JLabel lblLogo = new JLabel("");
 		lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLogo.setIcon(new ImageIcon(PagInicialS.class.getResource("/img/IF Logo - Remove.png")));
+		lblLogo.setIcon(new ImageIcon(PagInicialS.class.getResource("/img/Project_Icon.png")));
 		
 		JLabel lblMatricula = new JLabel(s.getMatricula());
 		lblMatricula.setFont(new Font("Arial", Font.PLAIN, 25));

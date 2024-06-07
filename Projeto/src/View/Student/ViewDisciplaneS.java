@@ -31,15 +31,10 @@ public class ViewDisciplaneS extends JPanel {
 	private ResultSet rs;
 
 	private static final long serialVersionUID = 1L;
-
-	private Disciplane d;
-	private StudentView sv;
 	
 	private JTable table;
 	
 	public ViewDisciplaneS(Disciplane d, StudentView sv) {
-		this.d = d;
-		this.sv = sv;
 		
 		setBounds(0, 0, 637, 593);
 		
