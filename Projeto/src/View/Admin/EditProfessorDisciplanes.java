@@ -48,7 +48,7 @@ public class EditProfessorDisciplanes extends JDialog {
 		this.adm = adm;
 
 		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(EditProfessorDisciplanes.class.getResource("/img/IF Logo - Remove.png")));
+				.getImage(EditProfessorDisciplanes.class.getResource("/img/Project_Icon.png")));
 		setTitle("Editar disciplinas do professor");
 		setResizable(false);
 

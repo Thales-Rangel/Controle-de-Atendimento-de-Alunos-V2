@@ -53,7 +53,7 @@ public class EditStudentTurma extends JDialog {
 		this.adm = adm;
 
 		setIconImage(
-				Toolkit.getDefaultToolkit().getImage(EditStudentTurma.class.getResource("/img/IF Logo - Remove.png")));
+				Toolkit.getDefaultToolkit().getImage(EditStudentTurma.class.getResource("/img/Project_Icon.png")));
 		setTitle("Mudar turma do aluno");
 
 		setResizable(false);

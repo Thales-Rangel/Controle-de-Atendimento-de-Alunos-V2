@@ -28,6 +28,7 @@ import javax.swing.table.DefaultTableModel;
 import Models.Disciplane;
 import Utils.DAO;
 import Utils.Validador;
+import javax.swing.SwingConstants;
 
 public class EditDisciplane extends JDialog {
 
@@ -54,7 +55,7 @@ public class EditDisciplane extends JDialog {
 
 		setResizable(false);
 		setTitle("Editar disciplina");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(CdstrStudent.class.getResource("/img/IF Logo - Remove.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(CdstrStudent.class.getResource("/img/Project_Icon.png")));
 		setBounds(100, 100, 450, 500);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
@@ -109,8 +110,9 @@ public class EditDisciplane extends JDialog {
 		scrollPane.setViewportView(tableProfessores);
 
 		JLabel lblIF_logo = new JLabel("");
-		lblIF_logo.setIcon(new ImageIcon(CdstrTurma.class.getResource("/img/IF Logo - Remove.png")));
-		lblIF_logo.setBounds(317, 0, 87, 133);
+		lblIF_logo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIF_logo.setIcon(new ImageIcon(CdstrTurma.class.getResource("/img/Project_Icon.png")));
+		lblIF_logo.setBounds(272, 0, 132, 133);
 		contentPanel.add(lblIF_logo);
 
 		JScrollPane scrollPane_1 = new JScrollPane();
