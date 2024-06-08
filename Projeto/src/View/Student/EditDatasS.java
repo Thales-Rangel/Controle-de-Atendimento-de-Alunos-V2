@@ -38,7 +38,7 @@ public class EditDatasS extends JDialog {
 		
 		setResizable(false);
 		setTitle("Editar dados pessoais");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(EditDatasS.class.getResource("/img/IF Logo - Remove.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(EditDatasS.class.getResource("/img/Project_Icon.png")));
 		setBounds(100, 100, 521, 279);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

@@ -56,7 +56,7 @@ public class CdstrProfessor extends JDialog {
 
 		setResizable(false);
 		setTitle("Cadastro de professores");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(CdstrStudent.class.getResource("/img/IF Logo - Remove.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(CdstrStudent.class.getResource("/img/Project_Icon.png")));
 		setBounds(100, 100, 450, 500);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
@@ -213,8 +213,9 @@ public class CdstrProfessor extends JDialog {
 		listDisciplinas.setVisible(false);
 
 		JLabel lblIF_logo = new JLabel("");
-		lblIF_logo.setIcon(new ImageIcon(CdstrStudent.class.getResource("/img/IF Logo - Remove.png")));
-		lblIF_logo.setBounds(316, 5, 87, 133);
+		lblIF_logo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIF_logo.setIcon(new ImageIcon(CdstrStudent.class.getResource("/img/Project_Icon.png")));
+		lblIF_logo.setBounds(281, 5, 122, 133);
 		contentPanel.add(lblIF_logo);
 
 		JLabel lblDesenho = new JLabel("");
