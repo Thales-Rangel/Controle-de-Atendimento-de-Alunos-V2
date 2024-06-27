@@ -6,7 +6,7 @@
 
 [![java](https://img.shields.io/badge/Java-21.x-orange)](https://www.java.com)
 [![Javax Swing](https://img.shields.io/badge/Swing-GUI-white)](https://docs.oracle.com/javase%2F7%2Fdocs%2Fapi%2F/javax/swing/package-summary.html)
-[![MySQL Server](https://img.shields.io/badge/MySQl-Server-blue)](https://www.mysql.com)
+[![MySQL Server](https://img.shields.io/badge/MySQL-Server-blue)](https://www.mysql.com)
 
 </div>
 
