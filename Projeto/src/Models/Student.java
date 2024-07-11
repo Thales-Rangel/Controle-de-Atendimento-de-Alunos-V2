@@ -6,7 +6,7 @@ import Utils.DAO;
 
 public class Student extends User {
 
-	int id_turma;
+	private int id_turma;
 	private Turma turma;
 
 	public Student(String nome, String matricula, String senha, int id_turma) {
