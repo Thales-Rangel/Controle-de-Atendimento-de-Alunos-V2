@@ -49,6 +49,7 @@ public class Login extends JFrame {
 
 					new Sobre().setVisible(true);
 				} catch (Exception e) {
+					e.printStackTrace();
 					JOptionPane.showMessageDialog(null, e);
 				}
 			}
