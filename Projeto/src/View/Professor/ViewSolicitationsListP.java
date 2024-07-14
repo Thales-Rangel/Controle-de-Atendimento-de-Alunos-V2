@@ -77,8 +77,12 @@ public class ViewSolicitationsListP extends JPanel {
 		table = new JTable();
 		table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
-				pv.setViewPanel(
-						new ViewSolicitationP(new Solicitation((int) table.getValueAt(table.getSelectedRow(), 0)), pv));
+				// Por algum motivo o "(int) table.getValueAt(table.getSelectedRow(), 0)" parou
+				// de funcionar
+				// Tive que usar "Integer.parseint((String) table.getValueAt
+				// (table.getSelectedRow(), 0))"
+				pv.setViewPanel(new ViewSolicitationP(
+						new Solicitation(Integer.parseInt((String) table.getValueAt(table.getSelectedRow(), 0))), pv));
 			}
 		});
 		table.setFont(new Font("Arial", Font.PLAIN, 15));
